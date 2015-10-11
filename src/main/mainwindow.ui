@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Hypha Manager</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../res/main.qrc">
+    <normaloff>:/main/hypha_mini</normaloff>:/main/hypha_mini</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionE_xit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionAbout_Hypha_Client"/>
+   </widget>
+   <widget class="QMenu" name="menuLanguage">
+    <property name="title">
+     <string>Language</string>
+    </property>
+    <property name="separatorsCollapsible">
+     <bool>false</bool>
+    </property>
+    <property name="toolTipsVisible">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuE_dit">
+    <property name="title">
+     <string>E&amp;dit</string>
+    </property>
+    <addaction name="actionSettings"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuE_dit"/>
+   <addaction name="menuLanguage"/>
+   <addaction name="menu_Help"/>
+  </widget>
+  <action name="actionE_xit">
+   <property name="icon">
+    <iconset resource="../res/main.qrc">
+     <normaloff>:/actions/images/actions/exit.svg</normaloff>:/actions/images/actions/exit.svg</iconset>
+   </property>
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionAbout_Hypha_Client">
+   <property name="icon">
+    <iconset resource="../res/main.qrc">
+     <normaloff>:/main/hypha_mini</normaloff>:/main/hypha_mini</iconset>
+   </property>
+   <property name="text">
+    <string>About Hypha</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="../res/main.qrc">
+     <normaloff>:/actions/images/actions/config.svg</normaloff>:/actions/images/actions/config.svg</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open</string>
+   </property>
+  </action>
+  <action name="actionBlechuhr">
+   <property name="icon">
+    <iconset resource="../res/main.qrc">
+     <normaloff>:/actions/images/actions/timetracker.svg</normaloff>:/actions/images/actions/timetracker.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Blechuhr</string>
+   </property>
+  </action>
+  <action name="actionUser">
+   <property name="icon">
+    <iconset resource="../res/main.qrc">
+     <normaloff>:/actions/images/actions/users.svg</normaloff>:/actions/images/actions/users.svg</iconset>
+   </property>
+   <property name="text">
+    <string>User</string>
+   </property>
+  </action>
+  <action name="actionConnections">
+   <property name="icon">
+    <iconset resource="../res/main.qrc">
+     <normaloff>:/actions/images/actions/connections.svg</normaloff>:/actions/images/actions/connections.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Connections</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="../res/main.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>actionE_xit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

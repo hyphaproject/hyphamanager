@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Blechuhr</title>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load("visualization", "1", {packages:["timeline"]});
+var dataTable = new google.visualization.DataTable();
+function setUsername(username){
+	document.getElementById("username").innerHTML = username;
+}
+
+function addData(name1, from1, to1){
+	dataTable.addRow([name1, from1, to1]);
+}
+
+function newTable(){
+	dataTable = new google.visualization.DataTable();
+        dataTable.addColumn({ type: 'string', id: 'Time' });
+        dataTable.addColumn({ type: 'datetime', id: 'Start' });
+        dataTable.addColumn({ type: 'datetime', id: 'End' });
+
+}
+
+function drawChart() {
+        var container = document.getElementById('timeline');
+        var chart = new google.visualization.Timeline(container);
+	chart.draw(dataTable);
+}
+
+</script>
+</head>
+<body>
+<h1>
+<p id="username" />
+</h1>
+<div id="timeline" style="width: 600px; height: 350px;"></div>
+</body>
+</html>

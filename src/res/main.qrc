@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/main">
+        <file alias="hypha_text">images/logo_small.png</file>
+        <file alias="hypha_mini">images/hypha.png</file>
+    </qresource>
+    <qresource prefix="/actions">
+        <file>images/actions/config.svg</file>
+        <file>images/actions/connections.svg</file>
+        <file>images/actions/exit.svg</file>
+        <file>images/actions/timetracker.svg</file>
+        <file>images/actions/users.svg</file>
+        <file>images/actions/language.svg</file>
+    </qresource>
+    <qresource prefix="/users">
+        <file>images/actions/online.svg</file>
+    </qresource>
+</RCC>

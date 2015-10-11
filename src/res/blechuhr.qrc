@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/blechuhr">
+        <file>images/blechuhr/day.svg</file>
+        <file>images/blechuhr/month.svg</file>
+        <file>images/blechuhr/week.svg</file>
+        <file>images/blechuhr/summary.svg</file>
+        <file>html/blechuhr/day.html</file>
+        <file>images/blechuhr/accounts.svg</file>
+        <file>images/blechuhr/export.svg</file>
+        <file>images/blechuhr/email.svg</file>
+        <file>images/blechuhr/csv_file.svg</file>
+        <file alias="holiday">images/blechuhr/holiday.svg</file>
+        <file alias="other">images/blechuhr/other.svg</file>
+        <file alias="pause">images/blechuhr/pause.svg</file>
+        <file>images/blechuhr/pdf_file.svg</file>
+        <file alias="sick">images/blechuhr/sick.svg</file>
+        <file alias="working">images/blechuhr/working.svg</file>
+        <file>images/blechuhr/rules.svg</file>
+        <file>images/blechuhr/save.svg</file>
+        <file>images/blechuhr/delete.svg</file>
+        <file>images/blechuhr/add.svg</file>
+        <file>images/blechuhr/subtract.svg</file>
+        <file alias="workingmon">images/blechuhr/monday.svg</file>
+        <file alias="workingtue">images/blechuhr/tuesday.svg</file>
+        <file alias="workingfri">images/blechuhr/friday.svg</file>
+        <file alias="workingsat">images/blechuhr/saturday.svg</file>
+        <file alias="workingsun">images/blechuhr/sunday.svg</file>
+        <file alias="workingthu">images/blechuhr/thursday.svg</file>
+        <file alias="workingwed">images/blechuhr/wednesday.svg</file>
+    </qresource>
+</RCC>
