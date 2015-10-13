@@ -47,7 +47,7 @@ file(GLOB Resources "res/*.qrc" )
 file(GLOB UIS "res/*.ui" "main/*.ui" "user/*.ui" "connection/*.ui" "blechuhr/*.ui" "settings/*.ui")
 file(GLOB Trans "i18n/*.ts" )
 
-set(hyphamanagerlibs ${Hypha_LIBRARIES} HyphaUtils HyphaCore HyphaHandler HyphaPlugin
+set(hyphamanagerlibs ${Hypha_LIBRARIES} 
      ${Boost_LIBRARIES} ${Poco_LIBRARIES} PocoNet PocoUtil PocoFoundation PocoData PocoMySQL)
 
 qt5_add_resources(ResourceSources ${Resources})
