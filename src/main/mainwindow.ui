@@ -42,6 +42,7 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionE_xit"/>
    </widget>
@@ -100,7 +101,7 @@
      <normaloff>:/actions/images/actions/config.svg</normaloff>:/actions/images/actions/config.svg</iconset>
    </property>
    <property name="text">
-    <string>&amp;Open</string>
+    <string>&amp;Open </string>
    </property>
   </action>
   <action name="actionBlechuhr">
@@ -133,6 +134,11 @@
   <action name="actionSettings">
    <property name="text">
     <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="text">
+    <string>New</string>
    </property>
   </action>
  </widget>

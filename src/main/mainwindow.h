@@ -30,6 +30,8 @@ private slots:
     void closeEvent ( QCloseEvent * event );
 
 
+    void on_actionNew_triggered();
+
 private:
     Ui::MainWindow *ui;
     void createLanguageMenu();

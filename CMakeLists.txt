@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0.0)
 
-project(hypamanager)
+project(hyphamanager)
 set(PROJECT_NAME "hyphamanager")
 set(PROJECT_LONGNAME "Hypha Manager")
 set(VERSION "0.1.0")

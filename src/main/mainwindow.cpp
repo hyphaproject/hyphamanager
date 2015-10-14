@@ -8,6 +8,7 @@
 #include "aboutdialog.h"
 #include "../settings/translation.h"
 #include "../settings/settingswindow.h"
+#include "../wizzards/newconfigwizzard.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -92,4 +93,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
                 }
             }
         event->accept();
+}
+
+void MainWindow::on_actionNew_triggered()
+{
+    NewConfigWizzard newConfigWizzard(this);
+    newConfigWizzard.exec();
 }
