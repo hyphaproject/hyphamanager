@@ -22,6 +22,10 @@ private slots:
 
     void on_selectUserDBButton_clicked();
 
+    void on_cancelButton_clicked();
+
+    void on_nextButton_clicked();
+
 private:
     Ui::NewConfigWizzard *ui;
 };

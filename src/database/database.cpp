@@ -1,9 +1,8 @@
 #include <QtCore/QMutex>
 #include "../settings/databasesettings.h"
-
 #include "database.h"
 #include "blechuhr/model/type.h"
-#include <qdebug.h>
+
 
 Database::Database(DatabaseSettings * settings, QObject *parent) : QObject(parent)
 {
@@ -135,9 +134,12 @@ bool Database::connect()
     DatabaseSettings *dbs = settings;
     database = QSqlDatabase::addDatabase(dbs->getDriver(), "hypha");
     database.setDatabaseName(dbs->getDatabase());
-    database.setHostName(dbs->getHost());
-    database.setUserName(dbs->getUser());
-    database.setPassword(dbs->getPassword());
+    if(dbs->getDriver() != "QSQLITE")
+    {
+        database.setHostName(dbs->getHost());
+        database.setUserName(dbs->getUser());
+        database.setPassword(dbs->getPassword());
+    }
     if(!database.open())
         return false;
     createTables();
