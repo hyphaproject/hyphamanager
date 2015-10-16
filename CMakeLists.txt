@@ -3,7 +3,13 @@ cmake_minimum_required(VERSION 3.0.0)
 project(hyphamanager)
 set(PROJECT_NAME "hyphamanager")
 set(PROJECT_LONGNAME "Hypha Manager")
-set(VERSION "0.1.0")
+file (STRINGS "${PROJECT_SOURCE_DIR}/VERSION" PACKAGE_VERSION )
+string(REGEX REPLACE "([0-9]+)\\.[0-9]+\\.[0-9]+.*" "\\1" CPACK_PACKAGE_VERSION_MAJOR ${PACKAGE_VERSION})
+string(REGEX REPLACE "[0-9]+\\.([0-9])+\\.[0-9]+.*" "\\1" CPACK_PACKAGE_VERSION_MINOR ${PACKAGE_VERSION})
+string(REGEX REPLACE "[0-9]+\\.[0-9]+\\.([0-9]+).*" "\\1" CPACK_PACKAGE_VERSION_PATCH ${PACKAGE_VERSION})
+set(COMPLETE_VERSION ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH})
+set(RELEASE_NAME "Unstable-trunk")
+set(PROJECT_VERSION ${COMPLETE_VERSION})
 
 ADD_DEFINITIONS(
     -std=c++11
@@ -42,6 +48,22 @@ else()
 endif()
 
 option(BUILD_DOCUMENTATION "Create doxygen documentation for developers" OFF)
+
+#############################################################
+# Enable packaging
+include(InstallRequiredSystemLibraries)
+set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Hypha Manager")
+set(CPACK_PACKAGE_VENDOR "chriamue")
+set(CPACK_PACKAGE_CONTACT "chriamue")
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "/usr/local")
+set(CPACK_PACKAGE_VERSION ${COMPLETE_VERSION})
+set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${CPACK_PACKAGE_ARCHITECTURE})
+set (CPACK_PACKAGE_FILE_NAME   "${CPACK_PACKAGE_NAME}_${CPACK_PACKAGE_VERSION}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}")
+include(CPack)
+#############################################################
 
 add_subdirectory( src )
 add_subdirectory( doc )
