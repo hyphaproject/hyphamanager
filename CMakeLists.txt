@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.0.0)
-
 project(hyphamanager)
-set(PROJECT_NAME "hyphamanager")
-set(PROJECT_LONGNAME "Hypha Manager")
 file (STRINGS "${PROJECT_SOURCE_DIR}/VERSION" PACKAGE_VERSION )
 string(REGEX REPLACE "([0-9]+)\\.[0-9]+\\.[0-9]+.*" "\\1" CPACK_PACKAGE_VERSION_MAJOR ${PACKAGE_VERSION})
 string(REGEX REPLACE "[0-9]+\\.([0-9])+\\.[0-9]+.*" "\\1" CPACK_PACKAGE_VERSION_MINOR ${PACKAGE_VERSION})
