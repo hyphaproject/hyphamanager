@@ -17,6 +17,7 @@ find_package(Hypha COMPONENTS Utils Core Handler Plugin REQUIRED)
 #find_package(Poco REQUIRED)
 find_library(POCO_DATA PocoData)
 find_library(POCO_MYSQL PocoMySQL)
+find_library(POCO_SQLITE PocoSQLite)
 find_library(POCO_NET PocoNet)
 find_library(POCO_UTIL PocoUtil)
 find_library(POCO_FOUNDATION PocoFoundation)
@@ -49,7 +50,7 @@ file(GLOB UIS "res/*.ui" "main/*.ui" "user/*.ui" "connection/*.ui" "blechuhr/*.u
 file(GLOB Trans "i18n/*.ts" )
 
 set(hyphamanagerlibs ${Hypha_LIBRARIES} 
-     ${Boost_LIBRARIES} ${Poco_LIBRARIES} PocoNet PocoUtil PocoFoundation PocoData PocoMySQL)
+     ${Boost_LIBRARIES} ${Poco_LIBRARIES} PocoNet PocoUtil PocoFoundation PocoData PocoMySQL PocoSQLite)
 
 qt5_add_resources(ResourceSources ${Resources})
 qt5_wrap_ui(UI_SRCS ${UIS})
