@@ -1,9 +1,11 @@
+#include <Poco/Data/RecordSet.h>
+#include <hypha/database/database.h>
 #include "workingtimeimportexport.h"
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
 #include <QDebug>
 
-WorkingTimeImportExport::WorkingTimeImportExport(Database *database, QString username, QString file)
+WorkingTimeImportExport::WorkingTimeImportExport(hypha::database::Database *database, QString username, QString file)
 {
     this->database = database;
     this->username = username;
@@ -76,35 +78,50 @@ void WorkingTimeImportExport::exportData()
 QList<WorkingTime*> WorkingTimeImportExport::fromDatabase(QDate * date)
 {
     QList<WorkingTime*> returnList;
+
+    Poco::Data::Statement statement = database->getStatement();
+    if(date == 0)
+        statement << "SELECT id, start, end, type FROM workingtime WHERE username = '" + username.toStdString() + "';";
+    else
+        statement << "SELECT id, start, end, type FROM workingtime WHERE username = '" + username.toStdString() + "' AND DATE(start) = '"
+                     + date->toString("yyyy-MM-dd").toStdString() + "';";
+    statement.execute();
+    Poco::Data::RecordSet rs(statement);
+    bool more = rs.moveFirst();
+    while(more) {
+        std::string id = rs[0].convert<std::string>();
+        std::string start = rs[1].convert<std::string>();
+        QDateTime startTime = QDateTime::fromString(QString::fromStdString(start));
+        std::string end = rs[2].convert<std::string>();
+        QDateTime endTime = QDateTime::fromString(QString::fromStdString(end));
+        std::string type = rs[3].convert<std::string>();
+
+        startTime.setTimeSpec(Qt::UTC);
+        endTime.setTimeSpec(Qt::UTC);
+
+        WorkingTime *wt = new WorkingTime(username, startTime.toString(), startTime, endTime, QString::fromStdString(type));
+        returnList.append(wt);
+
+        more = rs.moveNext();
+    }
+
     QString queryString = "SELECT id, start, end, type FROM workingtime WHERE username = '" + username + "';";
     if(date != 0){
         queryString = "SELECT id, start, end, type FROM workingtime WHERE username = '" + username + "' AND DATE(start) = '"
                 + date->toString("yyyy-MM-dd")+"';";
     }
-    QSqlQuery query = database->getQuery();
-    query.exec(queryString);
-    while( query.next() ){
-        QDateTime start = query.value(1).toDateTime();
-        start.setTimeSpec(Qt::UTC);
-        QDateTime end = query.value(2).toDateTime();
-        end.setTimeSpec(Qt::UTC);
-        QString type = query.value(3).toString();
-        WorkingTime *wt = new WorkingTime(username, start.toString(), start, end, type);
-        returnList.append(wt);
-    }
+
     return returnList;
 }
 
 void WorkingTimeImportExport::toDatabase(QList<WorkingTime*> list, QDate *date)
 {
-    QSqlQuery query = database->getQuery();
-    foreach(WorkingTime *wt, list ){
-        query.prepare("insert into workingtime(username, type, start, end) values(:username, :type, :start, :end);");
-        query.bindValue(":username", wt->getUsername());
-        query.bindValue(":type", wt->getType());
-        query.bindValue(":start", wt->getStart().toUTC());
-        query.bindValue(":end", wt->getEnd().toUTC());
-        query.exec();
+    for(WorkingTime *wt: list ){
+        Poco::Data::Statement statement = database->getStatement();
+        statement << "insert into workingtime(username, type, start, end) values(:username, :type, :start, :end);",
+                Poco::Data::use(wt->getUsername().toStdString()), Poco::Data::use(wt->getType().toStdString()),
+                Poco::Data::use(wt->getStart().toUTC().toString().toStdString()), Poco::Data::use(wt->getEnd().toUTC().toString().toStdString());
+        statement.execute();
     }
 }
 

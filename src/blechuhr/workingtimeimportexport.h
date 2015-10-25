@@ -4,13 +4,18 @@
 #include <QtCore/QString>
 #include <QtCore/QDate>
 #include <QtCore/QList>
-#include "../database/database.h"
 #include "model/workingtime.h"
+
+namespace hypha {
+namespace database {
+    class Database;
+}
+}
 
 class WorkingTimeImportExport
 {
 public:
-    WorkingTimeImportExport(Database *database, QString username, QString file);
+    WorkingTimeImportExport(hypha::database::Database *database, QString username, QString file);
     WorkingTimeImportExport(QString username,QList<WorkingTime*> times, QString file);
     ~WorkingTimeImportExport();
     void importData(QDate *date = 0);
@@ -20,7 +25,7 @@ public:
 protected:
     QString username;
     QString file;
-    Database * database;
+    hypha::database::Database * database;
     QList<WorkingTime*> times;
 
     QList<WorkingTime*> fromDatabase(QDate * date);

@@ -2,28 +2,27 @@
 #include <QtCore/QProcess>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include "plugin/hyphaplugin.h"
+#include <Poco/ClassLibrary.h>
 #include "lightsensor.h"
 
 using namespace hypha::plugin;
 using namespace hypha::plugin::lightsensor;
 
-void LightSensor::loadConfig(QString json)
+void LightSensor::loadConfig(std::string json)
 {
     widget();
-    lightSensorWidget->setHost(host);
-    lightSensorWidget->loadConfig(json);
+    lightSensorWidget->setHost(QString::fromStdString(host));
+    lightSensorWidget->loadConfig(QString::fromStdString(json));
 }
 
-QString LightSensor::getConfig()
+std::string LightSensor::getConfig()
 {
-    return lightSensorWidget->getConfig();
+    return lightSensorWidget->getConfig().toStdString();
 }
 
-HyphaPlugin *LightSensor::getInstance(QString id, QObject *parent)
+HyphaPluginConfig *LightSensor::getInstance(std::string id)
 {
     LightSensor *instance = new LightSensor();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -34,3 +33,7 @@ QWidget *LightSensor::widget()
         lightSensorWidget = new LightSensorWidget();
     return lightSensorWidget;
 }
+
+POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_EXPORT_CLASS(LightSensor)
+POCO_END_MANIFEST

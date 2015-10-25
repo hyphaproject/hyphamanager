@@ -1,10 +1,12 @@
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
 #include "summarywidget.h"
 #include "ui_summarywidget.h"
 #include "workingtimealgo.h"
 #include "workingtimeitem.h"
 #include "summarymonth.h"
 
-SummaryWidget::SummaryWidget(QString username, Database * database, UserDatabase * userDatabase, QWidget *parent) :
+SummaryWidget::SummaryWidget(QString username, hypha::database::Database * database, hypha::database::UserDatabase * userDatabase, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SummaryWidget)
 {
@@ -15,7 +17,7 @@ SummaryWidget::SummaryWidget(QString username, Database * database, UserDatabase
     ui->dateEdit->setDate(QDate::currentDate());
 
     ui->usernameEdit->setText(username);
-    ui->emailEdit->setText(userDatabase->getMail(username));
+    ui->emailEdit->setText(QString::fromStdString(userDatabase->getMail(username.toStdString())));
     reloadSummary();
 }
 
@@ -31,7 +33,7 @@ void SummaryWidget::reloadSummary()
     algo.setDate(ui->dateEdit->date());
 
     ui->timesListWidget->clear();
-    foreach(WorkingTime wt, algo.getMonth()){
+    for(WorkingTime wt: algo.getMonth()){
         QListWidgetItem *item = new QListWidgetItem(ui->timesListWidget);
         ui->timesListWidget->addItem(item);
         WorkingTimeItem *workingTimeItem = new WorkingTimeItem(wt.getUsername(), wt.getStart(), wt.getEnd(), wt.getType(), database);

@@ -1,7 +1,8 @@
+#include <hypha/database/database.h>
 #include "rulesadddialog.h"
 #include "ui_rulesadddialog.h"
 
-RulesAddDialog::RulesAddDialog(QString username, QDate date, Database *database, QWidget *parent) :
+RulesAddDialog::RulesAddDialog(QString username, QDate date, hypha::database::Database *database, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::RulesAddDialog)
 {

@@ -3,10 +3,9 @@
 #include <QtCore/QThread>
 #include <QtCore/QDebug>
 #include <QtCore/QTimer>
-#include "../../plugin/hyphaplugin.h"
-#include "../../plugin/pluginloader.h"
-#include "../../database/database.h"
-#include "../../database/userdatabase.h"
+#include <Poco/ClassLibrary.h>
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
 #include "serverstatus.h"
 
 using namespace hypha::handler;
@@ -23,24 +22,23 @@ ServerStatus::~ServerStatus()
 
 }
 
-void ServerStatus::parse(QString message){
+void ServerStatus::parse(std::string message){
 
 }
 
-void ServerStatus::loadConfig(QString config)
+void ServerStatus::loadConfig(std::string config)
 {
-    serverStatusWidget->loadConfig(config);
+    serverStatusWidget->loadConfig(QString::fromStdString(config));
 }
 
-QString ServerStatus::getConfig()
+std::string ServerStatus::getConfig()
 {
-    return serverStatusWidget->getConfig();
+    return serverStatusWidget->getConfig().toStdString();
 }
 
-HyphaHandler *ServerStatus::getInstance(QString id, QObject *parent)
+HyphaHandlerConfig *ServerStatus::getInstance(std::string id)
 {
     ServerStatus *instance = new ServerStatus();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -49,3 +47,7 @@ QWidget *ServerStatus::widget()
 {
     return serverStatusWidget;
 }
+
+POCO_BEGIN_MANIFEST(HyphaHandler)
+POCO_EXPORT_CLASS(ServerStatus)
+POCO_END_MANIFEST

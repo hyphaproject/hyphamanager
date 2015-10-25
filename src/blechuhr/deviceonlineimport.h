@@ -1,22 +1,27 @@
 #ifndef DEVICEONLINEIMPORT_H
 #define DEVICEONLINEIMPORT_H
 
-#include "../database/database.h"
-#include "../database/userdatabase.h"
 #include "model/workingtime.h"
+
+namespace hypha {
+namespace database {
+    class Database;
+    class UserDatabase;
+}
+}
 
 class DeviceOnlineImport
 {
 public:
-    DeviceOnlineImport(Database *database, UserDatabase *userDatabase);
+    DeviceOnlineImport(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase);
     void setUsername(QString username);
     void setDate(QDate date);
     ~DeviceOnlineImport();
     QList<WorkingTime*> getMonth();
 
 protected:
-    Database *database;
-    UserDatabase *userDatabase;
+    hypha::database::Database *database;
+    hypha::database::UserDatabase *userDatabase;
     QString username;
     QDate date;
     void accumulate(QString device, QString type, QDateTime time);

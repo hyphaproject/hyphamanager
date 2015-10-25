@@ -4,7 +4,12 @@
 #include <QtWidgets/QDialog>
 #include <QtCore/QDate>
 #include "workingtimeitem.h"
-#include "../database/database.h"
+
+namespace hypha {
+namespace database {
+    class Database;
+}
+}
 
 namespace Ui {
 class WorkingTimeAddDialog;
@@ -15,7 +20,7 @@ class WorkingTimeAddDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit WorkingTimeAddDialog(QString username, QDate date, Database * database, QWidget *parent = 0);
+    explicit WorkingTimeAddDialog(QString username, QDate date, hypha::database::Database * database, QWidget *parent = 0);
     ~WorkingTimeAddDialog();
 
 private slots:
@@ -26,7 +31,7 @@ private:
     Ui::WorkingTimeAddDialog *ui;
     QString username;
     QDate date;
-    Database *database;
+    hypha::database::Database *database;
     WorkingTimeItem *workingTimeItem;
 
 };

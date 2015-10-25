@@ -1,3 +1,4 @@
+#include <hypha/database/database.h>
 #include "accountitem.h"
 #include "ui_accountitem.h"
 #include "model/type.h"
@@ -11,7 +12,7 @@ AccountItem::AccountItem(QWidget *parent) :
     init();
 }
 
-AccountItem::AccountItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::TYPE type, float amount, QString name, Database *database, QWidget *parent):
+AccountItem::AccountItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::TYPE type, float amount, QString name, hypha::database::Database *database, QWidget *parent):
     QWidget(parent),
     ui(new Ui::AccountItem)
 {
@@ -28,7 +29,7 @@ AccountItem::AccountItem(QString username, QDateTime start, QDateTime end, hypha
     init();
 }
 
-AccountItem::AccountItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::TYPE type, float amount, QString name, Database *database, QWidget *parent):
+AccountItem::AccountItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::TYPE type, float amount, QString name, hypha::database::Database *database, QWidget *parent):
     QWidget(parent),
     ui(new Ui::AccountItem)
 {
@@ -47,7 +48,7 @@ AccountItem::AccountItem(QString id, QString username, QDateTime start, QDateTim
     init();
 }
 
-AccountItem::AccountItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::ITYPE type, QTime starttime, QTime endtime, Database *database, QWidget *parent):
+AccountItem::AccountItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::ITYPE type, QTime starttime, QTime endtime, hypha::database::Database *database, QWidget *parent):
     QWidget(parent),
     ui(new Ui::AccountItem)
 {
@@ -64,7 +65,7 @@ AccountItem::AccountItem(QString username, QDateTime start, QDateTime end, hypha
     init();
 }
 
-AccountItem::AccountItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::ITYPE type, QTime starttime, QTime endtime, Database *database, QWidget *parent):
+AccountItem::AccountItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::ITYPE type, QTime starttime, QTime endtime, hypha::database::Database *database, QWidget *parent):
     QWidget(parent),
     ui(new Ui::AccountItem)
 {
@@ -90,51 +91,59 @@ AccountItem::~AccountItem()
 
 void AccountItem::save()
 {
-    QSqlQuery query = database->getQuery();
+    Poco::Data::Statement statement = database->getStatement();
+
     if(isIterative){
         if(id.isEmpty()){
-            query.prepare("insert into iterativeaccount(username, type, start, end, starttime, endtime) values(:username, :type, :start, :end, :starttime, :endtime);");
+            statement << "insert into iterativeaccount(username, type, start, end, starttime, endtime) values(?, ?, ?, ?, ?, ?);",
+                    Poco::Data::use(username.toStdString()), Poco::Data::use(ui->typeComboBox->currentText().toStdString()),
+                    Poco::Data::use(ui->startDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                    Poco::Data::use(ui->endDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                    Poco::Data::use(ui->startTimeEdit->time().toString().toStdString()),
+                    Poco::Data::use(ui->endTimeEdit->time().toString().toStdString());
         }else{
-            query.prepare("update iterativeaccount set username=:username, type=:type, start=:start, end=:end, starttime=:starttime, endtime=:endtime where id = :id;");
+            statement << "update iterativeaccount set username=?, type=?, start=?, end=?, starttime=?, endtime=? where id = ?;",
+                    Poco::Data::use(username.toStdString()), Poco::Data::use(ui->typeComboBox->currentText().toStdString()),
+                    Poco::Data::use(ui->startDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                    Poco::Data::use(ui->endDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                    Poco::Data::use(ui->startTimeEdit->time().toString().toStdString()),
+                    Poco::Data::use(ui->endTimeEdit->time().toString().toStdString()),
+                    Poco::Data::use(id.toStdString());
         }
-        query.bindValue(":username", this->username);
-        query.bindValue(":type", ui->typeComboBox->currentText());
-        query.bindValue(":start", ui->startDateTimeEdit->dateTime().toUTC());
-        query.bindValue(":end", ui->endDateTimeEdit->dateTime().toUTC());
-        query.bindValue(":id", this->id);
-        query.bindValue(":starttime", ui->startTimeEdit->time());
-        query.bindValue(":endtime", ui->endTimeEdit->time());
     }else{
         if(id.isEmpty()){
-            query.prepare("insert into account(username, type, start, end, amount, name) values(:username, :type, :start, :end, :amount, :name);");
+            statement << "insert into account(username, type, start, end, amount, name) values(?, ?, ?, ?, ?, ?);",
+                    Poco::Data::use(username.toStdString()), Poco::Data::use(ui->typeComboBox->currentText().toStdString()),
+                    Poco::Data::use(ui->startDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                    Poco::Data::use(ui->endDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                    Poco::Data::use(ui->amountSpinBox->value()),
+                    Poco::Data::use(ui->nameLineEdit->text().toStdString());
         }else{
-            query.prepare("update account set username=:username, type=:type, start=:start, end=:end, amount=:amount, name=:name where id = :id;");
+            statement << "update account set username=?, type=?, start=?, end=?, amount=?, name=? where id = ?;",
+                    Poco::Data::use(username.toStdString()), Poco::Data::use(ui->typeComboBox->currentText().toStdString()),
+                    Poco::Data::use(ui->startDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                    Poco::Data::use(ui->endDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                    Poco::Data::use(ui->amountSpinBox->value()),
+                    Poco::Data::use(ui->nameLineEdit->text().toStdString()),
+                    Poco::Data::use(this->id.toStdString());
         }
-        query.bindValue(":username", this->username);
-        query.bindValue(":type", ui->typeComboBox->currentText());
-        query.bindValue(":start", ui->startDateTimeEdit->dateTime().toUTC());
-        query.bindValue(":end", ui->endDateTimeEdit->dateTime().toUTC());
-        query.bindValue(":id", this->id);
-        query.bindValue(":amount", ui->amountSpinBox->value());
-        query.bindValue(":name", ui->nameLineEdit->text());
     }
-    query.exec();
+    statement.execute();
 }
 
 void AccountItem::deleteFromDatabase()
 {
-    QSqlQuery query = database->getQuery();
+    Poco::Data::Statement statement = database->getStatement();
     if(id.isEmpty()){
     }else{
         if(isIterative){
-            query.prepare("delete from iterativeaccount where id = :id;");
-            query.bindValue(":id", this->id);
+            statement << "delete from iterativeaccount where id = ?;",
+                    Poco::Data::use(this->id.toStdString());
         }else{
-            query.prepare("delete from account where id = :id;");
-            query.bindValue(":id", this->id);
+            statement << "delete from account where id = ?;",
+                    Poco::Data::use(this->id.toStdString());
         }
-
-        query.exec();
+        statement.execute();
     }
 }
 
@@ -177,7 +186,6 @@ void AccountItem::initType()
         }
     }
 }
-
 
 void AccountItem::on_iterativeCheckBox_clicked(bool checked)
 {

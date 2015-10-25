@@ -1,7 +1,7 @@
 #include "settingswindow.h"
 #include "ui_settingswindow.h"
 
-SettingsWindow::SettingsWindow(HyphaManagerSettings * settings, QWidget *parent) :
+SettingsWindow::SettingsWindow(hypha::settings::HyphaSettings * settings, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsWindow)
 {
@@ -17,14 +17,20 @@ SettingsWindow::~SettingsWindow()
 
 void SettingsWindow::load()
 {
-    ui->serverLineEdit->setText(settings->getValue("email", "host", "localhost").toString());
-    ui->usernameLineEdit->setText(settings->getValue("email", "user", "").toString());
-    ui->passwordLineEdit->setText(settings->getValue("email", "password", "").toString());
+    ui->serverLineEdit->setText(QString::fromStdString(
+                                    settings->getString("email:host", "localhost")));
+    ui->usernameLineEdit->setText(QString::fromStdString(
+                                      settings->getString("email:user", "")));
+    ui->passwordLineEdit->setText(QString::fromStdString(
+                                      settings->getString("email:password", "")));
 }
 
 void SettingsWindow::on_buttonBox_accepted()
 {
-    settings->setValue("email", "host", ui->serverLineEdit->text());
-    settings->setValue("email", "user", ui->usernameLineEdit->text());
-    settings->setValue("email", "password", ui->passwordLineEdit->text());
+    std::string host = ui->serverLineEdit->text().toStdString();
+    settings->setString("email.host", host);
+    std::string user =  ui->usernameLineEdit->text().toStdString();
+    settings->setString("email.user", user);
+    std::string password = ui->passwordLineEdit->text().toStdString();
+    settings->setString("email.password", password);
 }

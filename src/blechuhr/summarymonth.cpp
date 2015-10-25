@@ -1,8 +1,10 @@
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
 #include "summarymonth.h"
 #include "workingtimealgo.h"
 #include "model/workingtime.h"
 
-SummaryMonth::SummaryMonth(Database *database, UserDatabase *userDatabase)
+SummaryMonth::SummaryMonth(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase)
     : Summary(database, userDatabase)
 {
 }

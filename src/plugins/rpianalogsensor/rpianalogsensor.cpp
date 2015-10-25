@@ -2,28 +2,27 @@
 #include <QtCore/QProcess>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include "plugin/hyphaplugin.h"
+#include <Poco/ClassLibrary.h>
 #include "rpianalogsensor.h"
 
 using namespace hypha::plugin;
 using namespace hypha::plugin::rpianalogsensor;
 
-void RpiAnalogSensor::loadConfig(QString json)
+void RpiAnalogSensor::loadConfig(std::string json)
 {
     widget();
-    rpiAnalogSensorWidget->setHost(host);
-    rpiAnalogSensorWidget->loadConfig(json);
+    rpiAnalogSensorWidget->setHost(QString::fromStdString(host));
+    rpiAnalogSensorWidget->loadConfig(QString::fromStdString(json));
 }
 
-QString RpiAnalogSensor::getConfig()
+std::string RpiAnalogSensor::getConfig()
 {
-    return rpiAnalogSensorWidget->getConfig();
+    return rpiAnalogSensorWidget->getConfig().toStdString();
 }
 
-HyphaPlugin *RpiAnalogSensor::getInstance(QString id, QObject *parent)
+HyphaPluginConfig *RpiAnalogSensor::getInstance(std::string id)
 {
     RpiAnalogSensor *instance = new RpiAnalogSensor();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -34,3 +33,7 @@ QWidget *RpiAnalogSensor::widget()
         rpiAnalogSensorWidget = new RpiAnalogSensorWidget();
     return rpiAnalogSensorWidget;
 }
+
+POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_EXPORT_CLASS(RpiAnalogSensor)
+POCO_END_MANIFEST

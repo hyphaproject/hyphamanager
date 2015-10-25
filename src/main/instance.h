@@ -3,13 +3,25 @@
 
 #include <QtCore/QObject>
 
-#include "../settings/hyphamanagersettings.h"
-#include "../database/database.h"
-#include "../database/userdatabase.h"
-#include "../handler/handlerloader.h"
-#include "../plugin/pluginloader.h"
-
-class HandlerSettings;
+namespace hypha {
+namespace database {
+    class Database;
+    class UserDatabase;
+}
+namespace settings {
+    class HyphaSettings;
+    class DatabaseSettings;
+    class UserDatabaseSettings;
+    class HandlerSettings;
+    class PluginSettings;
+}
+namespace handler {
+    class HandlerLoader;
+}
+namespace plugin {
+    class PluginLoader;
+}
+}
 
 class Instance : public QObject
 {
@@ -18,11 +30,11 @@ public:
     explicit Instance(QString filename, QObject *parent = 0);
     ~Instance();
 
-    HyphaManagerSettings * getClientSettings();
-    DatabaseSettings * getDatabaseSettings();
-    UserDatabase * getUserDatabase();
-    Database *getDatabase();
-    HandlerSettings * getHandlerSettings();
+    hypha::settings::HyphaSettings * getClientSettings();
+    hypha::settings::DatabaseSettings * getDatabaseSettings();
+    hypha::database::UserDatabase * getUserDatabase();
+    hypha::database::Database *getDatabase();
+    hypha::settings::HandlerSettings * getHandlerSettings();
     hypha::handler::HandlerLoader * getHandlerLoader();
     hypha::plugin::PluginLoader * getPluginLoader();
 
@@ -32,14 +44,14 @@ public slots:
 
 protected:
     QString filename;
-    HyphaManagerSettings *managerSettings;
-    DatabaseSettings * databaseSettings;
-    Database * database;
-    UserDatabaseSettings * userDatabaseSettings;
-    UserDatabase * userDatabase;
+    hypha::settings::HyphaSettings *managerSettings;
+    hypha::settings::DatabaseSettings * databaseSettings;
+    hypha::database::Database * database;
+    hypha::settings::UserDatabaseSettings * userDatabaseSettings;
+    hypha::database::UserDatabase * userDatabase;
 
-    PluginSettings * pluginSettings;
-    HandlerSettings * handlerSettings;
+    hypha::settings::PluginSettings * pluginSettings;
+    hypha::settings::HandlerSettings * handlerSettings;
 
     hypha::plugin::PluginLoader * pluginLoader;
     hypha::handler::HandlerLoader * handlerLoader;

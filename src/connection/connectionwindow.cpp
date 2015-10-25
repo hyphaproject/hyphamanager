@@ -3,13 +3,17 @@
 #include <QtSql/QSqlError>
 #include <QtWidgets/QFileDialog>
 #include <QtPrintSupport/QPrinter>
-
+#include <QtWidgets/QMessageBox>
+#include <Poco/Data/RecordSet.h>
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
+#include <hypha/handler/handlerloader.h>
+#include <hypha/handler/hyphahandler.h>
+#include <hypha/plugin/pluginloader.h>
+#include <hypha/plugin/hyphaplugin.h>
 #include "connectionwindow.h"
 #include "ui_connectionwindow.h"
-#include "../handler/handlerloader.h"
-#include "../handler/hyphahandler.h"
-#include "../plugin/pluginloader.h"
-#include "../plugin/hyphaplugin.h"
+#include "handler/hyphahandlerconfig.h"
 #include "connectiondialog.h"
 #include "handlerdialog.h"
 #include "plugindialog.h"
@@ -55,13 +59,13 @@ void ConnectionWindow::createPluginsTree()
     handlerWidget->setText(0, "Handler");
     QTreeWidgetItem *pluginsWidget = new QTreeWidgetItem(ui->pluginsTreeWidget);
     pluginsWidget->setText(0, "Plugins");
-    foreach(hypha::handler::HyphaHandler * handler, instance->getHandlerLoader()->getHandlers())
+    for(hypha::handler::HyphaHandler * handler: instance->getHandlerLoader()->getHandlers())
     {
-        pluginsTreeItems.append(new QTreeWidgetItem(handlerWidget, QStringList(QString("%1").arg(handler->getName()))));
+        pluginsTreeItems.append(new QTreeWidgetItem(handlerWidget, QStringList(QString("%1").arg(QString::fromStdString(handler->name())))));
     }
-    foreach(hypha::plugin::HyphaPlugin * plugin, instance->getPluginLoader()->getPlugins())
+    for(hypha::plugin::HyphaPlugin * plugin: instance->getPluginLoader()->getPlugins())
     {
-        pluginsTreeItems.append(new QTreeWidgetItem(pluginsWidget, QStringList(QString("%1").arg(plugin->getName()))));
+        pluginsTreeItems.append(new QTreeWidgetItem(pluginsWidget, QStringList(QString("%1").arg(QString::fromStdString(plugin->name())))));
     }
     ui->pluginsTreeWidget->header()->resizeSection(0,250);
 }
@@ -70,14 +74,14 @@ void ConnectionWindow::createPluginsTabs()
 {
     foreach(hypha::handler::HyphaHandler *handler, instance->getHandlerLoader()->getInstances()){
         if(handler){
-            this->pluginTabs.insert(handler->getId(), handler->widget());
-            ui->tabWidget->addTab(handler->widget(), handler->getId() + " ("+handler->getName()+")");
+            this->pluginTabs.insert(QString::fromStdString(handler->getId()), ((hypha::handler::HyphaHandlerConfig *)handler)->widget());
+            ui->tabWidget->addTab(((hypha::handler::HyphaHandlerConfig *)handler)->widget(), QString::fromStdString(handler->getId() + " ("+handler->name()+")"));
         }
     }
     foreach(hypha::plugin::HyphaPlugin *plugin, instance->getPluginLoader()->getInstances()){
         if(plugin){
-            this->pluginTabs.insert(plugin->getId(), plugin->widget());
-            ui->tabWidget->addTab(plugin->widget(), plugin->getId() + " ("+plugin->getName()+")");
+            this->pluginTabs.insert(QString::fromStdString(plugin->getId()), ((hypha::plugin::HyphaPluginConfig*)plugin)->widget());
+            ui->tabWidget->addTab(((hypha::plugin::HyphaPluginConfig*)plugin)->widget(), QString::fromStdString(plugin->getId() + " ("+plugin->name()+")"));
         }
     }
 }
@@ -87,7 +91,7 @@ void ConnectionWindow::createHandlerItems()
     foreach(hypha::handler::HyphaHandler *handler, instance->getHandlerLoader()->getInstances()){
         if(handler){
             HandlerItem *item = new HandlerItem(handler, this);
-            this->handlerItems.insert(handler->getId(), item);
+            this->handlerItems.insert(QString::fromStdString(handler->getId()), item);
             scene->addItem(item);
         }
     }
@@ -97,10 +101,10 @@ void ConnectionWindow::updatePluginItems()
 {
     foreach(hypha::plugin::HyphaPlugin *plugin, instance->getPluginLoader()->getInstances()){
         if(plugin){
-            HandlerItem *item = handlerItems[plugin->getId()];
+            HandlerItem *item = handlerItems[QString::fromStdString(plugin->getId())];
             if(!item){
                 PluginItem *item = new PluginItem(plugin, this);
-                this->pluginItems.insert(plugin->getId(), item);
+                this->pluginItems.insert(QString::fromStdString(plugin->getId()), item);
                 scene->addItem(item);
             }
         }
@@ -123,16 +127,19 @@ void ConnectionWindow::loadPositions()
 
 void ConnectionWindow::loadPosition(QString id, QGraphicsItem *item)
 {
-    QSqlQuery query = instance->getDatabase()->getQuery();
-    query.exec("select x,y from designerpositions where id = '" + id + "'");
-    while( query.next() ){
-        item->setX(query.value(0).toReal());
-        item->setY(query.value(1).toReal());
+    Poco::Data::Statement statement = instance->getDatabase()->getStatement();
+    statement << "select x,y from designerpositions where id = '" + id.toStdString() + "'";
+    statement.execute();
+    Poco::Data::RecordSet rs(statement);
+    bool more = rs.moveFirst();
+    while(more) {
+        float x = rs[0].convert<float>();
+        float y = rs[1].convert<float>();
+        item->setX(x);
+        item->setY(y);
         return;
+        more = rs.moveNext();
     }
-    query.prepare("insert into designerpositions(id,x,y) values(:id, 0, 0);");
-    query.bindValue(":id", id);
-    query.exec();
 }
 
 void ConnectionWindow::savePositions()
@@ -153,55 +160,61 @@ void ConnectionWindow::saveConfig()
 {
     foreach(hypha::handler::HyphaHandler *handler, instance->getHandlerLoader()->getInstances()){
         if(handler){
-            saveHandlerConfig(handler->getId(), handler->getConfig());
+            saveHandlerConfig(QString::fromStdString(handler->getId()), QString::fromStdString(handler->getConfig()));
         }
     }
     foreach(hypha::plugin::HyphaPlugin *plugin, instance->getPluginLoader()->getInstances()){
         if(plugin){
-            savePluginConfig(plugin->getId(), plugin->getConfig());
+            savePluginConfig(QString::fromStdString(plugin->getId()), QString::fromStdString(plugin->getConfig()));
         }
     }
 }
 
 void ConnectionWindow::savePosition(QString id, int x, int y)
 {
-    QSqlQuery query = instance->getDatabase()->getQuery();
-    query.prepare("update designerpositions set x=:x, y=:y where id=:id");
-    query.bindValue(":id",id);
-    query.bindValue(":x",x);
-    query.bindValue(":y",y);
-    query.exec();
+    Poco::Data::Statement statement = instance->getDatabase()->getStatement();
+    statement << "update designerpositions set x=?, y=? where id=?",
+            Poco::Data::use(x), Poco::Data::use(y), Poco::Data::use(id.toStdString());
+    statement.execute();
 }
 
 void ConnectionWindow::saveHandlerConfig(QString id, QString config)
 {
-    QSqlQuery query = instance->getDatabase()->getQuery();
-    query.prepare("update handler set config=:config where id=:id");
-    query.bindValue(":id",id);
-    query.bindValue(":config",config);
-    query.exec();
+    Poco::Data::Statement statement = instance->getDatabase()->getStatement();
+    statement << "update handler set config=? where id=?",
+            Poco::Data::use(config.toStdString()), Poco::Data::use(id.toStdString());
+    statement.execute();
 }
 
 void ConnectionWindow::savePluginConfig(QString id, QString config)
 {
-    QSqlQuery query = instance->getDatabase()->getQuery();
-    query.prepare("update plugins set config=:config where id=:id");
-    query.bindValue(":id",id);
-    query.bindValue(":config",config);
-    query.exec();
+    Poco::Data::Statement statement = instance->getDatabase()->getStatement();
+    statement << "update plugins set config=? where id=?",
+            Poco::Data::use(config.toStdString()), Poco::Data::use(id.toStdString());
+    statement.execute();
 }
 
 void ConnectionWindow::addLines()
 {
-    QString queryString = "SELECT id, handler_id, plugin_id FROM connection;";
-    QSqlQuery query = instance->getDatabase()->getQuery();
-    query.exec(queryString);
-    while( query.next() ){
-        QString id = query.value(0).toString();
-        QString handlerId = query.value(1).toString();
-        QString pluginId = query.value(2).toString();
-        ConnectionLine * line = new ConnectionLine(this->handlerItems[handlerId], this->pluginItems[pluginId]);
+
+    Poco::Data::Statement statement = instance->getDatabase()->getStatement();
+    try {
+    statement << "SELECT `id`, `handler_id`, `plugin_id` FROM `connection`;";
+
+    statement.execute();
+    } catch (Poco::Exception &e){
+        QMessageBox::critical(0, "error", QString::fromStdString(e.what()));
+    }
+
+    Poco::Data::RecordSet rs(statement);
+    bool more = rs.moveFirst();
+    while(more) {
+        std::string id = rs[0].convert<std::string>();
+        std::string handlerId = rs[1].convert<std::string>();
+        std::string pluginId = rs[2].convert<std::string>();
+        ConnectionLine * line = new ConnectionLine(this->handlerItems[QString::fromStdString(handlerId)], this->pluginItems[QString::fromStdString(pluginId)]);
         scene->addItem(line);
+        more = rs.moveNext();
     }
 }
 
@@ -223,13 +236,13 @@ void ConnectionWindow::on_pluginsTreeWidget_currentItemChanged(QTreeWidgetItem *
         ui->descriptionLineEdit->setText("");
     }else{
         ui->descriptionBox->setTitle(name);
-        hypha::handler::HyphaHandler * handler = instance->getHandlerLoader()->getHandler(name);
+        hypha::handler::HyphaHandler * handler = instance->getHandlerLoader()->getHandler(name.toStdString());
         if(handler){
-            ui->descriptionLineEdit->setText(handler->getDescription());
+            ui->descriptionLineEdit->setText(QString::fromStdString(handler->getDescription()));
         }
-        hypha::plugin::HyphaPlugin * plugin = instance->getPluginLoader()->getPlugin(name);
+        hypha::plugin::HyphaPlugin * plugin = instance->getPluginLoader()->getPlugin(name.toStdString());
         if(plugin){
-            ui->descriptionLineEdit->setText(plugin->getDescription());
+            ui->descriptionLineEdit->setText(QString::fromStdString(plugin->getDescription()));
         }
     }
 }

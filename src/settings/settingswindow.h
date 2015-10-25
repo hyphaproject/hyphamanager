@@ -3,7 +3,7 @@
 
 
 #include <QDialog>
-#include "hyphamanagersettings.h"
+#include <hypha/settings/hyphasettings.h>
 
 namespace Ui {
 class SettingsWindow;
@@ -14,14 +14,14 @@ class SettingsWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit SettingsWindow(HyphaManagerSettings * settings, QWidget *parent = 0);
+    explicit SettingsWindow(hypha::settings::HyphaSettings * settings, QWidget *parent = 0);
     ~SettingsWindow();
     void load();
 
 private:
     Ui::SettingsWindow *ui;
 protected:
-    HyphaManagerSettings * settings;
+    hypha::settings::HyphaSettings * settings;
 private slots:
     void on_buttonBox_accepted();
 };

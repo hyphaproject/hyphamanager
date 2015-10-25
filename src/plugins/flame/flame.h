@@ -1,29 +1,26 @@
 #ifndef FLAME_H
 #define FLAME_H
-#include <QtCore/QObject>
-#include "plugin/hyphaplugin.h"
+#include "plugin/hyphapluginconfig.h"
 #include "flamewidget.h"
 namespace hypha{
 namespace plugin{
 namespace flame{
-class Flame : public HyphaPlugin
+class Flame : public HyphaPluginConfig
 {
-Q_OBJECT
-Q_PLUGIN_METADATA(IID "hypha.flame" FILE "flame.json")
-Q_INTERFACES(hypha::plugin::HyphaPlugin)
 public:
-    QString getName(){ return "flame"; }
-    QString getTitle() { return "Flame"; }
-    QString getVersion() { return "0.1"; }
-    QString getDescription() { return "Read Flame Sensor.";}
-    void loadConfig(QString json);
-    QString getConfig();
-    HyphaPlugin *getInstance(QString id, QObject *parent);
-    FlameWidget * flameWidget = 0;
+    std::string name(){ return "flame"; }
+    std::string getTitle() { return "Flame"; }
+    std::string getVersion() { return "0.1"; }
+    std::string getDescription() { return "Read Flame Sensor.";}
+    void loadConfig(std::string json);
+    std::string getConfig();
+    HyphaPluginConfig *getInstance(std::string id);
+
     QWidget *widget();
 
 private:
-    QString language;
+    FlameWidget * flameWidget = nullptr;
+    std::string language;
 };
 }
 }

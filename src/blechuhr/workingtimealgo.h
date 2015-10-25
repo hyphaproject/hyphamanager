@@ -5,14 +5,19 @@
 #include <QtCore/QDate>
 #include <QtCore/QDateTime>
 #include "model/workingtime.h"
-#include "../database/database.h"
-#include "../database/userdatabase.h"
+
+namespace hypha{
+namespace database {
+    class Database;
+    class UserDatabase;
+}
+}
 
 class WorkingTimeAlgo
 {
 public:
     WorkingTimeAlgo();
-    WorkingTimeAlgo(Database *database, UserDatabase *userDatabase);
+    WorkingTimeAlgo(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase);
     void setUsername(QString username);
     void setDate(QDate date);
 
@@ -23,8 +28,8 @@ public:
 
 
 private:
-    Database *database;
-    UserDatabase *userDatabase;
+    hypha::database::Database *database;
+    hypha::database::UserDatabase *userDatabase;
     QString username;
     QDate date;
     QList<WorkingTime> times;

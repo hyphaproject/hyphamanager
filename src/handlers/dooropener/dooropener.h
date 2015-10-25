@@ -2,34 +2,31 @@
 #define DOOROPENER_H
 
 #include <QtCore/QObject>
-#include "../../handler/hyphahandler.h"
+#include "../../handler/hyphahandlerconfig.h"
 #include "dooropenerwidget.h"
 
 namespace hypha{
 namespace handler{
 namespace dooropener{
-class DoorOpener : public HyphaHandler
+class DoorOpener : public HyphaHandlerConfig
 {
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID "hypha.dooropener" FILE "dooropener.json")
-    Q_INTERFACES(hypha::handler::HyphaHandler)
 public:
     explicit DoorOpener();
     ~DoorOpener();
     static DoorOpener * instance();
-    QString getName(){ return "dooropener"; }
-    QString getTitle() { return "DoorOpener"; }
-    QString getVersion() { return "0.1"; }
-    QString getDescription() { return "Handler to open doors.";}
-    void parse(QString message);
-    void loadConfig(QString config);
-    QString getConfig();
-    HyphaHandler *getInstance(QString id, QObject *parent);
+    std::string name(){ return "dooropener"; }
+    std::string getTitle() { return "DoorOpener"; }
+    std::string getVersion() { return "0.1"; }
+    std::string getDescription() { return "Handler to open doors.";}
+    void parse(std::string message);
+    void loadConfig(std::string config);
+    std::string getConfig();
+    HyphaHandlerConfig *getInstance(std::string id);
 
     QWidget *widget();
 
 protected:
-    DoorOpenerWidget * doorWidget = 0;
+    DoorOpenerWidget * doorWidget = nullptr;
 
 };
 }

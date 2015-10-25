@@ -2,28 +2,27 @@
 #include <QtCore/QProcess>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include "plugin/hyphaplugin.h"
+#include <Poco/ClassLibrary.h>
 #include "video.h"
 
 using namespace hypha::plugin;
 using namespace hypha::plugin::video;
 
-void Video::loadConfig(QString json)
+void Video::loadConfig(std::string json)
 {
     widget();
-    videoWidget->setHost(host);
-    videoWidget->loadConfig(json);
+    videoWidget->setHost(QString::fromStdString(host));
+    videoWidget->loadConfig(QString::fromStdString(json));
 }
 
-QString Video::getConfig()
+std::string Video::getConfig()
 {
-    return videoWidget->getConfig();
+    return videoWidget->getConfig().toStdString();
 }
 
-HyphaPlugin *Video::getInstance(QString id, QObject *parent)
+HyphaPluginConfig *Video::getInstance(std::string id)
 {
     Video *instance = new Video();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -34,3 +33,7 @@ QWidget *Video::widget()
         videoWidget = new VideoWidget();
     return videoWidget;
 }
+
+POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_EXPORT_CLASS(Video)
+POCO_END_MANIFEST

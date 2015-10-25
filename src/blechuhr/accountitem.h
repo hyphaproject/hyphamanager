@@ -3,8 +3,13 @@
 
 #include <QtWidgets/QWidget>
 #include <QtCore/QDateTime>
-#include "../database/database.h"
 #include "model/type.h"
+
+namespace hypha {
+namespace database {
+    class Database;
+}
+}
 
 namespace Ui {
 class AccountItem;
@@ -16,10 +21,10 @@ class AccountItem : public QWidget
 
 public:
     explicit AccountItem(QWidget *parent = 0);
-    AccountItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::TYPE type, float amount, QString name, Database *database, QWidget *parent = 0);
-    AccountItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::TYPE type, float amount, QString name, Database *database, QWidget *parent = 0);
-    AccountItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::ITYPE type, QTime starttime, QTime endtime, Database *database, QWidget *parent = 0);
-    AccountItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::ITYPE type, QTime starttime, QTime endtime, Database *database, QWidget *parent = 0);
+    AccountItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::TYPE type, float amount, QString name, hypha::database::Database *database, QWidget *parent = 0);
+    AccountItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::TYPE type, float amount, QString name, hypha::database::Database *database, QWidget *parent = 0);
+    AccountItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::ITYPE type, QTime starttime, QTime endtime, hypha::database::Database *database, QWidget *parent = 0);
+    AccountItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::ITYPE type, QTime starttime, QTime endtime, hypha::database::Database *database, QWidget *parent = 0);
     ~AccountItem();
 
     void save();
@@ -45,7 +50,7 @@ private:
     float amount;
     QTime starttime;
     QTime endtime;
-    Database *database;
+    hypha::database::Database *database;
 };
 
 #endif // ACCOUNTITEM_H

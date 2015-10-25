@@ -1,29 +1,26 @@
 #ifndef LIGHTSENSOR_H
 #define LIGHTSENSOR_H
-#include <QtCore/QObject>
-#include "plugin/hyphaplugin.h"
+#include "plugin/hyphapluginconfig.h"
 #include "lightsensorwidget.h"
 namespace hypha{
 namespace plugin{
 namespace lightsensor{
-class LightSensor : public HyphaPlugin
+class LightSensor : public HyphaPluginConfig
 {
-Q_OBJECT
-Q_PLUGIN_METADATA(IID "hypha.lightsensor" FILE "lightsensor.json")
-Q_INTERFACES(hypha::plugin::HyphaPlugin)
 public:
-    QString getName(){ return "lightsensor"; }
-    QString getTitle() { return "LightSensor"; }
-    QString getVersion() { return "0.1"; }
-    QString getDescription() { return "Read Light Sensor.";}
-    void loadConfig(QString json);
-    QString getConfig();
-    HyphaPlugin *getInstance(QString id, QObject *parent);
-    LightSensorWidget * lightSensorWidget = 0;
+    std::string name(){ return "lightsensor"; }
+    std::string getTitle() { return "LightSensor"; }
+    std::string getVersion() { return "0.1"; }
+    std::string getDescription() { return "Read Light Sensor.";}
+    void loadConfig(std::string json);
+    std::string getConfig();
+    HyphaPluginConfig *getInstance(std::string id);
+
     QWidget *widget();
 
 private:
-    QString language;
+    LightSensorWidget * lightSensorWidget = nullptr;
+    std::string language;
 };
 }
 }

@@ -1,8 +1,9 @@
+#include <hypha/database/database.h>
 #include "workingtimeadddialog.h"
 #include "ui_workingtimeadddialog.h"
 #include <QtCore/QDateTime>
 
-WorkingTimeAddDialog::WorkingTimeAddDialog(QString username, QDate date, Database *database, QWidget *parent) :
+WorkingTimeAddDialog::WorkingTimeAddDialog(QString username, QDate date, hypha::database::Database *database, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::WorkingTimeAddDialog)
 {

@@ -4,6 +4,9 @@
 #include <QtSql/QSqlQuery>
 #include <QtCore/QDateTime>
 #include <QtCore/QTimeZone>
+#include <Poco/Data/RecordSet.h>
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
 #include "userwindow.h"
 #include "ui_userwindow.h"
 
@@ -24,7 +27,10 @@ UserWindow::~UserWindow()
 void UserWindow::reload()
 {
     ui->listWidget->clear();
-    ui->listWidget->addItems(instance->getUserDatabase()->getUsers());
+    for(std::string user: instance->getUserDatabase()->getUsers())
+    {
+        ui->listWidget->addItem(QString::fromStdString(user));
+    }
     loadOnline();
 }
 
@@ -41,60 +47,66 @@ void UserWindow::loadOnline()
 
 bool UserWindow::isOnline(QString username)
 {
-    QList<QString> devices = instance->getUserDatabase()->getDevices(username);
+    std::list<std::string> devices = instance->getUserDatabase()->getDevices(username.toStdString());
     // number of registrations today
     int connections = 0;
-    for(int i = 0; i< instance->getUserDatabase()->getDevices(username).size(); ++i){
-        QString device = devices.at(i);
-        QSqlQuery query = instance->getDatabase()->getQuery();
-            query.prepare("select count(id) from deviceonline where deviceid='"+device+"' and DATE(time) = '" +QDateTime::currentDateTimeUtc().date().toString("yyyy-MM-dd")+"'" );
-            query.exec();
-            while( query.next() ){
-                connections += query.value(0).toInt();
-            }
+    for(std::string device: devices){
+        Poco::Data::Statement statement = instance->getDatabase()->getStatement();
+        statement << "select count(id) from deviceonline where deviceid='"+device+"' and DATE(time) = '"
+                     +QDateTime::currentDateTimeUtc().date().toString("yyyy-MM-dd").toStdString()+"'";
+        Poco::Data::RecordSet rs(statement);
+        bool more = rs.moveFirst();
+        while(more) {
+            connections += rs[0].convert<int>();
+            more = rs.moveNext();
+        }
     }
     return connections % 2 == 1;
 }
 
 void UserWindow::reloadUserStatus(QString username)
 {
-    QList<QString> devices = instance->getUserDatabase()->getDevices(username);
+    std::list<std::string> devices = instance->getUserDatabase()->getDevices(username.toStdString());
     QDateTime datetime;
-    for(int i = 0; i< instance->getUserDatabase()->getDevices(username).size(); ++i){
-        QString device = devices.at(i);
-        QSqlQuery query = instance->getDatabase()->getQuery();
-            query.prepare("select time from deviceonline where deviceid='"+device+"' ORDER BY time desc" );
-            query.exec();
-            while( query.next() ){
-                QDateTime dt = query.value(0).toDateTime();
-                dt.setTimeSpec(Qt::UTC);
-                if(dt > datetime){
-                    ui->deviceOnlineLabel->setText(device);
-                    ui->dateTimeEdit->setDateTime(dt.toLocalTime());
-                    datetime = dt;
-                }
-                break;
+    for(std::string device: devices){
+        Poco::Data::Statement statement = instance->getDatabase()->getStatement();
+        statement << "select time from deviceonline where deviceid='"+device+"' ORDER BY time desc";
+        Poco::Data::RecordSet rs(statement);
+        bool more = rs.moveFirst();
+        while(more) {
+            std::string dateTimeStr = rs[0].convert<std::string>();
+            QDateTime dt = QDateTime::fromString(QString::fromStdString(dateTimeStr));
+            dt.setTimeSpec(Qt::UTC);
+            if(dt > datetime){
+                ui->deviceOnlineLabel->setText(QString::fromStdString(device));
+                ui->dateTimeEdit->setDateTime(dt.toLocalTime());
+                datetime = dt;
             }
+            more = rs.moveNext();
+            break;
+        }
     }
 }
 
 QString UserWindow::lastConnection(QString username)
 {
-    QList<QString> devices = instance->getUserDatabase()->getDevices(username);
+    std::list<std::string> devices = instance->getUserDatabase()->getDevices(username.toStdString());
     QDateTime datetime;
-    for(int i = 0; i< instance->getUserDatabase()->getDevices(username).size(); ++i){
-        QString device = devices.at(i);
-        QSqlQuery query = instance->getDatabase()->getQuery();
-            query.prepare("select time from deviceonline where deviceid='"+device+"' ORDER BY time desc" );
-            query.exec();
-            while( query.next() ){
-                QDateTime dt = query.value(0).toDateTime();
-                dt.setTimeSpec(Qt::UTC);
-                if(dt > datetime){
-                    datetime = dt;
-                }
-                break;
+    for(std::string device: devices){
+        Poco::Data::Statement statement = instance->getDatabase()->getStatement();
+        statement << "select time from deviceonline where deviceid='"+device+"' ORDER BY time desc";
+        Poco::Data::RecordSet rs(statement);
+        bool more = rs.moveFirst();
+        while(more) {
+            std::string dateTimeStr = rs[0].convert<std::string>();
+            QDateTime dt = QDateTime::fromString(QString::fromStdString(dateTimeStr));
+            dt.setTimeSpec(Qt::UTC);
+            if(dt > datetime){
+                datetime = dt;
             }
+            more = rs.moveNext();
+            break;
+        }
     }
     return datetime.toLocalTime().toString("hh:mm");
 }
@@ -102,7 +114,7 @@ QString UserWindow::lastConnection(QString username)
 void UserWindow::on_newUserButton_clicked()
 {
     QString username = QInputDialog::getText(this, "New User", "Username");
-    if(instance->getUserDatabase()->createUser(username, "Unknown", "Unknown", "")){
+    if(instance->getUserDatabase()->createUser(username.toStdString(), "Unknown", "Unknown", "")){
         reload();
     }else{
         QMessageBox::warning(this, "Error", "The user could not been added to the database.");
@@ -112,11 +124,20 @@ void UserWindow::on_newUserButton_clicked()
 void UserWindow::on_listWidget_currentTextChanged(const QString &currentText)
 {
     ui->groupBox->setTitle(currentText);
-    ui->firstnameEdit->setText(instance->getUserDatabase()->getFirstname(currentText));
-    ui->lastnameEdit->setText(instance->getUserDatabase()->getLastname(currentText));
-    ui->mailEdit->setText(instance->getUserDatabase()->getMail(currentText));
-    QStringList devs = instance->getUserDatabase()->getDevices(currentText);
-    ui->deviceIdEdit->setText(devs.join(","));
+    ui->firstnameEdit->setText(QString::fromStdString(instance->getUserDatabase()->getFirstname(currentText.toStdString())));
+    ui->lastnameEdit->setText(QString::fromStdString(instance->getUserDatabase()->getLastname(currentText.toStdString())));
+    ui->mailEdit->setText(QString::fromStdString(instance->getUserDatabase()->getMail(currentText.toStdString())));
+    std::list<std::string>  devs = instance->getUserDatabase()->getDevices(currentText.toStdString());
+    std::ostringstream oss;
+    std::list<std::string>::const_iterator iter;
+    while (iter != devs.end())
+    {
+     oss << *iter;
+     iter++;
+     if (iter != devs.end()) oss << ", ";
+    }
+    std::string deviceids = oss.str();
+    ui->deviceIdEdit->setText(QString::fromStdString(deviceids));
     ui->saveButton->setEnabled(false);
     reloadUserStatus(currentText);
 }
@@ -143,6 +164,8 @@ void UserWindow::on_deviceIdEdit_editingFinished()
 
 void UserWindow::on_saveButton_clicked()
 {
-    if(instance->getUserDatabase()->updateUser(ui->groupBox->title(), ui->firstnameEdit->text(), ui->lastnameEdit->text(), ui->mailEdit->text(), ui->deviceIdEdit->text()))
+    if(instance->getUserDatabase()->updateUser(ui->groupBox->title().toStdString(), ui->firstnameEdit->text().toStdString(),
+                                               ui->lastnameEdit->text().toStdString(), ui->mailEdit->text().toStdString(),
+                                               ui->deviceIdEdit->text().toStdString()))
         ui->saveButton->setEnabled(false);
 }

@@ -2,6 +2,9 @@
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
 #include <QtCore/QTemporaryFile>
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
+#include <hypha/settings/hyphasettings.h>
 #include <hypha/utils/email.h>
 #include "deviceonlineimportdialog.h"
 #include "deviceonlineimport.h"
@@ -12,7 +15,7 @@
 
 #include "ui_deviceonlineimportdialog.h"
 
-DeviceOnlineImportDialog::DeviceOnlineImportDialog(HyphaManagerSettings * settings, Database *database, UserDatabase * userDatabase, QWidget *parent) :
+DeviceOnlineImportDialog::DeviceOnlineImportDialog(hypha::settings::HyphaSettings * settings, hypha::database::Database *database, hypha::database::UserDatabase * userDatabase, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DeviceOnlineImportDialog)
 {
@@ -44,7 +47,7 @@ void DeviceOnlineImportDialog::reload()
     deviceOnlineImport.setUsername(ui->usernameComboBox->currentText());
     deviceOnlineImport.setDate(ui->dateEdit->date());
     times.clear();
-    foreach(WorkingTime wt, deviceOnlineImport.getMonth()){
+    for(WorkingTime wt: deviceOnlineImport.getMonth()){
         times.append(new WorkingTime(wt));
         ui->webView->page()->mainFrame()->evaluateJavaScript(wt.toAddString(true));
     }
@@ -56,7 +59,7 @@ void DeviceOnlineImportDialog::reload()
 void DeviceOnlineImportDialog::reloadTimesList()
 {
     ui->timesListWidget->clear();
-    foreach(WorkingTime *wt, times){
+    for(WorkingTime *wt: times){
         QListWidgetItem *item = new QListWidgetItem(ui->timesListWidget);
         ui->timesListWidget->addItem(item);
         WorkingTimeItem *workingTimeItem = new WorkingTimeItem(wt->getUsername(), wt->getStart(), wt->getEnd(), wt->getType(), database);
@@ -68,8 +71,8 @@ void DeviceOnlineImportDialog::reloadTimesList()
 void DeviceOnlineImportDialog::init()
 {
     ui->usernameComboBox->clear();
-    foreach(QString username, userDatabase->getUsers()){
-        ui->usernameComboBox->addItem(username);
+    for(std::string username: userDatabase->getUsers()){
+        ui->usernameComboBox->addItem(QString::fromStdString(username));
     }
 
     ui->webView->settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
@@ -147,10 +150,10 @@ void DeviceOnlineImportDialog::on_mailPDFButton_clicked()
         timePrinter.setWorkingTimes(this->times);
         timePrinter.print();
         hypha::utils::EMail mail;
-        mail.setHost(settings->getValue("email", "host", "localhost").toString().toStdString());
-        mail.setUser(settings->getValue("email", "user", "").toString().toStdString());
-        mail.setPassword(settings->getValue("email", "password", "").toString().toStdString());
-        mail.sendMessageWithAttachment(this->userDatabase->getMail(ui->usernameComboBox->currentText()).toStdString(),
+        mail.setHost(settings->getString("email.host", "localhost"));
+        mail.setUser(settings->getString("email.user", ""));
+        mail.setPassword(settings->getString("email.password", ""));
+        mail.sendMessageWithAttachment(this->userDatabase->getMail(ui->usernameComboBox->currentText().toStdString()),
                                        "Time Record as PDF", "Here is your timerecord.\n Made with Hypha Manager ",
                                        (ui->dateEdit->date().toString("MMM")+".pdf").toStdString(), file.fileName().toStdString() );
         QApplication::restoreOverrideCursor();
@@ -166,10 +169,10 @@ void DeviceOnlineImportDialog::on_mailCSVButton_clicked()
         WorkingTimeImportExport importexport(ui->usernameComboBox->currentText(), times, file.fileName());
         importexport.exportData();
         hypha::utils::EMail mail;
-        mail.setHost(settings->getValue("email", "host", "localhost").toString().toStdString());
-        mail.setUser(settings->getValue("email", "user", "").toString().toStdString());
-        mail.setPassword(settings->getValue("email", "password", "").toString().toStdString());
-        mail.sendMessageWithAttachment(this->userDatabase->getMail(ui->usernameComboBox->currentText()).toStdString(),
+        mail.setHost(settings->getString("email.host", "localhost"));
+        mail.setUser(settings->getString("email.user", ""));
+        mail.setPassword(settings->getString("email.password", ""));
+        mail.sendMessageWithAttachment(this->userDatabase->getMail(ui->usernameComboBox->currentText().toStdString()),
                                        "Time Record as CSV", "Here is your timerecord.\nPlease check it.\n Made with Hypha Manager ",
                                        (ui->dateEdit->date().toString("MMM")+".pdf").toStdString(), file.fileName().toStdString() );
         QApplication::restoreOverrideCursor();

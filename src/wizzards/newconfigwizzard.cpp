@@ -18,7 +18,7 @@ NewConfigWizzard::~NewConfigWizzard()
 void NewConfigWizzard::on_selectFileButton_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("Config File"), ui->configFileEdit->text(), tr("INI File (*.ini)"));
+                                                    tr("Config File"), ui->configFileEdit->text(), tr("INI File (*.xml)"));
     if(!fileName.isEmpty()) ui->configFileEdit->setText(fileName);
 }
 

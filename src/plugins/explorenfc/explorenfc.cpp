@@ -5,26 +5,26 @@
 #include <QtCore/QJsonObject>
 #include <QtCore/QJsonArray>
 #include <QtCore/QDebug>
-#include "plugin/hyphaplugin.h"
+#include <Poco/ClassLibrary.h>
 #include "explorenfc.h"
 #include "explorenfcwidget.h"
 
 using namespace hypha::plugin::explorenfc;
+using namespace hypha::plugin;
 
-void ExploreNFC::loadConfig(QString json)
+void ExploreNFC::loadConfig(std::string json)
 {
 
 }
 
-QString ExploreNFC::getConfig()
+std::string ExploreNFC::getConfig()
 {
     return "{}";
 }
 
-hypha::plugin::HyphaPlugin *ExploreNFC::getInstance(QString id, QObject *parent)
+HyphaPluginConfig *ExploreNFC::getInstance(std::string id)
 {
     ExploreNFC *instance = new ExploreNFC();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -34,3 +34,6 @@ QWidget *ExploreNFC::widget()
     return new ExploreNFCWidget();
 }
 
+POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_EXPORT_CLASS(ExploreNFC)
+POCO_END_MANIFEST

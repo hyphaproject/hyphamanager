@@ -3,8 +3,8 @@
 
 #include <QtWidgets/QWidget>
 #include <QtCore/QDate>
-#include "../database/database.h"
-#include "../database/userdatabase.h"
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
 
 namespace Ui {
 class SummaryWidget;
@@ -15,7 +15,7 @@ class SummaryWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit SummaryWidget(QString username, Database * database, UserDatabase * userDatabase, QWidget *parent = 0);
+    explicit SummaryWidget(QString username, hypha::database::Database * database, hypha::database::UserDatabase * userDatabase, QWidget *parent = 0);
     ~SummaryWidget();
 
 public slots:
@@ -29,8 +29,8 @@ private slots:
 private:
     Ui::SummaryWidget *ui;
     QString username;
-    Database *database;
-    UserDatabase * userDatabase;
+    hypha::database::Database *database;
+    hypha::database::UserDatabase * userDatabase;
 
 };
 

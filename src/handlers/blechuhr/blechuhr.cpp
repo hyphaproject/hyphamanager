@@ -5,12 +5,8 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QThread>
 #include <QtCore/QDebug>
-#include "../../plugin/hyphaplugin.h"
-#include "../../plugin/pluginloader.h"
+#include <Poco/ClassLibrary.h>
 #include "blechuhr.h"
-#include "../../database/database.h"
-#include "../../database/userdatabase.h"
-
 
 using namespace hypha::handler;
 using namespace hypha::handler::blechuhr;
@@ -26,25 +22,23 @@ BlechUhr::~BlechUhr()
 
 }
 
-
-void BlechUhr::parse(QString message){
+void BlechUhr::parse(std::string message){
 
 }
 
-void BlechUhr::loadConfig(QString config)
+void BlechUhr::loadConfig(std::string config)
 {
 
 }
 
-QString BlechUhr::getConfig()
+std::string BlechUhr::getConfig()
 {
     return "{\"name\":\"blechuhr\"}";
 }
 
-HyphaHandler *BlechUhr::getInstance(QString id, QObject *parent)
+HyphaHandlerConfig *BlechUhr::getInstance(std::string id)
 {
     BlechUhr *blechuhr = new BlechUhr();
-    blechuhr->setParent(parent);
     blechuhr->setId(id);
     return blechuhr;
 }
@@ -53,3 +47,7 @@ QWidget *BlechUhr::widget()
 {
     return buwidget;
 }
+
+POCO_BEGIN_MANIFEST(HyphaHandler)
+POCO_EXPORT_CLASS(BlechUhr)
+POCO_END_MANIFEST

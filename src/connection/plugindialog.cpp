@@ -1,9 +1,9 @@
 #include <QtSql/QSqlQuery>
-#include "plugin/pluginloader.h"
+#include <hypha/plugin/pluginloader.h>
 #include "plugindialog.h"
 #include "ui_plugindialog.h"
 
-PluginDialog::PluginDialog(hypha::plugin::PluginLoader *pluginLoader, Database *database, QWidget *parent) :
+PluginDialog::PluginDialog(hypha::plugin::PluginLoader *pluginLoader, hypha::database::Database *database, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PluginDialog)
 {
@@ -22,18 +22,18 @@ void PluginDialog::init()
 {
     ui->comboBox->clear();
     for(hypha::plugin::HyphaPlugin * plugin: pluginLoader->getPlugins()){
-        ui->comboBox->addItem(plugin->getName());
+        ui->comboBox->addItem(QString::fromStdString(plugin->name()));
     }
 }
 
 void PluginDialog::on_buttonBox_accepted()
 {
-    QSqlQuery query = database->getQuery();
-    query.prepare("INSERT INTO plugins(id,host,type) values(:id,:host,:type);");
-    query.bindValue(":id",ui->idEdit->text());
-    query.bindValue(":host", ui->hostEdit->text());
-    query.bindValue(":type", ui->comboBox->currentText());
-    query.exec();
-    pluginLoader->loadInstances();
+    Poco::Data::Statement statement = database->getStatement();
+    statement << "INSERT INTO plugins(id,host,type) values(:id,:host,:type);",
+            Poco::Data::use(ui->idEdit->text().toStdString()),
+            Poco::Data::use(ui->hostEdit->text().toStdString()),
+            Poco::Data::use(ui->comboBox->currentText().toStdString());
+    statement.execute();
+    pluginLoader->loadAllInstances();
     init();
 }

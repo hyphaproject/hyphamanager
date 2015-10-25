@@ -2,28 +2,27 @@
 #include <QtCore/QProcess>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include "plugin/hyphaplugin.h"
+#include <Poco/ClassLibrary.h>
 #include "watersensor.h"
 
 using namespace hypha::plugin;
 using namespace hypha::plugin::watersensor;
 
-void WaterSensor::loadConfig(QString json)
+void WaterSensor::loadConfig(std::string json)
 {
     widget();
-    waterSensorWidget->setHost(host);
-    waterSensorWidget->loadConfig(json);
+    waterSensorWidget->setHost(QString::fromStdString(host));
+    waterSensorWidget->loadConfig(QString::fromStdString(json));
 }
 
-QString WaterSensor::getConfig()
+std::string WaterSensor::getConfig()
 {
-    return waterSensorWidget->getConfig();
+    return waterSensorWidget->getConfig().toStdString();
 }
 
-HyphaPlugin *WaterSensor::getInstance(QString id, QObject *parent)
+HyphaPluginConfig *WaterSensor::getInstance(std::string id)
 {
     WaterSensor *instance = new WaterSensor();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -34,3 +33,7 @@ QWidget *WaterSensor::widget()
         waterSensorWidget = new WaterSensorWidget();
     return waterSensorWidget;
 }
+
+POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_EXPORT_CLASS(WaterSensor)
+POCO_END_MANIFEST

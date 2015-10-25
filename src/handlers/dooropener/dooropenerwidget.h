@@ -4,9 +4,8 @@
 #include <QtWidgets/QWidget>
 #include <QtGui/QStandardItemModel>
 
-#include "database/database.h"
-#include "database/userdatabase.h"
-
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
 
 namespace Ui {
 class DoorOpenerWidget;
@@ -19,8 +18,8 @@ class DoorOpenerWidget : public QWidget
 public:
     explicit DoorOpenerWidget(QWidget *parent = 0);
     ~DoorOpenerWidget();
-    void setDatabase(Database * database);
-    void setUserDatabase(UserDatabase * userDatabase);
+    void setDatabase(hypha::database::Database * database);
+    void setUserDatabase(hypha::database::UserDatabase * userDatabase);
     void setId(QString id);
     void loadConfig(QString json);
     void reloadUser();
@@ -33,8 +32,8 @@ private slots:
 
 private:
     Ui::DoorOpenerWidget *ui;
-    Database * database;
-    UserDatabase *userDatabase;
+    hypha::database::Database * database;
+    hypha::database::UserDatabase *userDatabase;
     QString id;
     QStandardItemModel listModel;
 };

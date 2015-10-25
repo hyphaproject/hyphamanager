@@ -2,28 +2,27 @@
 #include <QtCore/QProcess>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include "plugin/hyphaplugin.h"
+#include <Poco/ClassLibrary.h>
 #include "flame.h"
 
 using namespace hypha::plugin;
 using namespace hypha::plugin::flame;
 
-void Flame::loadConfig(QString json)
+void Flame::loadConfig(std::string json)
 {
     widget();
-    flameWidget->setHost(host);
-    flameWidget->loadConfig(json);
+    flameWidget->setHost(QString::fromStdString(host));
+    flameWidget->loadConfig(QString::fromStdString(json));
 }
 
-QString Flame::getConfig()
+std::string Flame::getConfig()
 {
-    return flameWidget->getConfig();
+    return flameWidget->getConfig().toStdString();
 }
 
-HyphaPlugin *Flame::getInstance(QString id, QObject *parent)
+HyphaPluginConfig *Flame::getInstance(std::string id)
 {
     Flame *instance = new Flame();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -34,3 +33,7 @@ QWidget *Flame::widget()
         flameWidget = new FlameWidget();
     return flameWidget;
 }
+
+POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_EXPORT_CLASS(Flame)
+POCO_END_MANIFEST

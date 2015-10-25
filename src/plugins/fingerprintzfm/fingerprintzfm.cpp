@@ -5,32 +5,25 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QVariant>
 #include <QtSerialPort/QSerialPortInfo>
-
-
-#include "plugin/hyphaplugin.h"
+#include <Poco/ClassLibrary.h>
 #include "fingerprintzfm.h"
-#include "../../database/database.h"
 #include "fingerprintzfmwidget.h"
 
 using namespace hypha::plugin::fingerprintzfm;
+using namespace hypha::plugin;
 
-void FingerPrintZFM::loadConfig(QString json)
+void FingerPrintZFM::loadConfig(std::string json)
 {
-    QJsonDocument document = QJsonDocument::fromJson(json.toUtf8());
-    QJsonObject object = document.object();
-    if(object.contains("usbport")){
-    }
 }
 
-QString FingerPrintZFM::getConfig()
+std::string FingerPrintZFM::getConfig()
 {
     return "{}";
 }
 
-hypha::plugin::HyphaPlugin *FingerPrintZFM::getInstance(QString id, QObject *parent)
+HyphaPluginConfig *FingerPrintZFM::getInstance(std::string id)
 {
     FingerPrintZFM *instance = new FingerPrintZFM();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -39,3 +32,7 @@ QWidget *FingerPrintZFM::widget()
 {
     return new FingerPrintZFMWidget();
 }
+
+POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_EXPORT_CLASS(FingerPrintZFM)
+POCO_END_MANIFEST

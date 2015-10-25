@@ -1,29 +1,27 @@
-
 #include <QtCore/QProcess>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include "plugin/hyphaplugin.h"
+#include <Poco/ClassLibrary.h>
 #include "dht11.h"
 
 using namespace hypha::plugin;
 using namespace hypha::plugin::dht11;
 
-void Dht11::loadConfig(QString json)
+void Dht11::loadConfig(std::string json)
 {
     widget();
-    dht11Widget->setHost(host);
-    dht11Widget->loadConfig(json);
+    dht11Widget->setHost(QString::fromStdString(host));
+    dht11Widget->loadConfig(QString::fromStdString(json));
 }
 
-QString Dht11::getConfig()
+std::string Dht11::getConfig()
 {
-    return dht11Widget->getConfig();
+    return dht11Widget->getConfig().toStdString();
 }
 
-HyphaPlugin *Dht11::getInstance(QString id, QObject *parent)
+HyphaPluginConfig *Dht11::getInstance(std::string id)
 {
     Dht11 *instance = new Dht11();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -34,3 +32,7 @@ QWidget *Dht11::widget()
         dht11Widget = new Dht11Widget();
     return dht11Widget;
 }
+
+POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_EXPORT_CLASS(Dht11)
+POCO_END_MANIFEST

@@ -1,14 +1,14 @@
+#include <Poco/Data/RecordSet.h>
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
 #include "workingtimealgo.h"
-#include <QDebug>
-#include <QtSql/QSqlError>
-
 
 WorkingTimeAlgo::WorkingTimeAlgo()
 {
 
 }
 
-WorkingTimeAlgo::WorkingTimeAlgo(Database *database, UserDatabase *userDatabase)
+WorkingTimeAlgo::WorkingTimeAlgo(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase)
 {
     this->database = database;
     this->userDatabase = userDatabase;
@@ -27,19 +27,28 @@ void WorkingTimeAlgo::setDate(QDate date)
 QList<WorkingTime> WorkingTimeAlgo::getDay()
 {
     times.clear();
-    QString queryString = "SELECT id, start, end, type FROM workingtime WHERE username = '" + this->username +
-            "' AND DATE(start) = '" + date.toString("yyyy-MM-dd") + "'";
-    QSqlQuery query = database->getQuery();
-    query.exec(queryString);
-    while( query.next() ){
-        QString id = query.value(0).toString();
-        QDateTime start = query.value(1).toDateTime();
-        start.setTimeSpec(Qt::UTC);
-        QDateTime end = query.value(2).toDateTime();
-        end.setTimeSpec(Qt::UTC);
-        QString type = query.value(3).toString();
-        WorkingTime wt(username, start.toLocalTime().toString("hh:00"), start, end, type);
+
+    Poco::Data::Statement statement = database->getStatement();
+    statement << "SELECT id, start, end, type FROM workingtime WHERE username = '" + this->username.toStdString() +
+                 "' AND DATE(start) = '" + date.toString("yyyy-MM-dd").toStdString() + "'";
+    statement.execute();
+    Poco::Data::RecordSet rs(statement);
+    bool more = rs.moveFirst();
+    while(more) {
+        std::string id = rs[0].convert<std::string>();
+        std::string start = rs[1].convert<std::string>();
+        QDateTime startTime = QDateTime::fromString(QString::fromStdString(start));
+        std::string end = rs[2].convert<std::string>();
+        QDateTime endTime = QDateTime::fromString(QString::fromStdString(end));
+        std::string type = rs[3].convert<std::string>();
+
+        startTime.setTimeSpec(Qt::UTC);
+        endTime.setTimeSpec(Qt::UTC);
+
+        WorkingTime wt(username, startTime.toLocalTime().toString("hh:00"), startTime, endTime, QString::fromStdString(type));
         times.append(wt);
+
+        more = rs.moveNext();
     }
     return times;
 }
@@ -47,20 +56,30 @@ QList<WorkingTime> WorkingTimeAlgo::getDay()
 QList<WorkingTime> WorkingTimeAlgo::getMonth()
 {
     times.clear();
-    QString queryString = "SELECT id, start, end, type FROM workingtime WHERE username = '" + this->username +
-            "' AND MONTH(start) = MONTH('"+date.toString("yyyy-MM-dd")+"') and YEAR(start) = YEAR('"+date.toString("yyyy-MM-dd")+"')";
-    QSqlQuery query = database->getQuery();
-    query.exec(queryString);
-    while( query.next() ){
-        QString id = query.value(0).toString();
-        QDateTime start = query.value(1).toDateTime();
-        start.setTimeSpec(Qt::UTC);
-        QDateTime end = query.value(2).toDateTime();
-        end.setTimeSpec(Qt::UTC);
-        QString type = query.value(3).toString();
-        WorkingTime wt(username, start.toString("dd. MMM"), start, end, type);
+
+    Poco::Data::Statement statement = database->getStatement();
+    statement << "SELECT id, start, end, type FROM workingtime WHERE username = '" + this->username.toStdString() +
+                 "' AND DATE(start) = '" + date.toString("yyyy-MM-dd").toStdString() + "'";
+    statement.execute();
+    Poco::Data::RecordSet rs(statement);
+    bool more = rs.moveFirst();
+    while(more) {
+        std::string id = rs[0].convert<std::string>();
+        std::string start = rs[1].convert<std::string>();
+        QDateTime startTime = QDateTime::fromString(QString::fromStdString(start));
+        std::string end = rs[2].convert<std::string>();
+        QDateTime endTime = QDateTime::fromString(QString::fromStdString(end));
+        std::string type = rs[3].convert<std::string>();
+
+        startTime.setTimeSpec(Qt::UTC);
+        endTime.setTimeSpec(Qt::UTC);
+
+        WorkingTime wt(username, startTime.toString("dd. MMM"), startTime, endTime, QString::fromStdString(type));
         times.append(wt);
+
+        more = rs.moveNext();
     }
+
     return times;
 }
 

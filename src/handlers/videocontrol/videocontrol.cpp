@@ -3,12 +3,10 @@
 #include <QtCore/QThread>
 #include <QtCore/QDebug>
 #include <QtCore/QTimer>
-#include "../../plugin/hyphaplugin.h"
-#include "../../plugin/pluginloader.h"
+#include <Poco/ClassLibrary.h>
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
 #include "videocontrol.h"
-#include "../../database/database.h"
-#include "../../database/userdatabase.h"
-
 
 using namespace hypha::handler;
 using namespace hypha::handler::videocontrol;
@@ -24,24 +22,23 @@ VideoControl::~VideoControl()
 
 }
 
-void VideoControl::parse(QString message){
+void VideoControl::parse(std::string message){
 
 }
 
-void VideoControl::loadConfig(QString config)
+void VideoControl::loadConfig(std::string config)
 {
-    vcwidget->loadConfig(config);
+    vcwidget->loadConfig(QString::fromStdString(config));
 }
 
-QString VideoControl::getConfig()
+std::string VideoControl::getConfig()
 {
-    return vcwidget->getConfig();
+    return vcwidget->getConfig().toStdString();
 }
 
-HyphaHandler *VideoControl::getInstance(QString id, QObject *parent)
+HyphaHandlerConfig *VideoControl::getInstance(std::string id)
 {
     VideoControl *instance = new VideoControl();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -50,3 +47,7 @@ QWidget *VideoControl::widget()
 {
     return vcwidget;
 }
+
+POCO_BEGIN_MANIFEST(HyphaHandler)
+POCO_EXPORT_CLASS(VideoControl)
+POCO_END_MANIFEST

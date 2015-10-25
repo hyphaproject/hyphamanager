@@ -1,29 +1,26 @@
 #ifndef WATERSENSOR_H
 #define WATERSENSOR_H
-#include <QtCore/QObject>
-#include "plugin/hyphaplugin.h"
+#include "plugin/hyphapluginconfig.h"
 #include "watersensorwidget.h"
 namespace hypha{
 namespace plugin{
 namespace watersensor{
-class WaterSensor : public HyphaPlugin
+class WaterSensor : public HyphaPluginConfig
 {
-Q_OBJECT
-Q_PLUGIN_METADATA(IID "hypha.watersensor" FILE "watersensor.json")
-Q_INTERFACES(hypha::plugin::HyphaPlugin)
 public:
-    QString getName(){ return "watersensor"; }
-    QString getTitle() { return "WaterSensor"; }
-    QString getVersion() { return "0.1"; }
-    QString getDescription() { return "Read Water Sensor.";}
-    void loadConfig(QString json);
-    QString getConfig();
-    HyphaPlugin *getInstance(QString id, QObject *parent);
-    WaterSensorWidget * waterSensorWidget = 0;
+    std::string name(){ return "watersensor"; }
+    std::string getTitle() { return "WaterSensor"; }
+    std::string getVersion() { return "0.1"; }
+    std::string getDescription() { return "Read Water Sensor.";}
+    void loadConfig(std::string json);
+    std::string getConfig();
+    HyphaPluginConfig *getInstance(std::string id);
+
     QWidget *widget();
 
 private:
-    QString language;
+    WaterSensorWidget * waterSensorWidget = nullptr;
+    std::string language;
 };
 }
 }

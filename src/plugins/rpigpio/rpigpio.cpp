@@ -5,26 +5,26 @@
 #include <QtCore/QJsonObject>
 #include <QtCore/QJsonArray>
 #include <QtCore/QDebug>
-#include "plugin/hyphaplugin.h"
+#include <Poco/ClassLibrary.h>
 #include "rpigpio.h"
 #include "rpigpiowidget.h"
 
+using namespace hypha::plugin;
 using namespace hypha::plugin::rpigpio;
 
-void RpiGpio::loadConfig(QString json)
+void RpiGpio::loadConfig(std::string json)
 {
 
 }
 
-QString RpiGpio::getConfig()
+std::string RpiGpio::getConfig()
 {
     return "{}";
 }
 
-hypha::plugin::HyphaPlugin *RpiGpio::getInstance(QString id, QObject *parent)
+HyphaPluginConfig *RpiGpio::getInstance(std::string id)
 {
     RpiGpio *instance = new RpiGpio();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -33,3 +33,7 @@ QWidget *RpiGpio::widget()
 {
     return new RpiGpioWidget();
 }
+
+POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_EXPORT_CLASS(RpiGpio)
+POCO_END_MANIFEST

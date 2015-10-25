@@ -1,8 +1,8 @@
+#include <hypha/database/database.h>
 #include "connectionitem.h"
-#include "database/database.h"
 #include "ui_connectionitem.h"
 
-ConnectionItem::ConnectionItem(QString id, QString handlerId, QString pluginId, Database *database, QWidget *parent):
+ConnectionItem::ConnectionItem(QString id, QString handlerId, QString pluginId, hypha::database::Database *database, QWidget *parent):
     QWidget(parent),
     ui(new Ui::ConnectionItem)
 {
@@ -27,8 +27,8 @@ void ConnectionItem::init()
 
 void ConnectionItem::deleteFromDatabase()
 {
-    QSqlQuery query = database->getQuery();
-    query.prepare("delete from connection where id = :id;");
-    query.bindValue(":id", this->id);query.bindValue(":id", this->id);
-    query.exec();
+    Poco::Data::Statement statement = database->getStatement();
+    statement << "delete from connection where id = ?;",
+            Poco::Data::use(id.toStdString());
+    statement.execute();
 }

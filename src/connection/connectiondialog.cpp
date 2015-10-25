@@ -1,12 +1,12 @@
-#include <QtSql/QSqlQuery>
-#include "plugin/pluginloader.h"
-#include "handler/handlerloader.h"
-#include "database/database.h"
+#include <Poco/Data/RecordSet.h>
+#include <hypha/plugin/pluginloader.h>
+#include <hypha/handler/handlerloader.h>
+#include <hypha/database/database.h>
 #include "connectiondialog.h"
 #include "connectionitem.h"
 #include "ui_connectiondialog.h"
 
-ConnectionDialog::ConnectionDialog(hypha::handler::HandlerLoader *handlerLoader, hypha::plugin::PluginLoader *pluginLoader, Database *database, QWidget *parent) :
+ConnectionDialog::ConnectionDialog(hypha::handler::HandlerLoader *handlerLoader, hypha::plugin::PluginLoader *pluginLoader, hypha::database::Database *database, QWidget *parent) :
 QDialog(parent),
 ui(new Ui::ConnectionDialog)
 {
@@ -28,25 +28,32 @@ void ConnectionDialog::init()
     ui->handlerComboBox->clear();
     ui->pluginComboBox->clear();
     for(hypha::handler::HyphaHandler * handler: handlerLoader->getInstances()){
-        ui->handlerComboBox->addItem(handler->getId());
+        ui->handlerComboBox->addItem(QString::fromStdString(handler->getId()));
     }
     for(hypha::plugin::HyphaPlugin * plugin: pluginLoader->getInstances()){
-        ui->pluginComboBox->addItem(plugin->getId());
+        ui->pluginComboBox->addItem(QString::fromStdString(plugin->getId()));
     }
 
-    QString queryString = "SELECT id, handler_id, plugin_id FROM connection;";
-    QSqlQuery query = database->getQuery();
-    query.exec(queryString);
-    while( query.next() ){
-        QString id = query.value(0).toString();
-        QString handlerId = query.value(1).toString();
-        QString pluginId = query.value(2).toString();
+    Poco::Data::Statement statement = database->getStatement();
+    statement << "SELECT id, handler_id, plugin_id FROM connection;";
+    statement.execute();
+    Poco::Data::RecordSet rs(statement);
+    bool more = rs.moveFirst();
+    while(more) {
+        std::string id = rs[0].convert<std::string>();
+        std::string handlerId = rs[1].convert<std::string>();
+        std::string pluginId = rs[2].convert<std::string>();
 
         QListWidgetItem *item = new QListWidgetItem(ui->listWidget);
         ui->listWidget->addItem(item);
-        ConnectionItem *connectionItem = new ConnectionItem(id, handlerId, pluginId, database);
+        ConnectionItem *connectionItem = new ConnectionItem(
+                    QString::fromStdString(id),
+                    QString::fromStdString(handlerId),
+                    QString::fromStdString(pluginId), database);
         item->setSizeHint(connectionItem->minimumSizeHint());
         ui->listWidget->setItemWidget(item, connectionItem);
+
+        more = rs.moveNext();
     }
 }
 
@@ -61,10 +68,10 @@ void ConnectionDialog::on_deleteButton_clicked()
 
 void ConnectionDialog::on_addButton_clicked()
 {
-    QSqlQuery query = database->getQuery();
-    query.prepare("INSERT INTO connection(handler_id,plugin_id) values(:handler_id,:plugin_id);");
-    query.bindValue(":handler_id",ui->handlerComboBox->currentText());
-    query.bindValue(":plugin_id", ui->pluginComboBox->currentText());
-    query.exec();
+    Poco::Data::Statement statement = database->getStatement();
+    statement << "INSERT INTO connection(handler_id,plugin_id) values(?, ?);",
+            Poco::Data::use(ui->handlerComboBox->currentText().toStdString()),
+            Poco::Data::use(ui->pluginComboBox->currentText().toStdString());
+    statement.execute();
     init();
 }

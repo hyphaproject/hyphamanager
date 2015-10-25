@@ -33,7 +33,7 @@ void PluginItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
     pen.setColor(QColor(0,0,0));
     pen.setWidth(1);
     painter->setPen(pen);
-    painter->drawText(10,10, plugin->getId());
+    painter->drawText(10,10, QString::fromStdString(plugin->getId()));
 }
 
 void PluginItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
@@ -42,7 +42,7 @@ void PluginItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     menu.addAction("Edit");
     QAction *a = menu.exec(event->screenPos());
     if(a){
-        wnd->moveTab(plugin->getId());
+        wnd->moveTab(QString::fromStdString(plugin->getId()));
     }
 }
 
@@ -60,7 +60,7 @@ void PluginItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 void PluginItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mousePressEvent(event);
-    QString url = "http://" + plugin->getHost() + ":47965/statusmessage/" + plugin->getId();
+    QString url = "http://" + QString::fromStdString(plugin->getHost()) + ":47965/statusmessage/" + QString::fromStdString(plugin->getId());
     wnd->setStatusMessageUrl(url);
 }
 

@@ -6,12 +6,10 @@
 #include <QtCore/QThread>
 #include <QtCore/QDebug>
 #include <QtCore/QTimer>
-#include "../../plugin/hyphaplugin.h"
-#include "../../plugin/pluginloader.h"
+#include <Poco/ClassLibrary.h>
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
 #include "dooropener.h"
-#include "../../database/database.h"
-#include "../../database/userdatabase.h"
-
 
 using namespace hypha::handler;
 using namespace hypha::handler::dooropener;
@@ -27,27 +25,26 @@ DoorOpener::~DoorOpener()
 
 }
 
-void DoorOpener::parse(QString message){
+void DoorOpener::parse(std::string message){
 
 }
 
-void DoorOpener::loadConfig(QString config)
+void DoorOpener::loadConfig(std::string config)
 {
-    doorWidget->setId(id);
+    doorWidget->setId(QString::fromStdString(id));
     doorWidget->setDatabase(database);
     doorWidget->setUserDatabase(userDatabase);
-    doorWidget->loadConfig(config);
+    doorWidget->loadConfig(QString::fromStdString(config));
 }
 
-QString DoorOpener::getConfig()
+std::string DoorOpener::getConfig()
 {
-    return doorWidget->getConfig();
+    return doorWidget->getConfig().toStdString();
 }
 
-HyphaHandler *DoorOpener::getInstance(QString id, QObject *parent)
+HyphaHandlerConfig *DoorOpener::getInstance(std::string id)
 {
     DoorOpener *dooropener = new DoorOpener();
-    dooropener->setParent(parent);
     dooropener->setId(id);
     return dooropener;
 }
@@ -56,3 +53,7 @@ QWidget *DoorOpener::widget()
 {
     return doorWidget;
 }
+
+POCO_BEGIN_MANIFEST(HyphaHandler)
+POCO_EXPORT_CLASS(DoorOpener)
+POCO_END_MANIFEST

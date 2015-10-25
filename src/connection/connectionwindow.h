@@ -7,7 +7,6 @@
 #include <QtCore/QMap>
 #include <QtWidgets/QGraphicsScene>
 #include "../main/instance.h"
-#include "../database/database.h"
 #include "handleritem.h"
 #include "pluginitem.h"
 

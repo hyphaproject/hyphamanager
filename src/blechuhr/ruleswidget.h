@@ -2,7 +2,7 @@
 #define RULESWIDGET_H
 
 #include <QtWidgets/QWidget>
-#include "database/database.h"
+#include <hypha/database/database.h>
 
 namespace Ui {
 class RulesWidget;
@@ -13,7 +13,7 @@ class RulesWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit RulesWidget(QString username, Database * database, QWidget *parent = 0);
+    explicit RulesWidget(QString username, hypha::database::Database * database, QWidget *parent = 0);
     ~RulesWidget();
     void init();
     void loadRules();
@@ -31,7 +31,7 @@ private slots:
 
 protected:
     QString username;
-    Database *database;
+    hypha::database::Database *database;
 };
 
 #endif // RULESWIDGET_H

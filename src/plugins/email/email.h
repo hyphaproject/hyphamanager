@@ -1,24 +1,20 @@
 #ifndef EMAIL_H
 #define EMAIL_H
-#include <QtCore/QObject>
-#include "plugin/hyphaplugin.h"
+#include "plugin/hyphapluginconfig.h"
 #include "emailwidget.h"
 namespace hypha{
 namespace plugin{
 namespace email{
-class EMail : public HyphaPlugin
+class EMail : public HyphaPluginConfig
 {
-Q_OBJECT
-Q_PLUGIN_METADATA(IID "hypha.email" FILE "email.json")
-Q_INTERFACES(hypha::plugin::HyphaPlugin)
 public:
-    QString getName(){ return "email"; }
-    QString getTitle() { return "EMail"; }
-    QString getVersion() { return "0.1"; }
-    QString getDescription() { return "Plugin to send emails.";}
-    void loadConfig(QString json);
-    QString getConfig();
-    HyphaPlugin *getInstance(QString id, QObject *parent);
+    std::string name(){ return "email"; }
+    std::string getTitle() { return "EMail"; }
+    std::string getVersion() { return "0.1"; }
+    std::string getDescription() { return "Plugin to send emails.";}
+    void loadConfig(std::string json);
+    std::string getConfig();
+    HyphaPluginConfig *getInstance(std::string id);
     EMailWidget * emailWidget = 0;
     QWidget *widget();
 

@@ -1,3 +1,4 @@
+#include <hypha/database/database.h>
 #include "workingtimeitem.h"
 #include "ui_workingtimeitem.h"
 
@@ -5,16 +6,12 @@ WorkingTimeItem::WorkingTimeItem(){
 
 }
 
-WorkingTimeItem::WorkingTimeItem(QString id)
-{
+WorkingTimeItem::WorkingTimeItem(QString id) {
     this->id = id;
 }
 
-
-
-WorkingTimeItem::WorkingTimeItem(QString username, QDateTime start, QDateTime end, Database *database, QWidget *parent):    QWidget(parent),
-    ui(new Ui::WorkingTimeItem)
-{
+WorkingTimeItem::WorkingTimeItem(QString username, QDateTime start, QDateTime end, hypha::database::Database *database, QWidget *parent):    QWidget(parent),
+    ui(new Ui::WorkingTimeItem) {
     ui->setupUi(this);
     this->database = database;
     this->username = username;
@@ -23,9 +20,8 @@ WorkingTimeItem::WorkingTimeItem(QString username, QDateTime start, QDateTime en
     init();
 }
 
-WorkingTimeItem::WorkingTimeItem(QString username, QDateTime start, QDateTime end, QString type, Database *database, QWidget *parent):    QWidget(parent),
-    ui(new Ui::WorkingTimeItem)
-{
+WorkingTimeItem::WorkingTimeItem(QString username, QDateTime start, QDateTime end, QString type, hypha::database::Database *database, QWidget *parent):    QWidget(parent),
+    ui(new Ui::WorkingTimeItem) {
     ui->setupUi(this);
     this->database = database;
     this->username = username;
@@ -35,9 +31,8 @@ WorkingTimeItem::WorkingTimeItem(QString username, QDateTime start, QDateTime en
     init();
 }
 
-WorkingTimeItem::WorkingTimeItem(QString id, QString username, QDateTime start, QDateTime end, QString type, Database *database, QWidget *parent):    QWidget(parent),
-    ui(new Ui::WorkingTimeItem)
-{
+WorkingTimeItem::WorkingTimeItem(QString id, QString username, QDateTime start, QDateTime end, QString type, hypha::database::Database *database, QWidget *parent):    QWidget(parent),
+    ui(new Ui::WorkingTimeItem) {
     ui->setupUi(this);
     this->id = id;
     this->username = username;
@@ -48,39 +43,35 @@ WorkingTimeItem::WorkingTimeItem(QString id, QString username, QDateTime start, 
     init();
 }
 
-WorkingTimeItem::~WorkingTimeItem()
-{
+WorkingTimeItem::~WorkingTimeItem() {
     delete ui;
 }
 
-void WorkingTimeItem::save()
-{
-    QSqlQuery query = database->getQuery();
+void WorkingTimeItem::save() {
+    Poco::Data::Statement statement = database->getStatement();
     if(id.isEmpty()){
-        query.prepare("insert into workingtime(username, type, start, end) values(:username, :type, :start, :end);");
-        query.bindValue(":username", this->username);
-        query.bindValue(":type", ui->typeComboBox->currentText());
-        query.bindValue(":start", ui->startDateTimeEdit->dateTime().toUTC());
-        query.bindValue(":end", ui->endDateTimeEdit->dateTime().toUTC());
+        statement << "insert into workingtime(username, type, start, end) values(?, ?, ?, ?);",
+                Poco::Data::use(this->username.toStdString()),Poco::Data::use(this->ui->typeComboBox->currentText().toStdString()),
+                Poco::Data::use(ui->startDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                Poco::Data::use(ui->endDateTimeEdit->dateTime().toUTC().toString().toStdString());
     }else{
-        query.prepare("update workingtime set username=:username, type=:type, start=:start, end=:end where id = :id;");
-        query.bindValue(":username", this->username);
-        query.bindValue(":type", ui->typeComboBox->currentText());
-        query.bindValue(":start", ui->startDateTimeEdit->dateTime().toUTC());
-        query.bindValue(":end", ui->endDateTimeEdit->dateTime().toUTC());
-        query.bindValue(":id", this->id);
+        statement << "update workingtime set username=?, type=?, start=?, end=? where id=?;",
+                Poco::Data::use(this->username.toStdString()),Poco::Data::use(this->ui->typeComboBox->currentText().toStdString()),
+                Poco::Data::use(ui->startDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                Poco::Data::use(ui->endDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                Poco::Data::use(this->id.toStdString());
     }
-    query.exec();
+    statement.execute();
 }
 
 void WorkingTimeItem::deleteFromDatabase()
 {
-    QSqlQuery query = database->getQuery();
     if(id.isEmpty()){
     }else{
-        query.prepare("delete from workingtime where id = :id;");
-        query.bindValue(":id", this->id);
-        query.exec();
+        Poco::Data::Statement statement = database->getStatement();
+        statement << "delete from workingtime where id = ?;",
+                Poco::Data::use(this->id.toStdString());
+        statement.execute();
     }
 }
 

@@ -44,7 +44,7 @@
    <item row="0" column="0" colspan="3">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabFile">
       <attribute name="title">
@@ -54,7 +54,7 @@
        <item>
         <widget class="QLineEdit" name="configFileEdit">
          <property name="text">
-          <string>hypha.ini</string>
+          <string>hypha.xml</string>
          </property>
         </widget>
        </item>

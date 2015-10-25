@@ -1,22 +1,29 @@
-
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
+#include <hypha/settings/hyphasettings.h>
+#include <hypha/settings/databasesettings.h>
+#include <hypha/settings/handlersettings.h>
+#include <hypha/settings/pluginsettings.h>
+#include <hypha/handler/handlerloader.h>
+#include <hypha/plugin/pluginloader.h>
 #include "instance.h"
 
 Instance::Instance(QString filename, QObject *parent): QObject(parent)
 {
     this->filename = filename;
-    managerSettings = new HyphaManagerSettings(filename, this);
+    managerSettings = new hypha::settings::HyphaSettings(filename.toStdString());
     managerSettings->load();
-    databaseSettings = new DatabaseSettings(managerSettings, this);
-    database = Database::instance(databaseSettings, this);
-    userDatabaseSettings = new UserDatabaseSettings(managerSettings, this);
-    userDatabase = UserDatabase::instance(userDatabaseSettings, this);
+    databaseSettings = new hypha::settings::DatabaseSettings(managerSettings);
+    database = new hypha::database::Database(databaseSettings);
+    userDatabaseSettings = new hypha::settings::UserDatabaseSettings(managerSettings);
+    userDatabase = hypha::database::UserDatabase::factoreInstance(userDatabaseSettings);
     //
-    handlerSettings = new HandlerSettings(database);
-    pluginSettings = new PluginSettings(database);
-    handlerLoader = new hypha::handler::HandlerLoader(this);
-    handlerLoader->loadInstances();
+    handlerSettings = new hypha::settings::HandlerSettings(database);
+    pluginSettings = new hypha::settings::PluginSettings(database);
+    handlerLoader = new hypha::handler::HandlerLoader(handlerSettings);
+    handlerLoader->loadAllInstances();
     pluginLoader = new hypha::plugin::PluginLoader(pluginSettings);
-    pluginLoader->loadInstances();
+    pluginLoader->loadAllInstances();
 
 
 }
@@ -28,27 +35,27 @@ Instance::~Instance()
     //delete userDatabase;
 }
 
-HyphaManagerSettings *Instance::getClientSettings()
+hypha::settings::HyphaSettings *Instance::getClientSettings()
 {
     return managerSettings;
 }
 
-DatabaseSettings *Instance::getDatabaseSettings()
+hypha::settings::DatabaseSettings *Instance::getDatabaseSettings()
 {
     return databaseSettings;
 }
 
-UserDatabase *Instance::getUserDatabase()
+hypha::database::UserDatabase *Instance::getUserDatabase()
 {
     return userDatabase;
 }
 
-Database *Instance::getDatabase()
+hypha::database::Database *Instance::getDatabase()
 {
     return database;
 }
 
-HandlerSettings *Instance::getHandlerSettings()
+hypha::settings::HandlerSettings *Instance::getHandlerSettings()
 {
     return handlerSettings;
 }

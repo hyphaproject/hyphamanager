@@ -1,29 +1,26 @@
 #ifndef EMAIL_H
 #define EMAIL_H
-#include <QtCore/QObject>
-#include "plugin/hyphaplugin.h"
+#include "plugin/hyphapluginconfig.h"
 #include "dht11widget.h"
 namespace hypha{
 namespace plugin{
 namespace dht11{
-class Dht11 : public HyphaPlugin
+class Dht11 : public HyphaPluginConfig
 {
-Q_OBJECT
-Q_PLUGIN_METADATA(IID "hypha.dht11" FILE "dht11.json")
-Q_INTERFACES(hypha::plugin::HyphaPlugin)
 public:
-    QString getName(){ return "dht11"; }
-    QString getTitle() { return "Dht11"; }
-    QString getVersion() { return "0.1"; }
-    QString getDescription() { return "Read Temperature and Humidity.";}
-    void loadConfig(QString json);
-    QString getConfig();
-    HyphaPlugin *getInstance(QString id, QObject *parent);
-    Dht11Widget * dht11Widget = 0;
+    std::string name(){ return "dht11"; }
+    std::string getTitle() { return "Dht11"; }
+    std::string getVersion() { return "0.1"; }
+    std::string getDescription() { return "Read Temperature and Humidity.";}
+    void loadConfig(std::string json);
+    std::string getConfig();
+    HyphaPluginConfig *getInstance(std::string id);
+
     QWidget *widget();
 
 private:
-    QString language;
+    Dht11Widget * dht11Widget = nullptr;
+    std::string language;
 };
 }
 }

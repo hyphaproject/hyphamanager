@@ -1,3 +1,4 @@
+#include <hypha/database/database.h>
 #include "rulesitem.h"
 #include "ui_rulesitem.h"
 
@@ -7,7 +8,7 @@ RulesItem::RulesItem(QWidget *parent) :
 {
     ui->setupUi(this);
 }
-RulesItem::RulesItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::RTYPE type, Database *database, QWidget *parent):
+RulesItem::RulesItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::RTYPE type, hypha::database::Database *database, QWidget *parent):
     QWidget(parent),
     ui(new Ui::RulesItem)
 {
@@ -21,7 +22,7 @@ RulesItem::RulesItem(QString username, QDateTime start, QDateTime end, hypha::bl
     init();
 }
 
-RulesItem::RulesItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::RTYPE type, Database *database, QWidget *parent):
+RulesItem::RulesItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::RTYPE type, hypha::database::Database *database, QWidget *parent):
     QWidget(parent),
     ui(new Ui::RulesItem)
 {
@@ -43,32 +44,32 @@ RulesItem::~RulesItem()
 
 void RulesItem::save()
 {
-    QSqlQuery query = database->getQuery();
+    Poco::Data::Statement statement = database->getStatement();
     if(id.isEmpty()){
-        query.prepare("insert into rules(username, type, start, end) values(:username, :type, :start, :end);");
-        query.bindValue(":username", this->username);
-        query.bindValue(":type", ui->typeComboBox->currentText());
-        query.bindValue(":start", ui->startDateTimeEdit->dateTime().toUTC());
-        query.bindValue(":end", ui->endDateTimeEdit->dateTime().toUTC());
+        statement << "insert into rules(username, type, start, end) values(?, ?, ?, ?);",
+                Poco::Data::use(username.toStdString()),
+                Poco::Data::use(ui->typeComboBox->currentText().toStdString()),
+                Poco::Data::use(ui->startDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                Poco::Data::use(ui->endDateTimeEdit->dateTime().toUTC().toString().toStdString());
     }else{
-        query.prepare("update rules set username=:username, type=:type, start=:start, end=:end where id = :id;");
-        query.bindValue(":username", this->username);
-        query.bindValue(":type", ui->typeComboBox->currentText());
-        query.bindValue(":start", ui->startDateTimeEdit->dateTime().toUTC());
-        query.bindValue(":end", ui->endDateTimeEdit->dateTime().toUTC());
-        query.bindValue(":id", this->id);
+        statement << "insert into rules(username, type, start, end) values(?, ?, ?, ?);",
+                Poco::Data::use(username.toStdString()),
+                Poco::Data::use(ui->typeComboBox->currentText().toStdString()),
+                Poco::Data::use(ui->startDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                Poco::Data::use(ui->endDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                Poco::Data::use(id.toStdString());
     }
-    query.exec();
+    statement.execute();
 }
 
 void RulesItem::deleteFromDatabase()
 {
-    QSqlQuery query = database->getQuery();
     if(id.isEmpty()){
     }else{
-        query.prepare("delete from rules where id = :id;");
-        query.bindValue(":id", this->id);
-        query.exec();
+        Poco::Data::Statement statement = database->getStatement();
+        statement << "delete from rules where id = ?;",
+                Poco::Data::use(this->id.toStdString());
+        statement.execute();
     }
 }
 

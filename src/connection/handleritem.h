@@ -3,7 +3,7 @@
 
 #include <QtWidgets/QGraphicsItem>
 #include <QtCore/QList>
-#include "../handler/hyphahandler.h"
+#include <hypha/handler/hyphahandler.h>
 
 using namespace hypha::handler;
 

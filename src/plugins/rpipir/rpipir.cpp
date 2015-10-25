@@ -2,28 +2,27 @@
 #include <QtCore/QProcess>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include "plugin/hyphaplugin.h"
+#include <Poco/ClassLibrary.h>
 #include "rpipir.h"
 #include "rpipirwidget.h"
 
 using namespace hypha::plugin;
 using namespace hypha::plugin::rpipir;
 
-void RpiPir::loadConfig(QString json)
+void RpiPir::loadConfig(std::string json)
 {
     widget();
-    rpipirWidget->loadConfig(json);
+    rpipirWidget->loadConfig(QString::fromStdString(json));
 }
 
-QString RpiPir::getConfig()
+std::string RpiPir::getConfig()
 {
-    return rpipirWidget->getConfig();
+    return rpipirWidget->getConfig().toStdString();
 }
 
-HyphaPlugin *RpiPir::getInstance(QString id, QObject *parent)
+HyphaPluginConfig *RpiPir::getInstance(std::string id)
 {
     RpiPir *instance = new RpiPir();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -34,3 +33,7 @@ QWidget *RpiPir::widget()
         rpipirWidget = new RpiPirWidget();
     return rpipirWidget;
 }
+
+POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_EXPORT_CLASS(RpiPir)
+POCO_END_MANIFEST

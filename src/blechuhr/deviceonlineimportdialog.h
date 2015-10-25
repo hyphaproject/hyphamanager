@@ -2,10 +2,18 @@
 #define DEVICEONLINEIMPORTDIALOG_H
 
 #include <QtWidgets/QDialog>
-#include "../database/database.h"
-#include "../database/userdatabase.h"
-#include "../settings/hyphamanagersettings.h"
 #include "model/workingtime.h"
+
+namespace hypha {
+namespace database {
+    class Database;
+    class UserDatabase;
+}
+
+namespace settings {
+    class HyphaSettings;
+}
+}
 
 namespace Ui {
 class DeviceOnlineImportDialog;
@@ -16,7 +24,7 @@ class DeviceOnlineImportDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit DeviceOnlineImportDialog(HyphaManagerSettings * settings, Database *database, UserDatabase * userDatabase, QWidget *parent = 0);
+    explicit DeviceOnlineImportDialog(hypha::settings::HyphaSettings * settings, hypha::database::Database *database, hypha::database::UserDatabase * userDatabase, QWidget *parent = 0);
     ~DeviceOnlineImportDialog();
 
 private slots:
@@ -40,9 +48,9 @@ private:
     void init();
     Ui::DeviceOnlineImportDialog *ui;
     QString username;
-    Database * database;
-    UserDatabase *userDatabase;
-    HyphaManagerSettings * settings;
+    hypha::database::Database * database;
+    hypha::database::UserDatabase *userDatabase;
+    hypha::settings::HyphaSettings * settings;
     QList<WorkingTime*> times;
 };
 

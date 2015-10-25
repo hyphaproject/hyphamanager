@@ -4,26 +4,26 @@
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 #include <QtCore/QJsonArray>
+#include <Poco/ClassLibrary.h>
 
-#include "plugin/hyphaplugin.h"
 #include "rfid.h"
 #include "rfidwidget.h"
 
+using namespace hypha::plugin;
 using namespace hypha::plugin::rfid;
 
-void RFID::loadConfig(QString json)
+void RFID::loadConfig(std::string json)
 {
 }
 
-QString RFID::getConfig()
+std::string RFID::getConfig()
 {
     return "{}";
 }
 
-hypha::plugin::HyphaPlugin *RFID::getInstance(QString id, QObject *parent)
+HyphaPluginConfig *RFID::getInstance(std::string id)
 {
     RFID *instance = new RFID();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -32,3 +32,7 @@ QWidget *RFID::widget()
 {
     return new RFIDWidget();
 }
+
+POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_EXPORT_CLASS(RFID)
+POCO_END_MANIFEST

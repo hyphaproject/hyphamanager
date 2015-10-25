@@ -2,28 +2,27 @@
 #include <QtCore/QProcess>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include "plugin/hyphaplugin.h"
+#include <Poco/ClassLibrary.h>
 #include "email.h"
 
 using namespace hypha::plugin;
 using namespace hypha::plugin::email;
 
-void EMail::loadConfig(QString json)
+void EMail::loadConfig(std::string json)
 {
     widget();
-    emailWidget->setHost(host);
-    emailWidget->loadConfig(json);
+    emailWidget->setHost(QString::fromStdString(host));
+    emailWidget->loadConfig(QString::fromStdString(json));
 }
 
-QString EMail::getConfig()
+std::string EMail::getConfig()
 {
-    return emailWidget->getConfig();
+    return emailWidget->getConfig().toStdString();
 }
 
-HyphaPlugin *EMail::getInstance(QString id, QObject *parent)
+HyphaPluginConfig *EMail::getInstance(std::string id)
 {
     EMail *instance = new EMail();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -34,3 +33,7 @@ QWidget *EMail::widget()
         emailWidget = new EMailWidget();
     return emailWidget;
 }
+
+POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_EXPORT_CLASS(EMail)
+POCO_END_MANIFEST

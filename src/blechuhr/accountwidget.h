@@ -2,7 +2,12 @@
 #define ACCOUNTWIDGET_H
 
 #include <QtWidgets/QWidget>
-#include "database/database.h"
+
+namespace hypha {
+namespace database {
+    class Database;
+}
+}
 
 namespace Ui {
 class AccountWidget;
@@ -13,7 +18,7 @@ class AccountWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit AccountWidget(QString username, Database * database, QWidget *parent = 0);
+    explicit AccountWidget(QString username, hypha::database::Database * database, QWidget *parent = 0);
     ~AccountWidget();
     void init();
     void loadAccounts();
@@ -28,7 +33,7 @@ private slots:
 
 protected:
     QString username;
-    Database *database;
+    hypha::database::Database *database;
 
 private:
     Ui::AccountWidget *ui;

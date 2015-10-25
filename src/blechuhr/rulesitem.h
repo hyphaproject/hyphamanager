@@ -3,8 +3,13 @@
 
 #include <QtWidgets/QWidget>
 #include <QtCore/QDateTime>
-#include "../database/database.h"
 #include "model/type.h"
+
+namespace hypha {
+namespace database {
+    class Database;
+}
+}
 
 namespace Ui {
 class RulesItem;
@@ -16,8 +21,8 @@ class RulesItem : public QWidget
 
 public:
     explicit RulesItem(QWidget *parent = 0);
-    RulesItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::RTYPE type, Database *database, QWidget *parent = 0);
-    RulesItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::RTYPE type, Database *database, QWidget *parent = 0);
+    RulesItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::RTYPE type, hypha::database::Database *database, QWidget *parent = 0);
+    RulesItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::RTYPE type, hypha::database::Database *database, QWidget *parent = 0);
     ~RulesItem();
 
 
@@ -33,7 +38,7 @@ private:
     QDateTime start;
     QDateTime end;
     hypha::blechuhr::RTYPE type;
-    Database *database;
+    hypha::database::Database *database;
 };
 
 #endif // RULESITEM_H

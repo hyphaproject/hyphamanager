@@ -32,7 +32,7 @@ void HandlerItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     pen.setColor(QColor(0,0,0));
     pen.setWidth(1);
     painter->setPen(pen);
-    painter->drawText(10,10, handler->getId());
+    painter->drawText(10,10, QString::fromStdString(handler->getId()));
 }
 
 void HandlerItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
@@ -41,7 +41,7 @@ void HandlerItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
     menu.addAction("Edit");
     QAction *a = menu.exec(event->screenPos());
     if(a){
-        wnd->moveTab(handler->getId());
+        wnd->moveTab(QString::fromStdString(handler->getId()));
     }
 }
 

@@ -5,6 +5,9 @@
 #include <QtWidgets/QMessageBox>
 #include <QtPrintSupport/QPrinter>
 #include <QtGui/QPainter>
+#include <Poco/Data/RecordSet.h>
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
 #include "blechuhrwindow.h"
 #include "workingtimealgo.h"
 #include "summarymonth.h"
@@ -41,7 +44,10 @@ BlechuhrWindow::~BlechuhrWindow()
 void BlechuhrWindow::reload()
 {
     ui->userList->clear();
-    ui->userList->addItems(instance->getUserDatabase()->getUsers());
+    for(std::string user: instance->getUserDatabase()->getUsers()) {
+        ui->userList->addItem(QString::fromStdString(user));
+    }
+
 }
 
 void BlechuhrWindow::reloadTab(int index)
@@ -166,22 +172,32 @@ void BlechuhrWindow::addDayRows()
 void BlechuhrWindow::addDayWorkingTime()
 {
     ui->dayListWidget->clear();
-    QString queryString = "SELECT id, start, end, type FROM workingtime WHERE username = '" + ui->userList->currentItem()->text() + "' AND DATE(start) = '"
-            + ui->dayCalendarWidget->selectedDate().toString("yyyy-MM-dd")+"'";
-    QSqlQuery query = instance->getDatabase()->getQuery();
-    query.exec(queryString);
-    while( query.next() ){
-        QString id = query.value(0).toString();
-        QDateTime start = query.value(1).toDateTime();
-        start.setTimeSpec(Qt::UTC);
-        QDateTime end = query.value(2).toDateTime();
-        end.setTimeSpec(Qt::UTC);
-        QString type = query.value(3).toString();
+
+    Poco::Data::Statement statement = instance->getDatabase()->getStatement();
+    statement << "SELECT id, start, end, type FROM workingtime WHERE username = '" + ui->userList->currentItem()->text().toStdString()
+                 + "' AND DATE(start) = '" + ui->dayCalendarWidget->selectedDate().toString("yyyy-MM-dd").toStdString() +"'";
+    statement.execute();
+    Poco::Data::RecordSet rs(statement);
+    bool more = rs.moveFirst();
+    while(more) {
+        std::string id = rs[0].convert<std::string>();
+        std::string start = rs[1].convert<std::string>();
+        QDateTime startTime = QDateTime::fromString(QString::fromStdString(start));
+        std::string end = rs[2].convert<std::string>();
+        QDateTime endTime = QDateTime::fromString(QString::fromStdString(end));
+        std::string type = rs[3].convert<std::string>();
+
+        startTime.setTimeSpec(Qt::UTC);
+        endTime.setTimeSpec(Qt::UTC);
+
         QListWidgetItem *item = new QListWidgetItem(ui->dayListWidget);
         ui->dayListWidget->addItem(item);
-        WorkingTimeItem *workingTimeItem = new WorkingTimeItem(id, ui->userList->currentItem()->text(), start, end, type,instance->getDatabase());
+        WorkingTimeItem *workingTimeItem = new WorkingTimeItem(QString::fromStdString(id), ui->userList->currentItem()->text(), startTime,
+                                                               endTime, QString::fromStdString(type),instance->getDatabase());
         item->setSizeHint(workingTimeItem->minimumSizeHint());
         ui->dayListWidget->setItemWidget(item, workingTimeItem);
+
+        more = rs.moveNext();
     }
 }
 

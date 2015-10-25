@@ -2,28 +2,27 @@
 #include <QtCore/QProcess>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include "plugin/hyphaplugin.h"
+#include <Poco/ClassLibrary.h>
 #include "rpiled.h"
 
 using namespace hypha::plugin;
 using namespace hypha::plugin::rpiled;
 
-void RpiLed::loadConfig(QString json)
+void RpiLed::loadConfig(std::string json)
 {
     widget();
-    rpiledWidget->setHost(host);
-    rpiledWidget->loadConfig(json);
+    rpiledWidget->setHost(QString::fromStdString(host));
+    rpiledWidget->loadConfig(QString::fromStdString(json));
 }
 
-QString RpiLed::getConfig()
+std::string RpiLed::getConfig()
 {
-    return rpiledWidget->getConfig();
+    return rpiledWidget->getConfig().toStdString();
 }
 
-HyphaPlugin *RpiLed::getInstance(QString id, QObject *parent)
+HyphaPluginConfig *RpiLed::getInstance(std::string id)
 {
     RpiLed *instance = new RpiLed();
-    instance->setParent(parent);
     instance->setId(id);
     return instance;
 }
@@ -34,3 +33,7 @@ QWidget *RpiLed::widget()
         rpiledWidget = new RpiLedWidget();
     return rpiledWidget;
 }
+
+POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_EXPORT_CLASS(RpiLed)
+POCO_END_MANIFEST

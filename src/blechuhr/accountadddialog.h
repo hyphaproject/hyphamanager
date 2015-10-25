@@ -3,7 +3,12 @@
 
 #include <QtWidgets/QDialog>
 #include "accountitem.h"
-#include "database/database.h"
+
+namespace hypha {
+namespace database {
+    class Database;
+}
+}
 
 namespace Ui {
 class AccountAddDialog;
@@ -14,7 +19,7 @@ class AccountAddDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AccountAddDialog(QString username, QDate date, Database * database, QWidget *parent = 0);
+    explicit AccountAddDialog(QString username, QDate date, hypha::database::Database * database, QWidget *parent = 0);
     ~AccountAddDialog();
 
 private slots:
@@ -25,7 +30,7 @@ private:
     Ui::AccountAddDialog *ui;
     QString username;
     QDate date;
-    Database *database;
+    hypha::database::Database *database;
     AccountItem *accountItem;
 
     };

@@ -3,7 +3,7 @@
 
 #include <QtWidgets/QGraphicsItem>
 #include <QtCore/QList>
-#include "../plugin/hyphaplugin.h"
+#include "../plugin/hyphapluginconfig.h"
 
 using namespace hypha::plugin;
 

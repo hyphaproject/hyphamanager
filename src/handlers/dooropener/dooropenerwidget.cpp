@@ -1,8 +1,7 @@
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 #include <QtWidgets/QInputDialog>
-#include <QtSql/QSqlQuery>
-#include <QtSql/QSqlError>
+#include <Poco/Data/RecordSet.h>
 #include <QDebug>
 #include "dooropenerwidget.h"
 #include "ui_dooropenerwidget.h"
@@ -19,12 +18,12 @@ DoorOpenerWidget::~DoorOpenerWidget()
     delete ui;
 }
 
-void DoorOpenerWidget::setDatabase(Database *database)
+void DoorOpenerWidget::setDatabase(hypha::database::Database *database)
 {
     this->database = database;
 }
 
-void DoorOpenerWidget::setUserDatabase(UserDatabase *userDatabase)
+void DoorOpenerWidget::setUserDatabase(hypha::database::UserDatabase *userDatabase)
 {
     this->userDatabase = userDatabase;
 }
@@ -54,12 +53,18 @@ void DoorOpenerWidget::reloadUser()
 {
     listModel.clear();
     ui->listView->setModel(&listModel);
-    QSqlQuery query = database->getQuery();
-    query.exec("select user,atworktime from dooropener_user where id='"+ id +"'");
-    while( query.next() ){
-        QStandardItem* item = new QStandardItem(query.value(0).toString());
+
+    Poco::Data::Statement statement = database->getStatement();
+    statement << "select user,atworktime from dooropener_user where id='" + id.toStdString() + "'";
+    statement.execute();
+    Poco::Data::RecordSet rs(statement);
+    bool more = rs.moveFirst();
+    while(more) {
+        std::string user = rs[0].convert<std::string>();
+        bool atworktime = rs[1].convert<bool>();
+        QStandardItem* item = new QStandardItem(QString::fromStdString(user));
         item->setCheckable(true);
-        item->setCheckState(query.value(1).toBool()?Qt::Checked:Qt::Unchecked);
+        item->setCheckState(atworktime?Qt::Checked:Qt::Unchecked);
         listModel.appendRow(item);
     }
 }
@@ -74,26 +79,27 @@ QString DoorOpenerWidget::getConfig()
 void DoorOpenerWidget::on_deleteButton_clicked()
 {
     QString user = this->listModel.itemFromIndex(ui->listView->currentIndex())->text();
-    QSqlQuery query = database->getQuery();
-    query.prepare("DELETE FROM dooropener_user WHERE `id`='"+id+"' AND `user`='"+user+"';");
-    qDebug() << user << id;
-    query.exec();
-    qDebug() << query.lastError().text();
+
+    Poco::Data::Statement statement = database->getStatement();
+    statement << "DELETE FROM dooropener_user WHERE `id`='" + id.toStdString() + "' AND `user`='" + user.toStdString() + "';";
+    statement.execute();
+
     reloadUser();
 }
 
 void DoorOpenerWidget::on_addButton_clicked()
 {
+    QStringList users;
+    for(std::string user: userDatabase->getUsers())
+        users.append(QString::fromStdString(user));
     bool ok;
     QString user = QInputDialog::getItem(this, tr("Add User"),
-                                         tr("User:"), userDatabase->getUsers(), 0, false, &ok);
+                                         tr("User:"), users, 0, false, &ok);
     if (ok && !user.isEmpty()){
-        QSqlQuery query = database->getQuery();
-        query.prepare("insert into dooropener_user(id,user,atworktime) values(:id, :user, :atworktime);");
-        query.bindValue(":id",id);
-        query.bindValue(":user",user);
-        query.bindValue(":atworktime",false);
-        query.exec();
+        Poco::Data::Statement statement = database->getStatement();
+        statement << "insert into dooropener_user(id,user,atworktime) values(?, ?, ?);",
+                Poco::Data::use(id.toStdString()), Poco::Data::use(user.toStdString()), Poco::Data::use(false);
+        statement.execute();
         reloadUser();
     }
 }

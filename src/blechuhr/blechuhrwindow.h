@@ -3,7 +3,6 @@
 
 #include <QtWidgets/QWidget>
 #include "../main/instance.h"
-#include "../database/database.h"
 #include "summarywidget.h"
 #include "accountwidget.h"
 #include "ruleswidget.h"

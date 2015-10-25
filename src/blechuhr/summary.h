@@ -1,15 +1,20 @@
 #ifndef SUMMARY_H
 #define SUMMARY_H
 
-#include "../database/database.h"
-#include "../database/userdatabase.h"
 #include <QtCore/QObject>
 #include "workingtimealgo.h"
+
+namespace hypha {
+namespace database {
+    class Database;
+    class UserDatabase;
+}
+}
 
 class Summary
 {
 public:
-    Summary(Database *database, UserDatabase *userDatabase);
+    Summary(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase);
     virtual ~Summary();
 
     void setUsername(QString username);
@@ -18,8 +23,8 @@ public:
     virtual bool calculate() = 0;
 
 protected:
-    Database *database;
-    UserDatabase *userDatabase;
+    hypha::database::Database *database;
+    hypha::database::UserDatabase *userDatabase;
     QString username;
     QDate date;
     WorkingTimeAlgo algo;

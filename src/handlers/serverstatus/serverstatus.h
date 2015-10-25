@@ -2,34 +2,31 @@
 #define SERVERSTATUS_H
 
 #include <QtCore/QObject>
-#include "../../handler/hyphahandler.h"
+#include "../../handler/hyphahandlerconfig.h"
 #include "serverstatuswidget.h"
 
 namespace hypha{
 namespace handler{
 namespace serverstatus{
-class ServerStatus : public HyphaHandler
+class ServerStatus : public HyphaHandlerConfig
 {
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID "hypha.serverstatus" FILE "serverstatus.json")
-    Q_INTERFACES(hypha::handler::HyphaHandler)
 public:
     explicit ServerStatus();
     ~ServerStatus();
     static ServerStatus * instance();
-    QString getName(){ return "serverstatus"; }
-    QString getTitle() { return "Server Status"; }
-    QString getVersion() { return "0.1"; }
-    QString getDescription() { return "Handler to send server status as email.";}
-    void parse(QString message);
-    void loadConfig(QString config);
-    QString getConfig();
-    HyphaHandler *getInstance(QString id, QObject *parent);
+    std::string name(){ return "serverstatus"; }
+    std::string getTitle() { return "Server Status"; }
+    std::string getVersion() { return "0.1"; }
+    std::string getDescription() { return "Handler to send server status as email.";}
+    void parse(std::string message);
+    void loadConfig(std::string config);
+    std::string getConfig();
+    HyphaHandlerConfig *getInstance(std::string id);
 
     QWidget *widget();
 
 protected:
-    ServerStatusWidget *serverStatusWidget = 0;
+    ServerStatusWidget *serverStatusWidget = nullptr;
 
 };
 }

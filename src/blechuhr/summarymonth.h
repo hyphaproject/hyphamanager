@@ -3,10 +3,17 @@
 
 #include "summary.h"
 
+namespace hypha {
+namespace database {
+    class Database;
+    class UserDatabase;
+}
+}
+
 class SummaryMonth: public Summary
 {
 public:
-    SummaryMonth(Database *database, UserDatabase *userDatabase);
+    SummaryMonth(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase);
     ~SummaryMonth();
 
     float getWorkedHours();

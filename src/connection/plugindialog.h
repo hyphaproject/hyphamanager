@@ -3,13 +3,15 @@
 
 #include <QtWidgets/QDialog>
 
-class Database;
 namespace hypha {
 namespace handler {
 class HandlerLoader;
 }
 namespace plugin{
 class PluginLoader;
+}
+namespace database{
+class Database;
 }
 }
 
@@ -22,7 +24,7 @@ class PluginDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PluginDialog(hypha::plugin::PluginLoader * pluginLoader, Database * database, QWidget *parent = 0);
+    explicit PluginDialog(hypha::plugin::PluginLoader * pluginLoader, hypha::database::Database * database, QWidget *parent = 0);
     ~PluginDialog();
     void init();
 
@@ -32,7 +34,7 @@ private slots:
 private:
     Ui::PluginDialog *ui;
     hypha::plugin::PluginLoader *pluginLoader;
-    Database *database;
+    hypha::database::Database *database;
 };
 
 #endif // PLUGINDIALOG_H

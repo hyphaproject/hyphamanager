@@ -1,23 +1,19 @@
 #ifndef RPIGPIO_H
 #define RPIGPIO_H
-#include <QtCore/QObject>
-#include "plugin/hyphaplugin.h"
+#include "plugin/hyphapluginconfig.h"
 namespace hypha{
 namespace plugin{
 namespace rpigpio{
-class RpiGpio : public HyphaPlugin
+class RpiGpio : public HyphaPluginConfig
 {
-Q_OBJECT
-Q_PLUGIN_METADATA(IID "hypha.rpigpio" FILE "rpigpio.json")
-Q_INTERFACES(hypha::plugin::HyphaPlugin)
 public:
-    QString getName(){ return "rpigpio"; }
-    QString getTitle() { return "RPI GPIO"; }
-    QString getVersion() { return "0.1"; }
-    QString getDescription() { return "Plugin to access gpio of the raspberry pi";}
-    void loadConfig(QString json);
-    QString getConfig();
-    HyphaPlugin *getInstance(QString id, QObject *parent);
+    std::string getName(){ return "rpigpio"; }
+    std::string getTitle() { return "RPI GPIO"; }
+    std::string getVersion() { return "0.1"; }
+    std::string getDescription() { return "Plugin to access gpio of the raspberry pi";}
+    void loadConfig(std::string json);
+    std::string getConfig();
+    HyphaPluginConfig *getInstance(std::string id);
 
     QWidget *widget();
 

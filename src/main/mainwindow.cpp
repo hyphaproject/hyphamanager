@@ -64,7 +64,7 @@ void MainWindow::onLanguageChosen(){
 void MainWindow::on_actionOpen_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open Hypha Config"), "", tr("Hypha Config (*.ini)"));
+                                                    tr("Open Hypha Config"), "", tr("Hypha Config (*.xml)"));
     if(fileName.isEmpty()) return;
     instance = new Instance(fileName, this);
     userWindow = new UserWindow(instance);

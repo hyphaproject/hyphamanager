@@ -1,6 +1,8 @@
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
 #include "summary.h"
 
-Summary::Summary(Database *database, UserDatabase *userDatabase)
+Summary::Summary(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase)
 {
     this->database = database;
     this->userDatabase = userDatabase;

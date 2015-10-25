@@ -1,6 +1,9 @@
+#include <Poco/Data/RecordSet.h>
+#include <hypha/database/database.h>
+#include <hypha/database/userdatabase.h>
 #include "deviceonlineimport.h"
 
-DeviceOnlineImport::DeviceOnlineImport(Database *database, UserDatabase *userDatabase)
+DeviceOnlineImport::DeviceOnlineImport(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase)
 {
     this->database = database;
     this->userDatabase = userDatabase;
@@ -21,29 +24,32 @@ DeviceOnlineImport::~DeviceOnlineImport()
 
 }
 
-
 QList<WorkingTime*> DeviceOnlineImport::getMonth()
 {
     times.clear();
-    QString queryString = "SELECT deviceid, time, type FROM deviceonline WHERE MONTH(time) = MONTH('"+date.toString("yyyy-MM-dd")+"') and YEAR(time) = YEAR('"+date.toString("yyyy-MM-dd")+"')";
-    QSqlQuery query = database->getQuery();
-    query.exec(queryString);
-    while( query.next() ){
-        QString device = query.value(0).toString();
-        QDateTime time = query.value(1).toDateTime();
-        time.setTimeSpec(Qt::UTC);
-        QString type = query.value(2).toString();
-        accumulate(device, type, time);
+    Poco::Data::Statement statement = database->getStatement();
+    statement << "SELECT deviceid, time, type FROM deviceonline WHERE MONTH(time) = MONTH('" + date.toString("yyyy-MM-dd").toStdString()
+                 + "') and YEAR(time) = YEAR('" + date.toString("yyyy-MM-dd").toStdString() + "')";
+    statement.execute();
+    Poco::Data::RecordSet rs(statement);
+    bool more = rs.moveFirst();
+    while(more) {
+        std::string device = rs[0].convert<std::string>();
+        std::string time = rs[1].convert<std::string>();
+        QDateTime datetime = QDateTime::fromString(QString::fromStdString(time));
+        std::string type = rs[2].convert<std::string>();
+        datetime.setTimeSpec(Qt::UTC);
+        accumulate(QString::fromStdString(device), QString::fromStdString(type), datetime);
+
+        more = rs.moveNext();
     }
     accumulate();
     return times;
 }
 
-
-
 void DeviceOnlineImport::accumulate(QString device, QString type, QDateTime time)
 {
-    if(userDatabase->getOwnerOfDevice(device) == username || device == "authuser"+username){
+    if(userDatabase->getOwnerOfDevice(device.toStdString()) == username.toStdString() || device.toStdString() == "authuser"+username.toStdString()){
         WorkingTime *wt= new WorkingTime(username, time.toString("yyyy,MM,dd"), time, time);
         if(type == "rfid"){
             this->stopTime.append(wt);
@@ -66,11 +72,11 @@ void DeviceOnlineImport::accumulate(QString username, QDateTime start, QDateTime
 void DeviceOnlineImport::accumulate()
 {
     accumulateStop();
-    foreach(WorkingTime *wt, stopTime){
+    for(WorkingTime *wt: stopTime){
         times.append(wt);
     }
     while(!accumulateContinue());
-    foreach(WorkingTime *wt, continueTime){
+    for(WorkingTime *wt: continueTime){
         times.append(wt);
     }
 }
@@ -80,7 +86,7 @@ bool DeviceOnlineImport::accumulateStop()
     bool start = true;
     WorkingTime *current;
     QList<WorkingTime*> temp;
-    foreach(WorkingTime *wt, stopTime){
+    for(WorkingTime *wt: stopTime){
         if(start){
             current = new WorkingTime(wt);
             start = false;
@@ -104,8 +110,8 @@ bool DeviceOnlineImport::accumulateStop()
 
 bool DeviceOnlineImport::accumulateContinue()
 {
-    foreach(WorkingTime *wt, continueTime){
-        foreach(WorkingTime *wt2, continueTime){
+    for(WorkingTime *wt: continueTime){
+        for(WorkingTime *wt2: continueTime){
             if(wt->belongsTo(*wt2, 300)){
                 WorkingTime *wt1 = new WorkingTime(wt);
                 wt1->accumulate(*wt2);
@@ -118,4 +124,3 @@ bool DeviceOnlineImport::accumulateContinue()
     }
     return true;
 }
-

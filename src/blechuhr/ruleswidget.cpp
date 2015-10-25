@@ -1,10 +1,12 @@
 #include <QtCore/QDate>
+#include <Poco/Data/RecordSet.h>
+#include <hypha/database/database.h>
 #include "ruleswidget.h"
 #include "rulesadddialog.h"
 #include "rulesitem.h"
 #include "ui_ruleswidget.h"
 
-RulesWidget::RulesWidget(QString username, Database *database, QWidget *parent) :
+RulesWidget::RulesWidget(QString username, hypha::database::Database *database, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RulesWidget)
 {
@@ -27,20 +29,25 @@ void RulesWidget::init()
 void RulesWidget::loadRules()
 {
     ui->listWidget->clear();
-    QString queryString = "SELECT id, start, end, type FROM rules WHERE username = '" + this->username + "' ORDER BY start DESC;";
-    QSqlQuery query = database->getQuery();
-    query.exec(queryString);
-    while( query.next() ){
-        QString id = query.value(0).toString();
-        QDateTime start = query.value(1).toDateTime();
-        start.setTimeSpec(Qt::UTC);
-        QDateTime end = query.value(2).toDateTime();
-        end.setTimeSpec(Qt::UTC);
-        QString type = query.value(3).toString();
-        hypha::blechuhr::RTYPE t = hypha::blechuhr::StringToRType(type.toStdString());
+
+    Poco::Data::Statement statement = database->getStatement();
+    statement << "SELECT id, start, end, type FROM rules WHERE username = '" + this->username.toStdString() + "' ORDER BY start DESC;";
+    statement.execute();
+    Poco::Data::RecordSet rs(statement);
+    bool more = rs.moveFirst();
+    while(more) {
+        std::string id = rs[0].convert<std::string>();
+        std::string starttime = rs[1].convert<std::string>();
+        QDateTime startdatetime = QDateTime::fromString(QString::fromStdString(starttime));
+        std::string endtime = rs[2].convert<std::string>();
+        QDateTime enddatetime = QDateTime::fromString(QString::fromStdString(endtime));
+        std::string type = rs[3].convert<std::string>();
+        startdatetime.setTimeSpec(Qt::UTC);
+        enddatetime.setTimeSpec(Qt::UTC);
+        hypha::blechuhr::RTYPE t = hypha::blechuhr::StringToRType(type);
         QListWidgetItem *item = new QListWidgetItem(ui->listWidget);
         ui->listWidget->addItem(item);
-        RulesItem *rulesItem = new RulesItem(id, username, start, end, t, database);
+        RulesItem *rulesItem = new RulesItem(QString::fromStdString(id), username, startdatetime, enddatetime, t, database);
         item->setSizeHint(rulesItem->minimumSizeHint());
         ui->listWidget->setItemWidget(item, rulesItem);
     }

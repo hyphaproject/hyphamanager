@@ -1,38 +1,32 @@
 #ifndef BLECHUHR_H
 #define BLECHUHR_H
 
-#include <QtCore/QObject>
-#include "../../handler/hyphahandler.h"
+#include "../../handler/hyphahandlerconfig.h"
 #include "blechuhrwidget.h"
 
 namespace hypha{
 namespace handler{
 namespace blechuhr{
-class BlechUhr : public HyphaHandler
+class BlechUhr : public HyphaHandlerConfig
 {
-    Q_OBJECT
-    Q_PLUGIN_METADATA(IID "hypha.blechuhr" FILE "blechuhr.json")
-    Q_INTERFACES(hypha::handler::HyphaHandler)
 public:
     explicit BlechUhr();
     ~BlechUhr();
     static BlechUhr * instance();
-    QString getName(){ return "blechuhr"; }
-    QString getTitle() { return "Blechuhr"; }
-    QString getVersion() { return "0.1"; }
-    QString getDescription() { return "Handler like a time recorder.";}
-    void parse(QString message);
-
-    void loadConfig(QString config);
-    QString getConfig();
-    HyphaHandler *getInstance(QString id, QObject *parent);
+    std::string name(){ return "blechuhr"; }
+    std::string getTitle() { return "Blechuhr"; }
+    std::string getVersion() { return "0.1"; }
+    std::string getDescription() { return "Handler like a time recorder.";}
+    void parse(std::string message);
+    void loadConfig(std::string config);
+    std::string getConfig();
+    HyphaHandlerConfig *getInstance(std::string id);
 
     QWidget *widget();
 
-
 private:
 protected:
-    BlechUhrWidget *buwidget;
+    BlechUhrWidget *buwidget = nullptr;
 
 
 };

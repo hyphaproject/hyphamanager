@@ -1,9 +1,9 @@
-#include "handler/handlerloader.h"
-#include "handler/hyphahandler.h"
+#include <hypha/handler/handlerloader.h>
+#include <hypha/handler/hyphahandler.h>
 #include "handlerdialog.h"
 #include "ui_handlerdialog.h"
 
-HandlerDialog::HandlerDialog(hypha::handler::HandlerLoader *handlerLoader, Database *database, QWidget *parent):
+HandlerDialog::HandlerDialog(hypha::handler::HandlerLoader *handlerLoader, hypha::database::Database *database, QWidget *parent):
 QDialog(parent),
 ui(new Ui::HandlerDialog)
 {
@@ -22,18 +22,18 @@ void HandlerDialog::init()
 {
     ui->comboBox->clear();
     for(hypha::handler::HyphaHandler * handler: handlerLoader->getHandlers()){
-        ui->comboBox->addItem(handler->getName());
+        ui->comboBox->addItem(QString::fromStdString(handler->name()));
     }
 }
 
 void HandlerDialog::on_buttonBox_accepted()
 {
-    QSqlQuery query = database->getQuery();
-    query.prepare("INSERT INTO handler(id,host,type) values(:id,:host,:type);");
-    query.bindValue(":id",ui->idEdit->text());
-    query.bindValue(":host", ui->hostEdit->text());
-    query.bindValue(":type", ui->comboBox->currentText());
-    query.exec();
-    handlerLoader->loadInstances();
+    Poco::Data::Statement statement = database->getStatement();
+    statement << "INSERT INTO handler(id,host,type) values(?,?,?);",
+            Poco::Data::use(ui->idEdit->text().toStdString()),
+            Poco::Data::use(ui->hostEdit->text().toStdString()),
+            Poco::Data::use(ui->comboBox->currentText().toStdString());
+    statement.execute();
+    handlerLoader->loadAllInstances();
     init();
 }

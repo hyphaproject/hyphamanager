@@ -1,8 +1,9 @@
+#include <hypha/database/database.h>
 #include "accountadddialog.h"
 #include "ui_accountadddialog.h"
 #include "model/type.h"
 
-AccountAddDialog::AccountAddDialog(QString username, QDate date, Database *database, QWidget *parent):
+AccountAddDialog::AccountAddDialog(QString username, QDate date, hypha::database::Database *database, QWidget *parent):
     QDialog(parent),
     ui(new Ui::AccountAddDialog)
 {
