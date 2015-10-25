@@ -15,6 +15,7 @@ Instance::Instance(QString filename, QObject *parent): QObject(parent)
     managerSettings->load();
     databaseSettings = new hypha::settings::DatabaseSettings(managerSettings);
     database = new hypha::database::Database(databaseSettings);
+    database->connect();
     userDatabaseSettings = new hypha::settings::UserDatabaseSettings(managerSettings);
     userDatabase = hypha::database::UserDatabase::factoreInstance(userDatabaseSettings);
     //
@@ -24,7 +25,6 @@ Instance::Instance(QString filename, QObject *parent): QObject(parent)
     handlerLoader->loadAllInstances();
     pluginLoader = new hypha::plugin::PluginLoader(pluginSettings);
     pluginLoader->loadAllInstances();
-
 
 }
 

@@ -1,4 +1,4 @@
-#include <QtSql/QSqlQuery>
+#include <QtWidgets/QMessageBox>
 #include <hypha/plugin/pluginloader.h>
 #include "plugindialog.h"
 #include "ui_plugindialog.h"
@@ -29,11 +29,15 @@ void PluginDialog::init()
 void PluginDialog::on_buttonBox_accepted()
 {
     Poco::Data::Statement statement = database->getStatement();
-    statement << "INSERT INTO plugins(id,host,type) values(:id,:host,:type);",
-            Poco::Data::use(ui->idEdit->text().toStdString()),
-            Poco::Data::use(ui->hostEdit->text().toStdString()),
-            Poco::Data::use(ui->comboBox->currentText().toStdString());
-    statement.execute();
+    statement << "INSERT INTO plugins(id,host,type) VALUES('"
+                 + ui->idEdit->text().toStdString() + "','"
+                 + ui->hostEdit->text().toStdString() + "','"
+                 + ui->comboBox->currentText().toStdString() + "');";
+    try {
+        statement.execute();
+    } catch (Poco::Exception &e) {
+        QMessageBox::critical(0, "", QString::fromStdString(e.message()) );
+    }
     pluginLoader->loadAllInstances();
     init();
 }

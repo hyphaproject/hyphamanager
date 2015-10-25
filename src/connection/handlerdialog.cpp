@@ -1,3 +1,5 @@
+#include <QtWidgets/QMessageBox>
+#include <Poco/Data/MySQL/MySQLException.h>
 #include <hypha/handler/handlerloader.h>
 #include <hypha/handler/hyphahandler.h>
 #include "handlerdialog.h"
@@ -29,11 +31,16 @@ void HandlerDialog::init()
 void HandlerDialog::on_buttonBox_accepted()
 {
     Poco::Data::Statement statement = database->getStatement();
-    statement << "INSERT INTO handler(id,host,type) values(?,?,?);",
-            Poco::Data::use(ui->idEdit->text().toStdString()),
-            Poco::Data::use(ui->hostEdit->text().toStdString()),
-            Poco::Data::use(ui->comboBox->currentText().toStdString());
-    statement.execute();
+    statement << "INSERT INTO handler(id,host,type) values('"
+                 + ui->idEdit->text().toStdString() + "','"
+                 + ui->hostEdit->text().toStdString() + "','"
+                 + ui->comboBox->currentText().toStdString() + "');";
+    try {
+        statement.execute();
+    } catch (Poco::Exception &e) {
+        QMessageBox::critical(0, "", QString::fromStdString(e.message()) );
+    }
+
     handlerLoader->loadAllInstances();
     init();
 }

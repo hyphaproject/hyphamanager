@@ -52,8 +52,8 @@ bool UserWindow::isOnline(QString username)
     int connections = 0;
     for(std::string device: devices){
         Poco::Data::Statement statement = instance->getDatabase()->getStatement();
-        statement << "select count(id) from deviceonline where deviceid='"+device+"' and DATE(time) = '"
-                     +QDateTime::currentDateTimeUtc().date().toString("yyyy-MM-dd").toStdString()+"'";
+        statement << "select count(id) from deviceonline where deviceid='" + device + "' and DATE(time) = '"
+                     + QDateTime::currentDateTimeUtc().date().toString("yyyy-MM-dd").toStdString() + "'";
         Poco::Data::RecordSet rs(statement);
         bool more = rs.moveFirst();
         while(more) {

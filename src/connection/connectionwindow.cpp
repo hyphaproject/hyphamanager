@@ -128,7 +128,7 @@ void ConnectionWindow::loadPositions()
 void ConnectionWindow::loadPosition(QString id, QGraphicsItem *item)
 {
     Poco::Data::Statement statement = instance->getDatabase()->getStatement();
-    statement << "select x,y from designerpositions where id = '" + id.toStdString() + "'";
+    statement << "SELECT x,y FROM designerpositions WHERE id = '"+ id.toStdString() +"';";
     statement.execute();
     Poco::Data::RecordSet rs(statement);
     bool more = rs.moveFirst();
@@ -158,12 +158,12 @@ void ConnectionWindow::savePositions()
 
 void ConnectionWindow::saveConfig()
 {
-    foreach(hypha::handler::HyphaHandler *handler, instance->getHandlerLoader()->getInstances()){
+    for(hypha::handler::HyphaHandler *handler: instance->getHandlerLoader()->getInstances()){
         if(handler){
             saveHandlerConfig(QString::fromStdString(handler->getId()), QString::fromStdString(handler->getConfig()));
         }
     }
-    foreach(hypha::plugin::HyphaPlugin *plugin, instance->getPluginLoader()->getInstances()){
+    for(hypha::plugin::HyphaPlugin *plugin: instance->getPluginLoader()->getInstances()){
         if(plugin){
             savePluginConfig(QString::fromStdString(plugin->getId()), QString::fromStdString(plugin->getConfig()));
         }
@@ -172,26 +172,21 @@ void ConnectionWindow::saveConfig()
 
 void ConnectionWindow::savePosition(QString id, int x, int y)
 {
-    Poco::Data::Statement statement = instance->getDatabase()->getStatement();
-    statement << "update designerpositions set x=?, y=? where id=?",
-            Poco::Data::use(x), Poco::Data::use(y), Poco::Data::use(id.toStdString());
-    statement.execute();
+    instance->getDatabase()->getSession() << "UPDATE `designerpositions` SET `x`=?, `y`=? WHERE `id`=?",
+            Poco::Data::use(x), Poco::Data::use(y), Poco::Data::use(id.toStdString()), Poco::Data::now;
 }
 
 void ConnectionWindow::saveHandlerConfig(QString id, QString config)
 {
-    Poco::Data::Statement statement = instance->getDatabase()->getStatement();
-    statement << "update handler set config=? where id=?",
-            Poco::Data::use(config.toStdString()), Poco::Data::use(id.toStdString());
-    statement.execute();
+    instance->getDatabase()->getSession() << "UPDATE `handler` SET config='%s' WHERE id='%s';",
+            config.toStdString(), id.toStdString(), Poco::Data::now;
 }
 
 void ConnectionWindow::savePluginConfig(QString id, QString config)
 {
-    Poco::Data::Statement statement = instance->getDatabase()->getStatement();
-    statement << "update plugins set config=? where id=?",
-            Poco::Data::use(config.toStdString()), Poco::Data::use(id.toStdString());
-    statement.execute();
+    instance->getDatabase()->getSession() << "UPDATE `plugins` SET `config`=? WHERE `id`=?",
+            Poco::Data::use(config.toStdString()), Poco::Data::use(id.toStdString()),
+            Poco::Data::now;
 }
 
 void ConnectionWindow::addLines()
