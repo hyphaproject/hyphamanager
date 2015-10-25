@@ -7,17 +7,16 @@ namespace Ui {
 class RpiAnalogSensorWidget;
 }
 
-class RpiAnalogSensorWidget : public QWidget
-{
+class RpiAnalogSensorWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit RpiAnalogSensorWidget(QWidget *parent = 0);
     ~RpiAnalogSensorWidget();
     void setHost(QString host);
     void loadConfig(QString json);
     QString getConfig();
-private:
+  private:
     Ui::RpiAnalogSensorWidget *ui;
     QString host;
 };

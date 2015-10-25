@@ -2,7 +2,7 @@
 #include "workingtimeitem.h"
 #include "ui_workingtimeitem.h"
 
-WorkingTimeItem::WorkingTimeItem(){
+WorkingTimeItem::WorkingTimeItem() {
 
 }
 
@@ -49,34 +49,32 @@ WorkingTimeItem::~WorkingTimeItem() {
 
 void WorkingTimeItem::save() {
     Poco::Data::Statement statement = database->getStatement();
-    if(id.isEmpty()){
+    if(id.isEmpty()) {
         statement << "insert into workingtime(username, type, start, end) values(?, ?, ?, ?);",
-                Poco::Data::use(this->username.toStdString()),Poco::Data::use(this->ui->typeComboBox->currentText().toStdString()),
-                Poco::Data::use(ui->startDateTimeEdit->dateTime().toUTC().toString().toStdString()),
-                Poco::Data::use(ui->endDateTimeEdit->dateTime().toUTC().toString().toStdString());
-    }else{
+                  Poco::Data::use(this->username.toStdString()),Poco::Data::use(this->ui->typeComboBox->currentText().toStdString()),
+                  Poco::Data::use(ui->startDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                  Poco::Data::use(ui->endDateTimeEdit->dateTime().toUTC().toString().toStdString());
+    } else {
         statement << "update workingtime set username=?, type=?, start=?, end=? where id=?;",
-                Poco::Data::use(this->username.toStdString()),Poco::Data::use(this->ui->typeComboBox->currentText().toStdString()),
-                Poco::Data::use(ui->startDateTimeEdit->dateTime().toUTC().toString().toStdString()),
-                Poco::Data::use(ui->endDateTimeEdit->dateTime().toUTC().toString().toStdString()),
-                Poco::Data::use(this->id.toStdString());
+                  Poco::Data::use(this->username.toStdString()),Poco::Data::use(this->ui->typeComboBox->currentText().toStdString()),
+                  Poco::Data::use(ui->startDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                  Poco::Data::use(ui->endDateTimeEdit->dateTime().toUTC().toString().toStdString()),
+                  Poco::Data::use(this->id.toStdString());
     }
     statement.execute();
 }
 
-void WorkingTimeItem::deleteFromDatabase()
-{
-    if(id.isEmpty()){
-    }else{
+void WorkingTimeItem::deleteFromDatabase() {
+    if(id.isEmpty()) {
+    } else {
         Poco::Data::Statement statement = database->getStatement();
         statement << "delete from workingtime where id = ?;",
-                Poco::Data::use(this->id.toStdString());
+                  Poco::Data::use(this->id.toStdString());
         statement.execute();
     }
 }
 
-void WorkingTimeItem::init()
-{
+void WorkingTimeItem::init() {
     ui->startDateTimeEdit->setDateTime(start.toLocalTime());
     ui->endDateTimeEdit->setDateTime(end.toLocalTime());
     ui->typeComboBox->setCurrentText(type);

@@ -6,7 +6,7 @@
 
 namespace hypha {
 namespace database {
-    class Database;
+class Database;
 }
 }
 
@@ -14,18 +14,17 @@ namespace Ui {
 class RulesAddDialog;
 }
 
-class RulesAddDialog : public QDialog
-{
+class RulesAddDialog : public QDialog {
     Q_OBJECT
 
-public:
+  public:
     explicit RulesAddDialog(QString username, QDate date, hypha::database::Database * database, QWidget *parent = 0);
     ~RulesAddDialog();
 
-private slots:
+  private slots:
     void on_buttonBox_accepted();
 
-private:
+  private:
     void init();
     Ui::RulesAddDialog *ui;
     QString username;

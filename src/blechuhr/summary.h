@@ -6,14 +6,13 @@
 
 namespace hypha {
 namespace database {
-    class Database;
-    class UserDatabase;
+class Database;
+class UserDatabase;
 }
 }
 
-class Summary
-{
-public:
+class Summary {
+  public:
     Summary(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase);
     virtual ~Summary();
 
@@ -22,7 +21,7 @@ public:
     virtual float getWorkedHours() = 0;
     virtual bool calculate() = 0;
 
-protected:
+  protected:
     hypha::database::Database *database;
     hypha::database::UserDatabase *userDatabase;
     QString username;

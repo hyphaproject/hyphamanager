@@ -3,34 +3,29 @@
 #include <hypha/database/userdatabase.h>
 #include "workingtimealgo.h"
 
-WorkingTimeAlgo::WorkingTimeAlgo()
-{
+WorkingTimeAlgo::WorkingTimeAlgo() {
 
 }
 
-WorkingTimeAlgo::WorkingTimeAlgo(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase)
-{
+WorkingTimeAlgo::WorkingTimeAlgo(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase) {
     this->database = database;
     this->userDatabase = userDatabase;
 }
 
-void WorkingTimeAlgo::setUsername(QString username)
-{
+void WorkingTimeAlgo::setUsername(QString username) {
     this->username = username;
 }
 
-void WorkingTimeAlgo::setDate(QDate date)
-{
+void WorkingTimeAlgo::setDate(QDate date) {
     this->date = date;
 }
 
-QList<WorkingTime> WorkingTimeAlgo::getDay()
-{
+QList<WorkingTime> WorkingTimeAlgo::getDay() {
     times.clear();
 
     Poco::Data::Statement statement = database->getStatement();
     statement << "SELECT id, start, end, type FROM workingtime WHERE username = '" + this->username.toStdString() +
-                 "' AND DATE(start) = '" + date.toString("yyyy-MM-dd").toStdString() + "'";
+              "' AND DATE(start) = '" + date.toString("yyyy-MM-dd").toStdString() + "'";
     statement.execute();
     Poco::Data::RecordSet rs(statement);
     bool more = rs.moveFirst();
@@ -53,13 +48,12 @@ QList<WorkingTime> WorkingTimeAlgo::getDay()
     return times;
 }
 
-QList<WorkingTime> WorkingTimeAlgo::getMonth()
-{
+QList<WorkingTime> WorkingTimeAlgo::getMonth() {
     times.clear();
 
     Poco::Data::Statement statement = database->getStatement();
     statement << "SELECT id, start, end, type FROM workingtime WHERE username = '" + this->username.toStdString() +
-                 "' AND DATE(start) = '" + date.toString("yyyy-MM-dd").toStdString() + "'";
+              "' AND DATE(start) = '" + date.toString("yyyy-MM-dd").toStdString() + "'";
     statement.execute();
     Poco::Data::RecordSet rs(statement);
     bool more = rs.moveFirst();
@@ -83,10 +77,9 @@ QList<WorkingTime> WorkingTimeAlgo::getMonth()
     return times;
 }
 
-float WorkingTimeAlgo::getHours(QList<WorkingTime*> times)
-{
+float WorkingTimeAlgo::getHours(QList<WorkingTime*> times) {
     float hours = 0.0f;
-    foreach(WorkingTime *wt, times){
+    foreach(WorkingTime *wt, times) {
         if(wt->getType() == "working")
             hours += wt->hours();
         if(wt->getType() == "pause")

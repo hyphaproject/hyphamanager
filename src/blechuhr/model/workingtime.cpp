@@ -2,8 +2,7 @@
 #include <QtCore/QStringList>
 #include <QDebug>
 
-WorkingTime::WorkingTime(const WorkingTime &workingTime)
-{
+WorkingTime::WorkingTime(const WorkingTime &workingTime) {
     this->username = workingTime.username;
     this->date = workingTime.date;
     this->start = workingTime.start;
@@ -11,8 +10,7 @@ WorkingTime::WorkingTime(const WorkingTime &workingTime)
     this->type = workingTime.type;
 }
 
-WorkingTime::WorkingTime(WorkingTime *workingTime)
-{
+WorkingTime::WorkingTime(WorkingTime *workingTime) {
     this->username = workingTime->username;
     this->date = workingTime->date;
     this->start = workingTime->start;
@@ -20,8 +18,7 @@ WorkingTime::WorkingTime(WorkingTime *workingTime)
     this->type = workingTime->type;
 }
 
-WorkingTime::WorkingTime(QString username, QString date, QDateTime start, QDateTime end, QString type)
-{
+WorkingTime::WorkingTime(QString username, QString date, QDateTime start, QDateTime end, QString type) {
     this->username = username;
     this->date = date;
     this->start = start;
@@ -29,47 +26,40 @@ WorkingTime::WorkingTime(QString username, QString date, QDateTime start, QDateT
     this->type = type;
 }
 
-QString WorkingTime::toAddString(bool onlyTime)
-{
+QString WorkingTime::toAddString(bool onlyTime) {
     return "addData('"+date+"', new Date("+start.toLocalTime().addMonths(-1).toString(onlyTime? "2000,00,01,hh,mm,ss":"yyyy,MM,dd,hh,mm,ss")+
-            "), new Date("+end.toLocalTime().addMonths(-1).toString(onlyTime? "2000,00,"+QString::number(1+end.date().day() - start.date().day())+",hh,mm,ss":"yyyy,MM,dd,hh,mm,ss")+"))";
+           "), new Date("+end.toLocalTime().addMonths(-1).toString(onlyTime? "2000,00,"+QString::number(1+end.date().day() - start.date().day())+",hh,mm,ss":"yyyy,MM,dd,hh,mm,ss")+"))";
 }
 
-bool WorkingTime::belongsTo(WorkingTime &other, int seconds)
-{
+bool WorkingTime::belongsTo(WorkingTime &other, int seconds) {
     return this != &other && this->username == other.username
-            && ((this->end < other.start
-            && (other.start.toMSecsSinceEpoch() - this->end.toMSecsSinceEpoch() < seconds*1000))
-                || (this->start > other.start && this->end < other.end)
-                || (this->start < other.start && this->end > other.end)); // less than X seconds diff
+           && ((this->end < other.start
+                && (other.start.toMSecsSinceEpoch() - this->end.toMSecsSinceEpoch() < seconds*1000))
+               || (this->start > other.start && this->end < other.end)
+               || (this->start < other.start && this->end > other.end)); // less than X seconds diff
 }
 
-void WorkingTime::accumulate(WorkingTime &other)
-{
+void WorkingTime::accumulate(WorkingTime &other) {
     if(this->start > other.start) this->start = other.start;
     if(this->end < other.end) this->end = other.end;
 }
 
-bool WorkingTime::before(WorkingTime *w1, WorkingTime *w2)
-{
+bool WorkingTime::before(WorkingTime *w1, WorkingTime *w2) {
     return w1->getStart() < w2->getStart();
 }
 
-bool WorkingTime::sameDay(WorkingTime &other)
-{
+bool WorkingTime::sameDay(WorkingTime &other) {
     return this->start.date() == other.start.date() && this->end.date() == other.end.date();
 }
 
-float WorkingTime::hours()
-{
+float WorkingTime::hours() {
     return (end.toMSecsSinceEpoch() - start.toMSecsSinceEpoch()) / 3600000.0f;
 }
 
-WorkingTime WorkingTime::fromCSV(QString username, QString csv, bool dateExtra)
-{
-    if(dateExtra){
+WorkingTime WorkingTime::fromCSV(QString username, QString csv, bool dateExtra) {
+    if(dateExtra) {
 
-    }else{
+    } else {
         return fromCSV(username + ";" +csv, false);
     }
 }
@@ -81,18 +71,17 @@ WorkingTime WorkingTime::fromCSV(QString username, QString csv, bool dateExtra)
  *
  * Format is: username,start,end,(type=working)
  */
-WorkingTime WorkingTime::fromCSV(QString csv, bool withUsername)
-{
+WorkingTime WorkingTime::fromCSV(QString csv, bool withUsername) {
     QStringList vals = csv.split(';');
     QString username = "unknown";
     QString type = "working";
-    if(withUsername){
+    if(withUsername) {
         username = vals.at(0);
-        if(vals.size() > 3){
+        if(vals.size() > 3) {
             type = vals.at(3);
         }
-    }else{
-        if(vals.size() > 2){
+    } else {
+        if(vals.size() > 2) {
             type = vals.at(2);
         }
     }
@@ -101,8 +90,7 @@ WorkingTime WorkingTime::fromCSV(QString csv, bool withUsername)
     return WorkingTime(username, start.toString(), start, end, type);
 }
 
-WorkingTime WorkingTime::fromCSV(QString csv, int iUsername, int iDate, int iFrom, int iTo, int iType)
-{
+WorkingTime WorkingTime::fromCSV(QString csv, int iUsername, int iDate, int iFrom, int iTo, int iType) {
     QStringList vals = csv.split(';');
     QString username = (iUsername==-1)?"unknown":vals.at(iUsername);
     QString sStart = (iDate==-1)?vals.at(iFrom):vals.at(iDate) + " " + vals.at(iFrom);
@@ -114,19 +102,18 @@ WorkingTime WorkingTime::fromCSV(QString csv, int iUsername, int iDate, int iFro
 
 }
 
-WorkingTime WorkingTime::fromCSVextraDate(QString csv, bool withUsername)
-{
+WorkingTime WorkingTime::fromCSVextraDate(QString csv, bool withUsername) {
     QStringList vals = csv.split(';');
     QString username = "unknown";
     QString type = "working";
 
-    if(withUsername){
+    if(withUsername) {
         username = vals.at(0);
-        if(vals.size() > 4){
+        if(vals.size() > 4) {
             type = vals.at(4);
         }
-    }else{
-        if(vals.size() > 3){
+    } else {
+        if(vals.size() > 3) {
             type = vals.at(3);
         }
     }
@@ -144,8 +131,7 @@ WorkingTime WorkingTime::fromCSVextraDate(QString csv, bool withUsername)
  *
  * Format is: username,start,end,(type=working)
  */
-QString WorkingTime::toCSV(bool withUsername)
-{
+QString WorkingTime::toCSV(bool withUsername) {
     QString returnStr = withUsername ? username + ";" : "";
     returnStr += start.toLocalTime().toString("dd.MM.yyyy") + ";";
     returnStr += start.toLocalTime().toString("hh:mm") + ";";
@@ -154,27 +140,22 @@ QString WorkingTime::toCSV(bool withUsername)
     return returnStr;
 }
 
-void WorkingTime::setUsername(QString username)
-{
+void WorkingTime::setUsername(QString username) {
     this->username = username;
 }
 
-QString WorkingTime::getUsername()
-{
+QString WorkingTime::getUsername() {
     return username;
 }
 
-QString WorkingTime::getType()
-{
+QString WorkingTime::getType() {
     return type;
 }
 
-QDateTime WorkingTime::getStart()
-{
+QDateTime WorkingTime::getStart() {
     return start;
 }
 
-QDateTime WorkingTime::getEnd()
-{
+QDateTime WorkingTime::getEnd() {
     return end;
 }

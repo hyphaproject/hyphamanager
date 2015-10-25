@@ -7,15 +7,14 @@ namespace Ui {
 class NewConfigWizzard;
 }
 
-class NewConfigWizzard : public QDialog
-{
+class NewConfigWizzard : public QDialog {
     Q_OBJECT
 
-public:
+  public:
     explicit NewConfigWizzard(QWidget *parent = 0);
     ~NewConfigWizzard();
 
-private slots:
+  private slots:
     void on_selectFileButton_clicked();
 
     void on_selectDBButton_clicked();
@@ -26,7 +25,7 @@ private slots:
 
     void on_nextButton_clicked();
 
-private:
+  private:
     Ui::NewConfigWizzard *ui;
 };
 

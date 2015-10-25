@@ -3,12 +3,10 @@
 
 FingerPrintZFMWidget::FingerPrintZFMWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::FingerPrintZFMWidget)
-{
+    ui(new Ui::FingerPrintZFMWidget) {
     ui->setupUi(this);
 }
 
-FingerPrintZFMWidget::~FingerPrintZFMWidget()
-{
+FingerPrintZFMWidget::~FingerPrintZFMWidget() {
     delete ui;
 }

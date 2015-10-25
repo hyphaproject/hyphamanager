@@ -7,15 +7,14 @@ namespace Ui {
 class RFIDWidget;
 }
 
-class RFIDWidget : public QWidget
-{
+class RFIDWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit RFIDWidget(QWidget *parent = 0);
     ~RFIDWidget();
 
-private:
+  private:
     Ui::RFIDWidget *ui;
 };
 

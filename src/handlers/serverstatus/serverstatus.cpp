@@ -12,39 +12,33 @@ using namespace hypha::handler;
 using namespace hypha::handler::serverstatus;
 using namespace hypha::plugin;
 
-ServerStatus::ServerStatus()
-{
+ServerStatus::ServerStatus() {
     serverStatusWidget = new ServerStatusWidget();
 }
 
-ServerStatus::~ServerStatus()
-{
+ServerStatus::~ServerStatus() {
 
 }
 
-void ServerStatus::parse(std::string message){
+void ServerStatus::parse(std::string message) {
 
 }
 
-void ServerStatus::loadConfig(std::string config)
-{
+void ServerStatus::loadConfig(std::string config) {
     serverStatusWidget->loadConfig(QString::fromStdString(config));
 }
 
-std::string ServerStatus::getConfig()
-{
+std::string ServerStatus::getConfig() {
     return serverStatusWidget->getConfig().toStdString();
 }
 
-HyphaHandlerConfig *ServerStatus::getInstance(std::string id)
-{
+HyphaHandlerConfig *ServerStatus::getInstance(std::string id) {
     ServerStatus *instance = new ServerStatus();
     instance->setId(id);
     return instance;
 }
 
-QWidget *ServerStatus::widget()
-{
+QWidget *ServerStatus::widget() {
     return serverStatusWidget;
 }
 

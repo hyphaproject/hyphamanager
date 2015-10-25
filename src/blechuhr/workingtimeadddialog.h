@@ -7,7 +7,7 @@
 
 namespace hypha {
 namespace database {
-    class Database;
+class Database;
 }
 }
 
@@ -15,18 +15,17 @@ namespace Ui {
 class WorkingTimeAddDialog;
 }
 
-class WorkingTimeAddDialog : public QDialog
-{
+class WorkingTimeAddDialog : public QDialog {
     Q_OBJECT
 
-public:
+  public:
     explicit WorkingTimeAddDialog(QString username, QDate date, hypha::database::Database * database, QWidget *parent = 0);
     ~WorkingTimeAddDialog();
 
-private slots:
+  private slots:
     void on_buttonBox_accepted();
 
-private:
+  private:
     void init();
     Ui::WorkingTimeAddDialog *ui;
     QString username;

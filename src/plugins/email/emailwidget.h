@@ -7,17 +7,16 @@ namespace Ui {
 class EMailWidget;
 }
 
-class EMailWidget : public QWidget
-{
+class EMailWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit EMailWidget(QWidget *parent = 0);
     ~EMailWidget();
     void setHost(QString host);
     void loadConfig(QString json);
     QString getConfig();
-private:
+  private:
     Ui::EMailWidget *ui;
     QString host;
 };

@@ -9,20 +9,19 @@ namespace Ui {
 class SettingsWindow;
 }
 
-class SettingsWindow : public QDialog
-{
+class SettingsWindow : public QDialog {
     Q_OBJECT
 
-public:
+  public:
     explicit SettingsWindow(hypha::settings::HyphaSettings * settings, QWidget *parent = 0);
     ~SettingsWindow();
     void load();
 
-private:
+  private:
     Ui::SettingsWindow *ui;
-protected:
+  protected:
     hypha::settings::HyphaSettings * settings;
-private slots:
+  private slots:
     void on_buttonBox_accepted();
 };
 

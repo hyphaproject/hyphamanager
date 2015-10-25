@@ -6,15 +6,14 @@
 #include "../baseaccount.h"
 
 
-class BaseRule
-{
-public:
+class BaseRule {
+  public:
     BaseRule(QList<BaseAccount *> accounts, QList<WorkingTime *> workingTimes);
     virtual void calculate();
     QList<BaseAccount *> getAccounts();
     QList<WorkingTime *> getWorkingTimes();
 
-protected:
+  protected:
     QList<BaseAccount *> accounts;
     QList<WorkingTime *> workingTimes;
 };

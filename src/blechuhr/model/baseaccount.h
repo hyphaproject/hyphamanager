@@ -5,16 +5,15 @@
 #include <QtCore/QDateTime>
 #include "type.h"
 
-class BaseAccount
-{
-public:
+class BaseAccount {
+  public:
     BaseAccount();
 
     QString getUsername();
     QDateTime getStart();
     QDateTime getEnd();
 
-protected:
+  protected:
     QString username;
     QDateTime start;
     QDateTime end;

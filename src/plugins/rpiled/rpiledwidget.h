@@ -7,17 +7,16 @@ namespace Ui {
 class RpiLedWidget;
 }
 
-class RpiLedWidget : public QWidget
-{
+class RpiLedWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit RpiLedWidget(QWidget *parent = 0);
     ~RpiLedWidget();
     void setHost(QString host);
     void loadConfig(QString json);
     QString getConfig();
-private:
+  private:
     Ui::RpiLedWidget *ui;
     QString host;
 };

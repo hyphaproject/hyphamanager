@@ -9,25 +9,21 @@
 using namespace hypha::plugin;
 using namespace hypha::plugin::espeak;
 
-void ESpeak::loadConfig(std::string json)
-{
+void ESpeak::loadConfig(std::string json) {
 
 }
 
-std::string ESpeak::getConfig()
-{
+std::string ESpeak::getConfig() {
     return "{}";
 }
 
-HyphaPluginConfig *ESpeak::getInstance(std::string id)
-{
+HyphaPluginConfig *ESpeak::getInstance(std::string id) {
     ESpeak *instance = new ESpeak();
     instance->setId(id);
     return instance;
 }
 
-QWidget *ESpeak::widget()
-{
+QWidget *ESpeak::widget() {
     return new ESpeakWidget();
 }
 

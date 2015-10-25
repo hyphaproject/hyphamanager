@@ -10,25 +10,21 @@
 using namespace hypha::plugin;
 using namespace hypha::plugin::wifi;
 
-void Wifi::loadConfig(std::string json)
-{
+void Wifi::loadConfig(std::string json) {
 
 }
 
-std::string Wifi::getConfig()
-{
+std::string Wifi::getConfig() {
     return "{}";
 }
 
-HyphaPluginConfig *Wifi::getInstance(std::string id)
-{
+HyphaPluginConfig *Wifi::getInstance(std::string id) {
     Wifi *instance = new Wifi();
     instance->setId(id);
     return instance;
 }
 
-QWidget *Wifi::widget()
-{
+QWidget *Wifi::widget() {
     return new WifiWidget();
 }
 

@@ -9,27 +9,23 @@
 
 AccountWidget::AccountWidget(QString username, hypha::database::Database *database, QWidget *parent):
     QWidget(parent),
-    ui(new Ui::AccountWidget)
-{
+    ui(new Ui::AccountWidget) {
     ui->setupUi(this);
     this->username = username;
     this->database = database;
     init();
 }
 
-AccountWidget::~AccountWidget()
-{
+AccountWidget::~AccountWidget() {
     delete ui;
 }
 
-void AccountWidget::init()
-{
+void AccountWidget::init() {
     loadAccounts();
     loadIterativeAccounts();
 }
 
-void AccountWidget::loadAccounts()
-{
+void AccountWidget::loadAccounts() {
     ui->listWidget->clear();
 
     Poco::Data::Statement statement = database->getStatement();
@@ -54,15 +50,14 @@ void AccountWidget::loadAccounts()
         QListWidgetItem *item = new QListWidgetItem(ui->listWidget);
         ui->listWidget->addItem(item);
         AccountItem *accountItem = new AccountItem(QString::fromStdString(id), username, startTime,
-                                                   endTime, t, amount, QString::fromStdString(name), database);
+                endTime, t, amount, QString::fromStdString(name), database);
         item->setSizeHint(accountItem->minimumSizeHint());
         ui->listWidget->setItemWidget(item, accountItem);
         more = rs.moveNext();
     }
 }
 
-void AccountWidget::loadIterativeAccounts()
-{
+void AccountWidget::loadIterativeAccounts() {
     Poco::Data::Statement statement = database->getStatement();
     statement << "SELECT id, start, end, type, starttime, endtime FROM iterativeaccount WHERE username = '" + this->username.toStdString() + "' ORDER BY start DESC;";
     statement.execute();
@@ -88,33 +83,30 @@ void AccountWidget::loadIterativeAccounts()
         QListWidgetItem *item = new QListWidgetItem(ui->listWidget);
         ui->listWidget->addItem(item);
         AccountItem *accountItem = new AccountItem(QString::fromStdString(id), username, startDateTime, endDateTime
-                                                   , t, starttime, endtime, database);
+                , t, starttime, endtime, database);
         item->setSizeHint(accountItem->minimumSizeHint());
         ui->listWidget->setItemWidget(item, accountItem);
         more = rs.moveNext();
     }
 }
 
-void AccountWidget::on_addButton_clicked()
-{
+void AccountWidget::on_addButton_clicked() {
     AccountAddDialog aAddDialog(this->username, QDate::currentDate(), database);
     aAddDialog.exec();
     init();
 }
 
-void AccountWidget::on_saveButton_clicked()
-{
-    for(int i = 0; i < ui->listWidget->count(); ++i){
+void AccountWidget::on_saveButton_clicked() {
+    for(int i = 0; i < ui->listWidget->count(); ++i) {
         AccountItem * item = (AccountItem*) ui->listWidget->itemWidget(ui->listWidget->item(i));
         item->save();
     }
     init();
 }
 
-void AccountWidget::on_deleteButton_clicked()
-{
+void AccountWidget::on_deleteButton_clicked() {
     AccountItem *item = (AccountItem*) ui->listWidget->itemWidget(ui->listWidget->currentItem());
-    if(item){
+    if(item) {
         item->deleteFromDatabase();
         init();
     }

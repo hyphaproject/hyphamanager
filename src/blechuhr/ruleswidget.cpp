@@ -8,26 +8,22 @@
 
 RulesWidget::RulesWidget(QString username, hypha::database::Database *database, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::RulesWidget)
-{
+    ui(new Ui::RulesWidget) {
     ui->setupUi(this);
     this->username = username;
     this->database = database;
     init();
 }
 
-RulesWidget::~RulesWidget()
-{
+RulesWidget::~RulesWidget() {
     delete ui;
 }
 
-void RulesWidget::init()
-{
+void RulesWidget::init() {
     loadRules();
 }
 
-void RulesWidget::loadRules()
-{
+void RulesWidget::loadRules() {
     ui->listWidget->clear();
 
     Poco::Data::Statement statement = database->getStatement();
@@ -53,25 +49,22 @@ void RulesWidget::loadRules()
     }
 }
 
-void RulesWidget::on_addButton_clicked()
-{
+void RulesWidget::on_addButton_clicked() {
     RulesAddDialog rAddDialog(this->username, QDate::currentDate(), database);
     rAddDialog.exec();
     init();
 }
 
-void RulesWidget::on_deleteButton_clicked()
-{
+void RulesWidget::on_deleteButton_clicked() {
     RulesItem *item = (RulesItem*) ui->listWidget->itemWidget(ui->listWidget->currentItem());
-    if(item){
+    if(item) {
         item->deleteFromDatabase();
         init();
     }
 }
 
-void RulesWidget::on_saveButton_clicked()
-{
-    for(int i = 0; i < ui->listWidget->count(); ++i){
+void RulesWidget::on_saveButton_clicked() {
+    for(int i = 0; i < ui->listWidget->count(); ++i) {
         RulesItem * item = (RulesItem*) ui->listWidget->itemWidget(ui->listWidget->item(i));
         item->save();
     }

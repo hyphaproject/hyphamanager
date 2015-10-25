@@ -7,17 +7,16 @@ namespace Ui {
 class Dht11Widget;
 }
 
-class Dht11Widget : public QWidget
-{
+class Dht11Widget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit Dht11Widget(QWidget *parent = 0);
     ~Dht11Widget();
     void setHost(QString host);
     void loadConfig(QString json);
     QString getConfig();
-private:
+  private:
     Ui::Dht11Widget *ui;
     QString host;
 };

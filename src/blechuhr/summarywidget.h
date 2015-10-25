@@ -10,23 +10,22 @@ namespace Ui {
 class SummaryWidget;
 }
 
-class SummaryWidget : public QWidget
-{
+class SummaryWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit SummaryWidget(QString username, hypha::database::Database * database, hypha::database::UserDatabase * userDatabase, QWidget *parent = 0);
     ~SummaryWidget();
 
-public slots:
+  public slots:
     void reloadSummary();
     void calculateWorkingHours();
     QDate getSelectedDate();
 
-private slots:
+  private slots:
     void on_dateEdit_editingFinished();
 
-private:
+  private:
     Ui::SummaryWidget *ui;
     QString username;
     hypha::database::Database *database;

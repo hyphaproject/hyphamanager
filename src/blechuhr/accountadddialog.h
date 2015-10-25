@@ -6,7 +6,7 @@
 
 namespace hypha {
 namespace database {
-    class Database;
+class Database;
 }
 }
 
@@ -14,18 +14,17 @@ namespace Ui {
 class AccountAddDialog;
 }
 
-class AccountAddDialog : public QDialog
-{
+class AccountAddDialog : public QDialog {
     Q_OBJECT
 
-public:
+  public:
     explicit AccountAddDialog(QString username, QDate date, hypha::database::Database * database, QWidget *parent = 0);
     ~AccountAddDialog();
 
-private slots:
+  private slots:
     void on_buttonBox_accepted();
 
-private:
+  private:
     void init();
     Ui::AccountAddDialog *ui;
     QString username;
@@ -33,6 +32,6 @@ private:
     hypha::database::Database *database;
     AccountItem *accountItem;
 
-    };
+};
 
 #endif // ACCOUNTADDDIALOG_H

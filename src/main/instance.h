@@ -5,28 +5,27 @@
 
 namespace hypha {
 namespace database {
-    class Database;
-    class UserDatabase;
+class Database;
+class UserDatabase;
 }
 namespace settings {
-    class HyphaSettings;
-    class DatabaseSettings;
-    class UserDatabaseSettings;
-    class HandlerSettings;
-    class PluginSettings;
+class HyphaSettings;
+class DatabaseSettings;
+class UserDatabaseSettings;
+class HandlerSettings;
+class PluginSettings;
 }
 namespace handler {
-    class HandlerLoader;
+class HandlerLoader;
 }
 namespace plugin {
-    class PluginLoader;
+class PluginLoader;
 }
 }
 
-class Instance : public QObject
-{
+class Instance : public QObject {
     Q_OBJECT
-public:
+  public:
     explicit Instance(QString filename, QObject *parent = 0);
     ~Instance();
 
@@ -38,11 +37,11 @@ public:
     hypha::handler::HandlerLoader * getHandlerLoader();
     hypha::plugin::PluginLoader * getPluginLoader();
 
-signals:
+  signals:
 
-public slots:
+  public slots:
 
-protected:
+  protected:
     QString filename;
     hypha::settings::HyphaSettings *managerSettings;
     hypha::settings::DatabaseSettings * databaseSettings;

@@ -7,17 +7,16 @@ namespace Ui {
 class RpiPirWidget;
 }
 
-class RpiPirWidget : public QWidget
-{
+class RpiPirWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit RpiPirWidget(QWidget *parent = 0);
     ~RpiPirWidget();
     void loadConfig(QString json);
     QString getConfig();
 
-private:
+  private:
     Ui::RpiPirWidget *ui;
 };
 

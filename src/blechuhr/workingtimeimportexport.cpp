@@ -5,27 +5,23 @@
 #include <QtCore/QTextStream>
 #include <QDebug>
 
-WorkingTimeImportExport::WorkingTimeImportExport(hypha::database::Database *database, QString username, QString file)
-{
+WorkingTimeImportExport::WorkingTimeImportExport(hypha::database::Database *database, QString username, QString file) {
     this->database = database;
     this->username = username;
     this->file = file;
 }
 
-WorkingTimeImportExport::WorkingTimeImportExport(QString username, QList<WorkingTime*> times, QString file)
-{
+WorkingTimeImportExport::WorkingTimeImportExport(QString username, QList<WorkingTime*> times, QString file) {
     this->username = username;
     this->file = file;
     this->times = times;
 }
 
-WorkingTimeImportExport::~WorkingTimeImportExport()
-{
+WorkingTimeImportExport::~WorkingTimeImportExport() {
 
 }
 
-void WorkingTimeImportExport::importData(QDate *date)
-{
+void WorkingTimeImportExport::importData(QDate *date) {
     QList<WorkingTime*> data;
     QFile f(file);
     f.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -36,8 +32,7 @@ void WorkingTimeImportExport::importData(QDate *date)
     int iFrom = l.indexOf("from");
     int iTo = l.indexOf("to");
     int iType = l.indexOf("type");
-    while (!inStream.atEnd())
-    {
+    while (!inStream.atEnd()) {
         QString line = inStream.readLine();
         WorkingTime *wt = new WorkingTime(WorkingTime::fromCSV(line,-1,iDate,iFrom,iTo,iType));
         wt->setUsername(username);
@@ -52,31 +47,28 @@ void WorkingTimeImportExport::importData(QDate *date)
  * @param date
  * Exports data of a given month into a csv file.
  */
-void WorkingTimeImportExport::exportDataFromDatabase(QDate * date)
-{
+void WorkingTimeImportExport::exportDataFromDatabase(QDate * date) {
     times.clear();
-    foreach(WorkingTime *wt, fromDatabase(date)){
+    foreach(WorkingTime *wt, fromDatabase(date)) {
         times.append(wt);
     }
     exportData();
     //toDatabase(data, date);
 }
 
-void WorkingTimeImportExport::exportData()
-{
+void WorkingTimeImportExport::exportData() {
     QFile f(file);
     f.open(QIODevice::WriteOnly | QIODevice::Text);
 
     QTextStream outStream(&f);
     outStream << QObject::tr("date;from;to;type") << "\n";
-    foreach(WorkingTime *wt, times){
+    foreach(WorkingTime *wt, times) {
         outStream << wt->toCSV() << "\n";
     }
     f.close();
 }
 
-QList<WorkingTime*> WorkingTimeImportExport::fromDatabase(QDate * date)
-{
+QList<WorkingTime*> WorkingTimeImportExport::fromDatabase(QDate * date) {
     QList<WorkingTime*> returnList;
 
     Poco::Data::Statement statement = database->getStatement();
@@ -84,7 +76,7 @@ QList<WorkingTime*> WorkingTimeImportExport::fromDatabase(QDate * date)
         statement << "SELECT id, start, end, type FROM workingtime WHERE username = '" + username.toStdString() + "';";
     else
         statement << "SELECT id, start, end, type FROM workingtime WHERE username = '" + username.toStdString() + "' AND DATE(start) = '"
-                     + date->toString("yyyy-MM-dd").toStdString() + "';";
+                  + date->toString("yyyy-MM-dd").toStdString() + "';";
     statement.execute();
     Poco::Data::RecordSet rs(statement);
     bool more = rs.moveFirst();
@@ -106,21 +98,20 @@ QList<WorkingTime*> WorkingTimeImportExport::fromDatabase(QDate * date)
     }
 
     QString queryString = "SELECT id, start, end, type FROM workingtime WHERE username = '" + username + "';";
-    if(date != 0){
+    if(date != 0) {
         queryString = "SELECT id, start, end, type FROM workingtime WHERE username = '" + username + "' AND DATE(start) = '"
-                + date->toString("yyyy-MM-dd")+"';";
+                      + date->toString("yyyy-MM-dd")+"';";
     }
 
     return returnList;
 }
 
-void WorkingTimeImportExport::toDatabase(QList<WorkingTime*> list, QDate *date)
-{
-    for(WorkingTime *wt: list ){
+void WorkingTimeImportExport::toDatabase(QList<WorkingTime*> list, QDate *date) {
+    for(WorkingTime *wt: list ) {
         Poco::Data::Statement statement = database->getStatement();
         statement << "insert into workingtime(username, type, start, end) values(:username, :type, :start, :end);",
-                Poco::Data::use(wt->getUsername().toStdString()), Poco::Data::use(wt->getType().toStdString()),
-                Poco::Data::use(wt->getStart().toUTC().toString().toStdString()), Poco::Data::use(wt->getEnd().toUTC().toString().toStdString());
+                  Poco::Data::use(wt->getUsername().toStdString()), Poco::Data::use(wt->getType().toStdString()),
+                  Poco::Data::use(wt->getStart().toUTC().toString().toStdString()), Poco::Data::use(wt->getEnd().toUTC().toString().toStdString());
         statement.execute();
     }
 }

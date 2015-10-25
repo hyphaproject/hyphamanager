@@ -7,17 +7,16 @@ namespace Ui {
 class VideoControlWidget;
 }
 
-class VideoControlWidget : public QWidget
-{
+class VideoControlWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit VideoControlWidget(QWidget *parent = 0);
     ~VideoControlWidget();
     void loadConfig(QString config);
     QString getConfig();
 
-private:
+  private:
     Ui::VideoControlWidget *ui;
 };
 

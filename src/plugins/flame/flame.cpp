@@ -8,27 +8,23 @@
 using namespace hypha::plugin;
 using namespace hypha::plugin::flame;
 
-void Flame::loadConfig(std::string json)
-{
+void Flame::loadConfig(std::string json) {
     widget();
     flameWidget->setHost(QString::fromStdString(host));
     flameWidget->loadConfig(QString::fromStdString(json));
 }
 
-std::string Flame::getConfig()
-{
+std::string Flame::getConfig() {
     return flameWidget->getConfig().toStdString();
 }
 
-HyphaPluginConfig *Flame::getInstance(std::string id)
-{
+HyphaPluginConfig *Flame::getInstance(std::string id) {
     Flame *instance = new Flame();
     instance->setId(id);
     return instance;
 }
 
-QWidget *Flame::widget()
-{
+QWidget *Flame::widget() {
     if(!flameWidget)
         flameWidget = new FlameWidget();
     return flameWidget;

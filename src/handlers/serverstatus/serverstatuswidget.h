@@ -7,17 +7,16 @@ namespace Ui {
 class ServerStatusWidget;
 }
 
-class ServerStatusWidget : public QWidget
-{
+class ServerStatusWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit ServerStatusWidget(QWidget *parent = 0);
     ~ServerStatusWidget();
     void loadConfig(QString config);
     QString getConfig();
 
-private:
+  private:
     Ui::ServerStatusWidget *ui;
 };
 

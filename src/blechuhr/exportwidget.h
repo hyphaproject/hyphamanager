@@ -9,16 +9,15 @@ namespace Ui {
 class ExportWidget;
 }
 
-class ExportWidget : public QWidget
-{
+class ExportWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit ExportWidget(Instance *instance, QWidget *parent = 0);
     ~ExportWidget();
 
 
-protected:
+  protected:
     Instance * instance;
     QStandardItemModel listModel;
 
@@ -29,7 +28,7 @@ protected:
     QString exportRFID_to_PDF(QString username, QDate month, QString folder);
     QString exportReport_to_PDF(QString username, QDate month, QString folder);
 
-private slots:
+  private slots:
     void on_allUserCheckBox_toggled(bool checked);
 
     void on_dateFromEdit_userDateChanged(const QDate &date);
@@ -38,7 +37,7 @@ private slots:
 
     void on_emailButton_clicked();
 
-private:
+  private:
     Ui::ExportWidget *ui;
 };
 

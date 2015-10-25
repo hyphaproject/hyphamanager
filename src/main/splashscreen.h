@@ -4,15 +4,14 @@
 #include <QtWidgets/QSplashScreen>
 #include <QtWidgets/QWidget>
 
-class SplashScreen : public QSplashScreen
-{
+class SplashScreen : public QSplashScreen {
     Q_OBJECT
-public:
+  public:
     explicit SplashScreen(QWidget *parent = 0);
 
-signals:
+  signals:
 
-public slots:
+  public slots:
     void setMessage(QString message);
 
 };

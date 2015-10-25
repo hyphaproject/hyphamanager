@@ -12,39 +12,33 @@ using namespace hypha::handler;
 using namespace hypha::handler::blechuhr;
 using namespace hypha::plugin;
 
-BlechUhr::BlechUhr()
-{
+BlechUhr::BlechUhr() {
     buwidget = new BlechUhrWidget();
 }
 
-BlechUhr::~BlechUhr()
-{
+BlechUhr::~BlechUhr() {
 
 }
 
-void BlechUhr::parse(std::string message){
+void BlechUhr::parse(std::string message) {
 
 }
 
-void BlechUhr::loadConfig(std::string config)
-{
+void BlechUhr::loadConfig(std::string config) {
 
 }
 
-std::string BlechUhr::getConfig()
-{
+std::string BlechUhr::getConfig() {
     return "{\"name\":\"blechuhr\"}";
 }
 
-HyphaHandlerConfig *BlechUhr::getInstance(std::string id)
-{
+HyphaHandlerConfig *BlechUhr::getInstance(std::string id) {
     BlechUhr *blechuhr = new BlechUhr();
     blechuhr->setId(id);
     return blechuhr;
 }
 
-QWidget *BlechUhr::widget()
-{
+QWidget *BlechUhr::widget() {
     return buwidget;
 }
 

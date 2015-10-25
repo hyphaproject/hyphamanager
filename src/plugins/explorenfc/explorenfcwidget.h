@@ -7,15 +7,14 @@ namespace Ui {
 class ExploreNFCWidget;
 }
 
-class ExploreNFCWidget : public QWidget
-{
+class ExploreNFCWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit ExploreNFCWidget(QWidget *parent = 0);
     ~ExploreNFCWidget();
 
-private:
+  private:
     Ui::ExploreNFCWidget *ui;
 };
 

@@ -1,20 +1,16 @@
 #include "baseaccount.h"
 
-BaseAccount::BaseAccount()
-{
+BaseAccount::BaseAccount() {
 }
 
-QString BaseAccount::getUsername()
-{
+QString BaseAccount::getUsername() {
     return username;
 }
 
-QDateTime BaseAccount::getStart()
-{
+QDateTime BaseAccount::getStart() {
     return start;
 }
 
-QDateTime BaseAccount::getEnd()
-{
+QDateTime BaseAccount::getEnd() {
     return end;
 }

@@ -7,9 +7,8 @@
 #include "ui_connectiondialog.h"
 
 ConnectionDialog::ConnectionDialog(hypha::handler::HandlerLoader *handlerLoader, hypha::plugin::PluginLoader *pluginLoader, hypha::database::Database *database, QWidget *parent) :
-QDialog(parent),
-ui(new Ui::ConnectionDialog)
-{
+    QDialog(parent),
+    ui(new Ui::ConnectionDialog) {
     ui->setupUi(this);
     this->handlerLoader = handlerLoader;
     this->pluginLoader = pluginLoader;
@@ -17,20 +16,18 @@ ui(new Ui::ConnectionDialog)
     init();
 }
 
-ConnectionDialog::~ConnectionDialog()
-{
+ConnectionDialog::~ConnectionDialog() {
     delete ui;
 }
 
-void ConnectionDialog::init()
-{
+void ConnectionDialog::init() {
     ui->listWidget->clear();
     ui->handlerComboBox->clear();
     ui->pluginComboBox->clear();
-    for(hypha::handler::HyphaHandler * handler: handlerLoader->getInstances()){
+    for(hypha::handler::HyphaHandler * handler: handlerLoader->getInstances()) {
         ui->handlerComboBox->addItem(QString::fromStdString(handler->getId()));
     }
-    for(hypha::plugin::HyphaPlugin * plugin: pluginLoader->getInstances()){
+    for(hypha::plugin::HyphaPlugin * plugin: pluginLoader->getInstances()) {
         ui->pluginComboBox->addItem(QString::fromStdString(plugin->getId()));
     }
 
@@ -47,9 +44,9 @@ void ConnectionDialog::init()
         QListWidgetItem *item = new QListWidgetItem(ui->listWidget);
         ui->listWidget->addItem(item);
         ConnectionItem *connectionItem = new ConnectionItem(
-                    QString::fromStdString(id),
-                    QString::fromStdString(handlerId),
-                    QString::fromStdString(pluginId), database);
+            QString::fromStdString(id),
+            QString::fromStdString(handlerId),
+            QString::fromStdString(pluginId), database);
         item->setSizeHint(connectionItem->minimumSizeHint());
         ui->listWidget->setItemWidget(item, connectionItem);
 
@@ -57,21 +54,19 @@ void ConnectionDialog::init()
     }
 }
 
-void ConnectionDialog::on_deleteButton_clicked()
-{
+void ConnectionDialog::on_deleteButton_clicked() {
     ConnectionItem *item = (ConnectionItem*) ui->listWidget->itemWidget(ui->listWidget->currentItem());
-    if(item){
+    if(item) {
         item->deleteFromDatabase();
         init();
     }
 }
 
-void ConnectionDialog::on_addButton_clicked()
-{
+void ConnectionDialog::on_addButton_clicked() {
     Poco::Data::Statement statement = database->getStatement();
     statement << "INSERT INTO connection(handler_id,plugin_id) values(?, ?);",
-            Poco::Data::use(ui->handlerComboBox->currentText().toStdString()),
-            Poco::Data::use(ui->pluginComboBox->currentText().toStdString());
+              Poco::Data::use(ui->handlerComboBox->currentText().toStdString()),
+              Poco::Data::use(ui->pluginComboBox->currentText().toStdString());
     statement.execute();
     init();
 }

@@ -7,10 +7,10 @@ namespace hypha {
 namespace handler {
 class HandlerLoader;
 }
-namespace plugin{
+namespace plugin {
 class PluginLoader;
 }
-namespace database{
+namespace database {
 class Database;
 }
 }
@@ -19,19 +19,18 @@ namespace Ui {
 class PluginDialog;
 }
 
-class PluginDialog : public QDialog
-{
+class PluginDialog : public QDialog {
     Q_OBJECT
 
-public:
+  public:
     explicit PluginDialog(hypha::plugin::PluginLoader * pluginLoader, hypha::database::Database * database, QWidget *parent = 0);
     ~PluginDialog();
     void init();
 
-private slots:
+  private slots:
     void on_buttonBox_accepted();
 
-private:
+  private:
     Ui::PluginDialog *ui;
     hypha::plugin::PluginLoader *pluginLoader;
     hypha::database::Database *database;

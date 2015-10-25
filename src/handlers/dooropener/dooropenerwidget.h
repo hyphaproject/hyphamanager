@@ -11,11 +11,10 @@ namespace Ui {
 class DoorOpenerWidget;
 }
 
-class DoorOpenerWidget : public QWidget
-{
+class DoorOpenerWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit DoorOpenerWidget(QWidget *parent = 0);
     ~DoorOpenerWidget();
     void setDatabase(hypha::database::Database * database);
@@ -25,12 +24,12 @@ public:
     void reloadUser();
     QString getConfig();
 
-private slots:
+  private slots:
     void on_deleteButton_clicked();
 
     void on_addButton_clicked();
 
-private:
+  private:
     Ui::DoorOpenerWidget *ui;
     hypha::database::Database * database;
     hypha::database::UserDatabase *userDatabase;

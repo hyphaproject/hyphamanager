@@ -1,8 +1,7 @@
 #include "iterativeaccount.h"
 
 
-IterativeAccount::IterativeAccount(QString username, QDateTime start, QDateTime end, QTime startTime, QTime endTime, hypha::blechuhr::ITYPE type)
-{
+IterativeAccount::IterativeAccount(QString username, QDateTime start, QDateTime end, QTime startTime, QTime endTime, hypha::blechuhr::ITYPE type) {
     this->username = username;
     this->start = start;
     this->end = end;
@@ -11,12 +10,10 @@ IterativeAccount::IterativeAccount(QString username, QDateTime start, QDateTime 
     this->itype = type;
 }
 
-QTime IterativeAccount::getStartTime()
-{
+QTime IterativeAccount::getStartTime() {
     return startTime;
 }
 
-QTime IterativeAccount::getEndTime()
-{
+QTime IterativeAccount::getEndTime() {
     return endTime;
 }

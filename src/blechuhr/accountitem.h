@@ -7,7 +7,7 @@
 
 namespace hypha {
 namespace database {
-    class Database;
+class Database;
 }
 }
 
@@ -15,11 +15,10 @@ namespace Ui {
 class AccountItem;
 }
 
-class AccountItem : public QWidget
-{
+class AccountItem : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit AccountItem(QWidget *parent = 0);
     AccountItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::TYPE type, float amount, QString name, hypha::database::Database *database, QWidget *parent = 0);
     AccountItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::TYPE type, float amount, QString name, hypha::database::Database *database, QWidget *parent = 0);
@@ -30,12 +29,12 @@ public:
     void save();
     void deleteFromDatabase();
 
-private slots:
+  private slots:
 
     void on_iterativeCheckBox_clicked(bool checked);
     void updateElements();
 
-private:
+  private:
     bool isIterative;
     void init();
     void initType();

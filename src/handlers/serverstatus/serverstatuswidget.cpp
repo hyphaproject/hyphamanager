@@ -7,23 +7,19 @@
 
 ServerStatusWidget::ServerStatusWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ServerStatusWidget)
-{
+    ui(new Ui::ServerStatusWidget) {
     ui->setupUi(this);
 }
 
-ServerStatusWidget::~ServerStatusWidget()
-{
+ServerStatusWidget::~ServerStatusWidget() {
     delete ui;
 }
 
-void ServerStatusWidget::loadConfig(QString config)
-{
+void ServerStatusWidget::loadConfig(QString config) {
     QJsonDocument document = QJsonDocument::fromJson(config.toUtf8());
     QJsonObject object = document.object();
 }
 
-QString ServerStatusWidget::getConfig()
-{
+QString ServerStatusWidget::getConfig() {
     return "{}";
 }

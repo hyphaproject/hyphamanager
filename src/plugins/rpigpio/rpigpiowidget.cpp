@@ -3,12 +3,10 @@
 
 RpiGpioWidget::RpiGpioWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::RpiGpioWidget)
-{
+    ui(new Ui::RpiGpioWidget) {
     ui->setupUi(this);
 }
 
-RpiGpioWidget::~RpiGpioWidget()
-{
+RpiGpioWidget::~RpiGpioWidget() {
     delete ui;
 }

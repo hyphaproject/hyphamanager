@@ -5,19 +5,26 @@
 #include "../../handler/hyphahandlerconfig.h"
 #include "serverstatuswidget.h"
 
-namespace hypha{
-namespace handler{
-namespace serverstatus{
-class ServerStatus : public HyphaHandlerConfig
-{
-public:
+namespace hypha {
+namespace handler {
+namespace serverstatus {
+class ServerStatus : public HyphaHandlerConfig {
+  public:
     explicit ServerStatus();
     ~ServerStatus();
     static ServerStatus * instance();
-    std::string name(){ return "serverstatus"; }
-    std::string getTitle() { return "Server Status"; }
-    std::string getVersion() { return "0.1"; }
-    std::string getDescription() { return "Handler to send server status as email.";}
+    std::string name() {
+        return "serverstatus";
+    }
+    std::string getTitle() {
+        return "Server Status";
+    }
+    std::string getVersion() {
+        return "0.1";
+    }
+    std::string getDescription() {
+        return "Handler to send server status as email.";
+    }
     void parse(std::string message);
     void loadConfig(std::string config);
     std::string getConfig();
@@ -25,7 +32,7 @@ public:
 
     QWidget *widget();
 
-protected:
+  protected:
     ServerStatusWidget *serverStatusWidget = nullptr;
 
 };

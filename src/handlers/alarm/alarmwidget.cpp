@@ -7,26 +7,22 @@
 
 AlarmWidget::AlarmWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AlarmWidget)
-{
+    ui(new Ui::AlarmWidget) {
     ui->setupUi(this);
 }
 
-AlarmWidget::~AlarmWidget()
-{
+AlarmWidget::~AlarmWidget() {
     delete ui;
 }
 
-void AlarmWidget::loadConfig(QString config)
-{
+void AlarmWidget::loadConfig(QString config) {
     QJsonDocument document = QJsonDocument::fromJson(config.toUtf8());
     QJsonObject object = document.object();
-    if(object.contains("savedir")){
+    if(object.contains("savedir")) {
     }
 
 }
 
-QString AlarmWidget::getConfig()
-{
+QString AlarmWidget::getConfig() {
     return "{\"savedir\":\"\"}";
 }

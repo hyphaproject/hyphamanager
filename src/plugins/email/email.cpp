@@ -8,27 +8,23 @@
 using namespace hypha::plugin;
 using namespace hypha::plugin::email;
 
-void EMail::loadConfig(std::string json)
-{
+void EMail::loadConfig(std::string json) {
     widget();
     emailWidget->setHost(QString::fromStdString(host));
     emailWidget->loadConfig(QString::fromStdString(json));
 }
 
-std::string EMail::getConfig()
-{
+std::string EMail::getConfig() {
     return emailWidget->getConfig().toStdString();
 }
 
-HyphaPluginConfig *EMail::getInstance(std::string id)
-{
+HyphaPluginConfig *EMail::getInstance(std::string id) {
     EMail *instance = new EMail();
     instance->setId(id);
     return instance;
 }
 
-QWidget *EMail::widget()
-{
+QWidget *EMail::widget() {
     if(!emailWidget)
         emailWidget = new EMailWidget();
     return emailWidget;

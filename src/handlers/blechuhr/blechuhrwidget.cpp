@@ -3,12 +3,10 @@
 
 BlechUhrWidget::BlechUhrWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::BlechUhrWidget)
-{
+    ui(new Ui::BlechUhrWidget) {
     ui->setupUi(this);
 }
 
-BlechUhrWidget::~BlechUhrWidget()
-{
+BlechUhrWidget::~BlechUhrWidget() {
     delete ui;
 }

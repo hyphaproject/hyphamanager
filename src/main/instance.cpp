@@ -8,8 +8,7 @@
 #include <hypha/plugin/pluginloader.h>
 #include "instance.h"
 
-Instance::Instance(QString filename, QObject *parent): QObject(parent)
-{
+Instance::Instance(QString filename, QObject *parent): QObject(parent) {
     this->filename = filename;
     managerSettings = new hypha::settings::HyphaSettings(filename.toStdString());
     managerSettings->load();
@@ -28,44 +27,36 @@ Instance::Instance(QString filename, QObject *parent): QObject(parent)
 
 }
 
-Instance::~Instance()
-{
+Instance::~Instance() {
     //delete clientSettings;
     //delete databaseSettings;
     //delete userDatabase;
 }
 
-hypha::settings::HyphaSettings *Instance::getClientSettings()
-{
+hypha::settings::HyphaSettings *Instance::getClientSettings() {
     return managerSettings;
 }
 
-hypha::settings::DatabaseSettings *Instance::getDatabaseSettings()
-{
+hypha::settings::DatabaseSettings *Instance::getDatabaseSettings() {
     return databaseSettings;
 }
 
-hypha::database::UserDatabase *Instance::getUserDatabase()
-{
+hypha::database::UserDatabase *Instance::getUserDatabase() {
     return userDatabase;
 }
 
-hypha::database::Database *Instance::getDatabase()
-{
+hypha::database::Database *Instance::getDatabase() {
     return database;
 }
 
-hypha::settings::HandlerSettings *Instance::getHandlerSettings()
-{
+hypha::settings::HandlerSettings *Instance::getHandlerSettings() {
     return handlerSettings;
 }
 
-hypha::handler::HandlerLoader *Instance::getHandlerLoader()
-{
+hypha::handler::HandlerLoader *Instance::getHandlerLoader() {
     return handlerLoader;
 }
 
-hypha::plugin::PluginLoader *Instance::getPluginLoader()
-{
+hypha::plugin::PluginLoader *Instance::getPluginLoader() {
     return pluginLoader;
 }

@@ -7,17 +7,16 @@ namespace Ui {
 class FlameWidget;
 }
 
-class FlameWidget : public QWidget
-{
+class FlameWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit FlameWidget(QWidget *parent = 0);
     ~FlameWidget();
     void setHost(QString host);
     void loadConfig(QString json);
     QString getConfig();
-private:
+  private:
     Ui::FlameWidget *ui;
     QString host;
 };

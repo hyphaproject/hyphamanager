@@ -7,17 +7,16 @@ namespace Ui {
 class WaterSensorWidget;
 }
 
-class WaterSensorWidget : public QWidget
-{
+class WaterSensorWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit WaterSensorWidget(QWidget *parent = 0);
     ~WaterSensorWidget();
     void setHost(QString host);
     void loadConfig(QString json);
     QString getConfig();
-private:
+  private:
     Ui::WaterSensorWidget *ui;
     QString host;
 };

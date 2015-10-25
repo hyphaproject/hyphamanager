@@ -7,17 +7,16 @@ namespace Ui {
 class AlarmWidget;
 }
 
-class AlarmWidget : public QWidget
-{
+class AlarmWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit AlarmWidget(QWidget *parent = 0);
     ~AlarmWidget();
     void loadConfig(QString config);
     QString getConfig();
 
-private:
+  private:
     Ui::AlarmWidget *ui;
 };
 

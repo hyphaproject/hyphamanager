@@ -8,13 +8,12 @@
 
 namespace hypha {
 namespace database {
-    class Database;
+class Database;
 }
 }
 
-class WorkingTimeImportExport
-{
-public:
+class WorkingTimeImportExport {
+  public:
     WorkingTimeImportExport(hypha::database::Database *database, QString username, QString file);
     WorkingTimeImportExport(QString username,QList<WorkingTime*> times, QString file);
     ~WorkingTimeImportExport();
@@ -22,7 +21,7 @@ public:
     void exportDataFromDatabase(QDate *date = 0);
     void exportData();
 
-protected:
+  protected:
     QString username;
     QString file;
     hypha::database::Database * database;

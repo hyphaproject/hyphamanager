@@ -3,12 +3,10 @@
 
 ExploreNFCWidget::ExploreNFCWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ExploreNFCWidget)
-{
+    ui(new Ui::ExploreNFCWidget) {
     ui->setupUi(this);
 }
 
-ExploreNFCWidget::~ExploreNFCWidget()
-{
+ExploreNFCWidget::~ExploreNFCWidget() {
     delete ui;
 }

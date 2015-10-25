@@ -8,27 +8,23 @@
 using namespace hypha::plugin;
 using namespace hypha::plugin::rpianalogsensor;
 
-void RpiAnalogSensor::loadConfig(std::string json)
-{
+void RpiAnalogSensor::loadConfig(std::string json) {
     widget();
     rpiAnalogSensorWidget->setHost(QString::fromStdString(host));
     rpiAnalogSensorWidget->loadConfig(QString::fromStdString(json));
 }
 
-std::string RpiAnalogSensor::getConfig()
-{
+std::string RpiAnalogSensor::getConfig() {
     return rpiAnalogSensorWidget->getConfig().toStdString();
 }
 
-HyphaPluginConfig *RpiAnalogSensor::getInstance(std::string id)
-{
+HyphaPluginConfig *RpiAnalogSensor::getInstance(std::string id) {
     RpiAnalogSensor *instance = new RpiAnalogSensor();
     instance->setId(id);
     return instance;
 }
 
-QWidget *RpiAnalogSensor::widget()
-{
+QWidget *RpiAnalogSensor::widget() {
     if(!rpiAnalogSensorWidget)
         rpiAnalogSensorWidget = new RpiAnalogSensorWidget();
     return rpiAnalogSensorWidget;

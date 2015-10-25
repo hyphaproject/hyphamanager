@@ -15,11 +15,10 @@ namespace Ui {
 class ConnectionWindow;
 }
 
-class ConnectionWindow : public QWidget
-{
+class ConnectionWindow : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit ConnectionWindow(Instance *instance, QWidget *parent = 0);
     ~ConnectionWindow();
     void moveTab(QString name);
@@ -28,10 +27,10 @@ public:
     void updateDesigner();
     void setStatusMessageUrl(QString url);
 
-private:
+  private:
     Ui::ConnectionWindow *ui;
 
-protected:
+  protected:
     void createPluginsTree();
     void createPluginsTabs();
     void createHandlerItems();
@@ -52,7 +51,7 @@ protected:
     QMap<QString, HandlerItem*> handlerItems;
     QMap<QString, PluginItem*> pluginItems;
 
-private slots:
+  private slots:
     void on_pluginsTreeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void on_connectionsButton_clicked();
     void on_handlerButton_clicked();

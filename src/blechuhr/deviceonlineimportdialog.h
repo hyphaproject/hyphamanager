@@ -6,12 +6,12 @@
 
 namespace hypha {
 namespace database {
-    class Database;
-    class UserDatabase;
+class Database;
+class UserDatabase;
 }
 
 namespace settings {
-    class HyphaSettings;
+class HyphaSettings;
 }
 }
 
@@ -19,15 +19,14 @@ namespace Ui {
 class DeviceOnlineImportDialog;
 }
 
-class DeviceOnlineImportDialog : public QDialog
-{
+class DeviceOnlineImportDialog : public QDialog {
     Q_OBJECT
 
-public:
+  public:
     explicit DeviceOnlineImportDialog(hypha::settings::HyphaSettings * settings, hypha::database::Database *database, hypha::database::UserDatabase * userDatabase, QWidget *parent = 0);
     ~DeviceOnlineImportDialog();
 
-private slots:
+  private slots:
     void on_DeviceOnlineImportDialog_accepted();
     void reload();
     void reloadTimesList();
@@ -44,7 +43,7 @@ private slots:
 
     void on_mailCSVButton_clicked();
 
-private:
+  private:
     void init();
     Ui::DeviceOnlineImportDialog *ui;
     QString username;

@@ -8,11 +8,10 @@
 #include "workingrule.h"
 #include "pauserule.h"
 
-class RulesFactory
-{
-private:
+class RulesFactory {
+  private:
     RulesFactory();
-public:
+  public:
     static BaseRule *getRule(QString type, QList<BaseAccount *> accounts, QList<WorkingTime*> workingTimes);
 };
 

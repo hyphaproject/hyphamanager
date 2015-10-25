@@ -7,15 +7,14 @@ namespace Ui {
 class ESpeakWidget;
 }
 
-class ESpeakWidget : public QWidget
-{
+class ESpeakWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit ESpeakWidget(QWidget *parent = 0);
     ~ESpeakWidget();
 
-private:
+  private:
     Ui::ESpeakWidget *ui;
 };
 

@@ -3,9 +3,8 @@
 
 #include "baserule.h"
 
-class WorkingRule: public BaseRule
-{
-public:
+class WorkingRule: public BaseRule {
+  public:
     WorkingRule(QList<BaseAccount *> accounts, QList<WorkingTime *> workingTimes);
     virtual void calculate();
 };

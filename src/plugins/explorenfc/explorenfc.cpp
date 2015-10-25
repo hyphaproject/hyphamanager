@@ -12,25 +12,21 @@
 using namespace hypha::plugin::explorenfc;
 using namespace hypha::plugin;
 
-void ExploreNFC::loadConfig(std::string json)
-{
+void ExploreNFC::loadConfig(std::string json) {
 
 }
 
-std::string ExploreNFC::getConfig()
-{
+std::string ExploreNFC::getConfig() {
     return "{}";
 }
 
-HyphaPluginConfig *ExploreNFC::getInstance(std::string id)
-{
+HyphaPluginConfig *ExploreNFC::getInstance(std::string id) {
     ExploreNFC *instance = new ExploreNFC();
     instance->setId(id);
     return instance;
 }
 
-QWidget *ExploreNFC::widget()
-{
+QWidget *ExploreNFC::widget() {
     return new ExploreNFCWidget();
 }
 

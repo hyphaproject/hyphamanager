@@ -5,35 +5,30 @@
 
 WaterSensorWidget::WaterSensorWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::WaterSensorWidget)
-{
+    ui(new Ui::WaterSensorWidget) {
     ui->setupUi(this);
 }
 
-WaterSensorWidget::~WaterSensorWidget()
-{
+WaterSensorWidget::~WaterSensorWidget() {
     delete ui;
 }
 
-void WaterSensorWidget::setHost(QString host)
-{
+void WaterSensorWidget::setHost(QString host) {
     this->host = host;
 }
 
-void WaterSensorWidget::loadConfig(QString json)
-{
+void WaterSensorWidget::loadConfig(QString json) {
     QJsonDocument document = QJsonDocument::fromJson(json.toUtf8());
     QJsonObject object = document.object();
-    if(object.contains("alarm")){
+    if(object.contains("alarm")) {
         ui->alarmCheckBox->setChecked(object.value("alarm").toBool());
     }
-    if(object.contains("pin")){
+    if(object.contains("pin")) {
         ui->pinSpinBox->setValue(object.value("pin").toInt(6));
     }
 }
 
-QString WaterSensorWidget::getConfig()
-{
+QString WaterSensorWidget::getConfig() {
     QJsonObject object;
     object["alarm"] = ui->alarmCheckBox->isChecked();
     object["pin"] = ui->pinSpinBox->value();

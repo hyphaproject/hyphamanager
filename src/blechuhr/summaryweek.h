@@ -2,9 +2,8 @@
 #define SUMMARYWEEK_H
 
 
-class SummaryWeek
-{
-public:
+class SummaryWeek {
+  public:
     SummaryWeek();
     ~SummaryWeek();
 };

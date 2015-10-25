@@ -5,10 +5,9 @@
 #include <QtCore/QMultiMap>
 #include <QtCore/QStringList>
 
-class Translation : public QObject
-{
+class Translation : public QObject {
     Q_OBJECT
-public:
+  public:
     static Translation * instance();
     void loadLanguage();
     void loadTranslations(QString dir);
@@ -18,11 +17,11 @@ public:
     QString language();
     void loadLanguageFile();
     static QString languageName(const QString &qmFile);
-signals:
+  signals:
 
-public slots:
+  public slots:
 
-protected:
+  protected:
     explicit Translation(QObject *parent = 0);
 
     static Translation *singleton;

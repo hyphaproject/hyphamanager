@@ -13,15 +13,14 @@ namespace Ui {
 class BlechuhrWindow;
 }
 
-class BlechuhrWindow : public QWidget
-{
+class BlechuhrWindow : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit BlechuhrWindow(Instance * instance, QWidget *parent = 0);
     ~BlechuhrWindow();
 
-public slots:
+  public slots:
     void reload();
     void reloadTab(int index);
     void reloadAccounts();
@@ -31,16 +30,16 @@ public slots:
     void reloadSummary();
     void reloadExport();
 
-private:
+  private:
     Ui::BlechuhrWindow *ui;
 
-protected:
+  protected:
     Instance * instance;
     SummaryWidget * summaryWidget;
     AccountWidget * accountWidget;
     RulesWidget * rulesWidget;
     ExportWidget * exportWidget;
-private slots:
+  private slots:
     void initDayWebView();
     void initMonthWebView();
     void on_userList_currentTextChanged(const QString &currentText);

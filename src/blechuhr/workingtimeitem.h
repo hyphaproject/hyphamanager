@@ -6,7 +6,7 @@
 
 namespace hypha {
 namespace database {
-    class Database;
+class Database;
 }
 }
 
@@ -14,11 +14,10 @@ namespace Ui {
 class WorkingTimeItem;
 }
 
-class WorkingTimeItem : public QWidget
-{
+class WorkingTimeItem : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     WorkingTimeItem();
     WorkingTimeItem(QString id);
     WorkingTimeItem(QString username, QDateTime start, QDateTime end, hypha::database::Database *database,  QWidget *parent = 0);
@@ -29,7 +28,7 @@ public:
     void save();
     void deleteFromDatabase();
 
-private:
+  private:
     void init();
     Ui::WorkingTimeItem *ui;
     QString id;

@@ -16,29 +16,25 @@
 
 ExportWidget::ExportWidget(Instance *instance, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ExportWidget)
-{
+    ui(new Ui::ExportWidget) {
     this->instance = instance;
     ui->setupUi(this);
     init();
 }
 
-ExportWidget::~ExportWidget()
-{
+ExportWidget::~ExportWidget() {
     delete ui;
 }
 
-void ExportWidget::init()
-{
+void ExportWidget::init() {
     ui->listView->setModel(&listModel);
     ui->dateFromEdit->setDate(QDate::currentDate());
     ui->dateToEdit->setDate(QDate::currentDate().addMonths(1));
     loadUser();
 }
 
-void ExportWidget::loadUser()
-{
-    for(std::string user: instance->getUserDatabase()->getUsers()){
+void ExportWidget::loadUser() {
+    for(std::string user: instance->getUserDatabase()->getUsers()) {
         QStandardItem* item = new QStandardItem(QString::fromStdString(user));
         item->setCheckable(true);
         item->setCheckState(Qt::Unchecked);
@@ -46,16 +42,14 @@ void ExportWidget::loadUser()
     }
 }
 
-QString ExportWidget::getSaveDir()
-{
+QString ExportWidget::getSaveDir() {
     return QFileDialog::getExistingDirectory(this, tr("Save Directory"),
-                                                    "",
-                                                    QFileDialog::ShowDirsOnly
-                                             | QFileDialog::DontResolveSymlinks);
+            "",
+            QFileDialog::ShowDirsOnly
+            | QFileDialog::DontResolveSymlinks);
 }
 
-QString ExportWidget::exportRFID_to_CSV(QString username, QDate month, QString folder)
-{
+QString ExportWidget::exportRFID_to_CSV(QString username, QDate month, QString folder) {
     QString file = folder + "/" + username + "_" + month.toString("MMM_yy") + ".csv";
     DeviceOnlineImport deviceOnlineImport(instance->getDatabase(), instance->getUserDatabase());
     deviceOnlineImport.setUsername(username);
@@ -66,8 +60,7 @@ QString ExportWidget::exportRFID_to_CSV(QString username, QDate month, QString f
     return file;
 }
 
-QString ExportWidget::exportRFID_to_PDF(QString username, QDate month, QString folder)
-{
+QString ExportWidget::exportRFID_to_PDF(QString username, QDate month, QString folder) {
     QString file = folder + "/" + username + "_" + month.toString("MMM_yy") + ".pdf";
     DeviceOnlineImport deviceOnlineImport(instance->getDatabase(), instance->getUserDatabase());
     deviceOnlineImport.setUsername(username);
@@ -86,8 +79,7 @@ QString ExportWidget::exportRFID_to_PDF(QString username, QDate month, QString f
     return file;
 }
 
-QString ExportWidget::exportReport_to_PDF(QString username, QDate month, QString folder)
-{
+QString ExportWidget::exportReport_to_PDF(QString username, QDate month, QString folder) {
     QString file = folder + "/" + username + "_" + month.toString("MMM_yy") + ".pdf";
 
     QPrinter printer(QPrinter::HighResolution);
@@ -104,7 +96,7 @@ QString ExportWidget::exportReport_to_PDF(QString username, QDate month, QString
     algo.setDate(month);
 
     QList<WorkingTime *> workingTimes;
-    for(WorkingTime wt: algo.getMonth()){
+    for(WorkingTime wt: algo.getMonth()) {
         workingTimes.append(new WorkingTime(wt));
     }
     timePrinter.setWorkingTimes(workingTimes);
@@ -133,33 +125,30 @@ QString ExportWidget::exportReport_to_PDF(QString username, QDate month, QString
     return file;
 }
 
-void ExportWidget::on_allUserCheckBox_toggled(bool checked)
-{
-    for(int i = 0; i < listModel.rowCount(); ++i){
+void ExportWidget::on_allUserCheckBox_toggled(bool checked) {
+    for(int i = 0; i < listModel.rowCount(); ++i) {
         QStandardItem * item = listModel.item(i);
         item->setCheckState(checked?Qt::Checked:Qt::Unchecked);
     }
 }
 
-void ExportWidget::on_dateFromEdit_userDateChanged(const QDate &date)
-{
+void ExportWidget::on_dateFromEdit_userDateChanged(const QDate &date) {
     ui->dateToEdit->setDate(date.addMonths(1));
 }
 
-void ExportWidget::on_filesButton_clicked()
-{
+void ExportWidget::on_filesButton_clicked() {
     QString dir = getSaveDir();
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    for(int i = 0; i < listModel.rowCount(); ++i){
+    for(int i = 0; i < listModel.rowCount(); ++i) {
         QStandardItem * item = listModel.item(i);
-        if(item->checkState() == Qt::Checked){
-            if(ui->rfidToCsvCheckBox->isChecked()){
+        if(item->checkState() == Qt::Checked) {
+            if(ui->rfidToCsvCheckBox->isChecked()) {
                 this->exportRFID_to_CSV(item->text(), ui->dateFromEdit->date(), dir);
             }
-            if(ui->rfidToPdfCheckBox->isChecked()){
+            if(ui->rfidToPdfCheckBox->isChecked()) {
                 this->exportRFID_to_PDF(item->text(), ui->dateFromEdit->date(), dir);
             }
-            if(ui->reportCheckBox->isChecked()){
+            if(ui->reportCheckBox->isChecked()) {
                 this->exportReport_to_PDF(item->text(), ui->dateFromEdit->date(), dir);
             }
         }
@@ -167,25 +156,24 @@ void ExportWidget::on_filesButton_clicked()
     QApplication::restoreOverrideCursor();
 }
 
-void ExportWidget::on_emailButton_clicked()
-{
+void ExportWidget::on_emailButton_clicked() {
     QTemporaryDir dir;
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    for(int i = 0; i < listModel.rowCount(); ++i){
+    for(int i = 0; i < listModel.rowCount(); ++i) {
         QStandardItem * item = listModel.item(i);
-        if(item->checkState() == Qt::Checked){
+        if(item->checkState() == Qt::Checked) {
             hypha::utils::EMail mail;
             mail.setHost(instance->getClientSettings()->getString("email.host", "localhost"));
             mail.setUser(instance->getClientSettings()->getString("email.user", ""));
             mail.setPassword(instance->getClientSettings()->getString("email.password", ""));
             qDebug() << "Send Mail to: " + QString::fromStdString(instance->getUserDatabase()->getMail(item->text().toStdString()));
-            if(ui->rfidToCsvCheckBox->isChecked()){
+            if(ui->rfidToCsvCheckBox->isChecked()) {
                 QString f = this->exportRFID_to_CSV(item->text(), ui->dateFromEdit->date(), dir.path());
                 mail.sendMessageWithAttachment(instance->getUserDatabase()->getMail(item->text().toStdString()),
                                                "Draft Time Record as CSV for "+ui->dateFromEdit->date().toString("MMMM").toStdString(), "Here is your timerecord.\n Made with Hypha Manager ",
                                                (ui->dateFromEdit->date().toString("MMMM")+".csv").toStdString(), f.toStdString() );
             }
-            if(ui->rfidToPdfCheckBox->isChecked()){
+            if(ui->rfidToPdfCheckBox->isChecked()) {
                 QString f = this->exportRFID_to_PDF(item->text(), ui->dateFromEdit->date(), dir.path());
                 mail.sendMessageWithAttachment(instance->getUserDatabase()->getMail(item->text().toStdString()),
                                                "Draft Time Record as PDF for "+ui->dateFromEdit->date().toString("MMMM").toStdString(), "Here is your timerecord.\n Made with Hypha Manager ",

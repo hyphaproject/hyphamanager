@@ -7,23 +7,20 @@
 #include "handleritem.h"
 
 HandlerItem::HandlerItem(HyphaHandler *handler, ConnectionWindow *window, QGraphicsItem *parent) :
-    QGraphicsItem(parent)
-{
+    QGraphicsItem(parent) {
     this->handler = handler;
     this->wnd = window;
     setFlag(ItemIsMovable);
     setFlag(ItemIsSelectable);
 }
 
-QRectF HandlerItem::boundingRect() const
-{
+QRectF HandlerItem::boundingRect() const {
     qreal penWidth = 1;
-            return QRectF(-10 - penWidth / 2, -10 - penWidth / 2,
-                          20 + penWidth, 20 + penWidth);
+    return QRectF(-10 - penWidth / 2, -10 - penWidth / 2,
+                  20 + penWidth, 20 + penWidth);
 }
 
-void HandlerItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
+void HandlerItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     QPen pen = painter->pen();
     pen.setColor(QColor(255,0,0));
     pen.setWidth(2);
@@ -35,27 +32,24 @@ void HandlerItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     painter->drawText(10,10, QString::fromStdString(handler->getId()));
 }
 
-void HandlerItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
-{
+void HandlerItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
     QMenu menu;
     menu.addAction("Edit");
     QAction *a = menu.exec(event->screenPos());
-    if(a){
+    if(a) {
         wnd->moveTab(QString::fromStdString(handler->getId()));
     }
 }
 
-void HandlerItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
+void HandlerItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsItem::mouseReleaseEvent(event);
     update();
-    for(ConnectionLine *line: connections){
+    for(ConnectionLine *line: connections) {
         line->updatePosition();
     }
     wnd->updateDesigner();
 }
 
-void HandlerItem::addConnection(ConnectionLine *connection)
-{
+void HandlerItem::addConnection(ConnectionLine *connection) {
     connections.append(connection);
 }

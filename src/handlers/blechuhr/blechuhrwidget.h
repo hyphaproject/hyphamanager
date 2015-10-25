@@ -7,15 +7,14 @@ namespace Ui {
 class BlechUhrWidget;
 }
 
-class BlechUhrWidget : public QWidget
-{
+class BlechUhrWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit BlechUhrWidget(QWidget *parent = 0);
     ~BlechUhrWidget();
 
-private:
+  private:
     Ui::BlechUhrWidget *ui;
 };
 

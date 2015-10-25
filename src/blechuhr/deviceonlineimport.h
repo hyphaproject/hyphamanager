@@ -5,21 +5,20 @@
 
 namespace hypha {
 namespace database {
-    class Database;
-    class UserDatabase;
+class Database;
+class UserDatabase;
 }
 }
 
-class DeviceOnlineImport
-{
-public:
+class DeviceOnlineImport {
+  public:
     DeviceOnlineImport(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase);
     void setUsername(QString username);
     void setDate(QDate date);
     ~DeviceOnlineImport();
     QList<WorkingTime*> getMonth();
 
-protected:
+  protected:
     hypha::database::Database *database;
     hypha::database::UserDatabase *userDatabase;
     QString username;

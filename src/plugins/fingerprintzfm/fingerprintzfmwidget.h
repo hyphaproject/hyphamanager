@@ -7,15 +7,14 @@ namespace Ui {
 class FingerPrintZFMWidget;
 }
 
-class FingerPrintZFMWidget : public QWidget
-{
+class FingerPrintZFMWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit FingerPrintZFMWidget(QWidget *parent = 0);
     ~FingerPrintZFMWidget();
 
-private:
+  private:
     Ui::FingerPrintZFMWidget *ui;
 };
 

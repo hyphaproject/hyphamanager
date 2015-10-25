@@ -8,27 +8,26 @@ namespace Ui {
 class UserWindow;
 }
 
-class UserWindow : public QWidget
-{
+class UserWindow : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit UserWindow(Instance * instance, QWidget *parent = 0);
     ~UserWindow();
 
-public slots:
+  public slots:
     void reload();
     void loadOnline();
     bool isOnline(QString username);
     void reloadUserStatus(QString username);
     QString lastConnection(QString username);
 
-private:
+  private:
     Ui::UserWindow *ui;
 
-protected:
+  protected:
     Instance *instance;
-private slots:
+  private slots:
     void on_newUserButton_clicked();
     void on_listWidget_currentTextChanged(const QString &currentText);
     void on_firstnameEdit_editingFinished();

@@ -7,7 +7,7 @@
 
 namespace hypha {
 namespace database {
-    class Database;
+class Database;
 }
 }
 
@@ -15,11 +15,10 @@ namespace Ui {
 class RulesItem;
 }
 
-class RulesItem : public QWidget
-{
+class RulesItem : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit RulesItem(QWidget *parent = 0);
     RulesItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::RTYPE type, hypha::database::Database *database, QWidget *parent = 0);
     RulesItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::RTYPE type, hypha::database::Database *database, QWidget *parent = 0);
@@ -29,7 +28,7 @@ public:
     void save();
     void deleteFromDatabase();
 
-private:
+  private:
     void init();
     void initType();
     Ui::RulesItem *ui;

@@ -5,32 +5,27 @@
 
 LightSensorWidget::LightSensorWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::LightSensorWidget)
-{
+    ui(new Ui::LightSensorWidget) {
     ui->setupUi(this);
 }
 
-LightSensorWidget::~LightSensorWidget()
-{
+LightSensorWidget::~LightSensorWidget() {
     delete ui;
 }
 
-void LightSensorWidget::setHost(QString host)
-{
+void LightSensorWidget::setHost(QString host) {
     this->host = host;
 }
 
-void LightSensorWidget::loadConfig(QString json)
-{
+void LightSensorWidget::loadConfig(QString json) {
     QJsonDocument document = QJsonDocument::fromJson(json.toUtf8());
     QJsonObject object = document.object();
-    if(object.contains("alarm")){
+    if(object.contains("alarm")) {
         ui->alarmCheckBox->setChecked(object.value("alarm").toBool());
     }
 }
 
-QString LightSensorWidget::getConfig()
-{
+QString LightSensorWidget::getConfig() {
     QJsonObject object;
     object["alarm"] = ui->alarmCheckBox->isChecked();
     QJsonDocument document(object);

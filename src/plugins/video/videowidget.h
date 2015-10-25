@@ -7,17 +7,16 @@ namespace Ui {
 class VideoWidget;
 }
 
-class VideoWidget : public QWidget
-{
+class VideoWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit VideoWidget(QWidget *parent = 0);
     ~VideoWidget();
     void setHost(QString host);
     void loadConfig(QString json);
     QString getConfig();
-private:
+  private:
     Ui::VideoWidget *ui;
     QString host;
 };

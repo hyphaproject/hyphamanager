@@ -7,15 +7,14 @@ namespace Ui {
 class RpiGpioWidget;
 }
 
-class RpiGpioWidget : public QWidget
-{
+class RpiGpioWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit RpiGpioWidget(QWidget *parent = 0);
     ~RpiGpioWidget();
 
-private:
+  private:
     Ui::RpiGpioWidget *ui;
 };
 

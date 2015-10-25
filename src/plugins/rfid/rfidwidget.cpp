@@ -3,12 +3,10 @@
 
 RFIDWidget::RFIDWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::RFIDWidget)
-{
+    ui(new Ui::RFIDWidget) {
     ui->setupUi(this);
 }
 
-RFIDWidget::~RFIDWidget()
-{
+RFIDWidget::~RFIDWidget() {
     delete ui;
 }

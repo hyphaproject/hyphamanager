@@ -5,46 +5,38 @@
 
 NewConfigWizzard::NewConfigWizzard(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::NewConfigWizzard)
-{
+    ui(new Ui::NewConfigWizzard) {
     ui->setupUi(this);
 }
 
-NewConfigWizzard::~NewConfigWizzard()
-{
+NewConfigWizzard::~NewConfigWizzard() {
     delete ui;
 }
 
-void NewConfigWizzard::on_selectFileButton_clicked()
-{
+void NewConfigWizzard::on_selectFileButton_clicked() {
     QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("Config File"), ui->configFileEdit->text(), tr("INI File (*.xml)"));
+                       tr("Config File"), ui->configFileEdit->text(), tr("INI File (*.xml)"));
     if(!fileName.isEmpty()) ui->configFileEdit->setText(fileName);
 }
 
-void NewConfigWizzard::on_selectDBButton_clicked()
-{
+void NewConfigWizzard::on_selectDBButton_clicked() {
     QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("SQLite File"), ui->dHostEdit->text(), tr("SQLite File (*.sqlite)"));
+                       tr("SQLite File"), ui->dHostEdit->text(), tr("SQLite File (*.sqlite)"));
     if(!fileName.isEmpty()) ui->dDatabaseEdit->setText(fileName);
 }
 
-void NewConfigWizzard::on_selectUserDBButton_clicked()
-{
+void NewConfigWizzard::on_selectUserDBButton_clicked() {
     QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("SQLite File"), ui->udHostEdit->text(), tr("SQLite File (*.sqlite)"));
+                       tr("SQLite File"), ui->udHostEdit->text(), tr("SQLite File (*.sqlite)"));
     if(!fileName.isEmpty()) ui->udDatabaseEdit->setText(fileName);
 }
 
-void NewConfigWizzard::on_cancelButton_clicked()
-{
+void NewConfigWizzard::on_cancelButton_clicked() {
     this->reject();
 }
 
-void NewConfigWizzard::on_nextButton_clicked()
-{
-    if(ui->tabWidget->currentIndex() == ui->tabWidget->count() - 1)
-    {
+void NewConfigWizzard::on_nextButton_clicked() {
+    if(ui->tabWidget->currentIndex() == ui->tabWidget->count() - 1) {
         ConfigGenerator generator;
         generator.dbDatabase = ui->dDatabaseEdit->text().toStdString();
         generator.dbDriver = ui->dDriverBox->currentText().toStdString();
@@ -65,7 +57,7 @@ void NewConfigWizzard::on_nextButton_clicked()
         generator.generateIniFile(ui->configFileEdit->text().toStdString());
 
         this->accept();
-    }else{
+    } else {
         ui->tabWidget->setCurrentIndex(ui->tabWidget->currentIndex() + 1);
     }
 }

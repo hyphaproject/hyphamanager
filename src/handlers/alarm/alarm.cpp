@@ -13,39 +13,33 @@ using namespace hypha::handler;
 using namespace hypha::handler::alarm;
 using namespace hypha::plugin;
 
-Alarm::Alarm()
-{
-	alarmWidget = new AlarmWidget();
+Alarm::Alarm() {
+    alarmWidget = new AlarmWidget();
 }
 
-Alarm::~Alarm()
-{
-
-}
-
-void Alarm::parse(std::string message){
+Alarm::~Alarm() {
 
 }
 
-void Alarm::loadConfig(std::string config)
-{
+void Alarm::parse(std::string message) {
+
+}
+
+void Alarm::loadConfig(std::string config) {
     alarmWidget->loadConfig(QString::fromStdString(config));
 }
 
-std::string Alarm::getConfig()
-{
+std::string Alarm::getConfig() {
     return alarmWidget->getConfig().toStdString();
 }
 
-HyphaHandlerConfig *Alarm::getInstance(std::string id)
-{
+HyphaHandlerConfig *Alarm::getInstance(std::string id) {
     Alarm *instance = new Alarm();
     instance->setId(id);
     return instance;
 }
 
-QWidget *Alarm::widget()
-{
+QWidget *Alarm::widget() {
     return alarmWidget;
 }
 

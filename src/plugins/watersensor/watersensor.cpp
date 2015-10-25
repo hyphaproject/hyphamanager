@@ -8,27 +8,23 @@
 using namespace hypha::plugin;
 using namespace hypha::plugin::watersensor;
 
-void WaterSensor::loadConfig(std::string json)
-{
+void WaterSensor::loadConfig(std::string json) {
     widget();
     waterSensorWidget->setHost(QString::fromStdString(host));
     waterSensorWidget->loadConfig(QString::fromStdString(json));
 }
 
-std::string WaterSensor::getConfig()
-{
+std::string WaterSensor::getConfig() {
     return waterSensorWidget->getConfig().toStdString();
 }
 
-HyphaPluginConfig *WaterSensor::getInstance(std::string id)
-{
+HyphaPluginConfig *WaterSensor::getInstance(std::string id) {
     WaterSensor *instance = new WaterSensor();
     instance->setId(id);
     return instance;
 }
 
-QWidget *WaterSensor::widget()
-{
+QWidget *WaterSensor::widget() {
     if(!waterSensorWidget)
         waterSensorWidget = new WaterSensorWidget();
     return waterSensorWidget;

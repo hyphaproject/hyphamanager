@@ -12,24 +12,20 @@
 using namespace hypha::plugin;
 using namespace hypha::plugin::rfid;
 
-void RFID::loadConfig(std::string json)
-{
+void RFID::loadConfig(std::string json) {
 }
 
-std::string RFID::getConfig()
-{
+std::string RFID::getConfig() {
     return "{}";
 }
 
-HyphaPluginConfig *RFID::getInstance(std::string id)
-{
+HyphaPluginConfig *RFID::getInstance(std::string id) {
     RFID *instance = new RFID();
     instance->setId(id);
     return instance;
 }
 
-QWidget *RFID::widget()
-{
+QWidget *RFID::widget() {
     return new RFIDWidget();
 }
 

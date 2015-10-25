@@ -4,20 +4,17 @@
 #include <algorithm>
 #include <QObject>
 
-WorkingTimePrinter::WorkingTimePrinter(QPrinter * printer)
-{
+WorkingTimePrinter::WorkingTimePrinter(QPrinter * printer) {
     this->printer = printer;
     width = printer->width();
     height = printer->height();
 }
 
-WorkingTimePrinter::~WorkingTimePrinter()
-{
+WorkingTimePrinter::~WorkingTimePrinter() {
 
 }
 
-void WorkingTimePrinter::setUsername(QString username)
-{
+void WorkingTimePrinter::setUsername(QString username) {
     this->username = username;
 }
 
@@ -26,33 +23,27 @@ void WorkingTimePrinter::setUsername(QString username)
  * @param name
  * set the full name of the username
  */
-void WorkingTimePrinter::setName(QString name)
-{
+void WorkingTimePrinter::setName(QString name) {
     this->name = name;
 }
 
-void WorkingTimePrinter::setMonth(QDate month)
-{
+void WorkingTimePrinter::setMonth(QDate month) {
     this->month = month;
 }
 
-void WorkingTimePrinter::setAccounts(QList<BaseAccount *> accounts)
-{
+void WorkingTimePrinter::setAccounts(QList<BaseAccount *> accounts) {
     this->accounts = accounts;
 }
 
-void WorkingTimePrinter::setRules(QList<QString> rules)
-{
+void WorkingTimePrinter::setRules(QList<QString> rules) {
     this->rules = rules;
 }
 
-void WorkingTimePrinter::setWorkingTimes(QList<WorkingTime *> times)
-{
+void WorkingTimePrinter::setWorkingTimes(QList<WorkingTime *> times) {
     this->times = times;
 }
 
-void WorkingTimePrinter::print()
-{
+void WorkingTimePrinter::print() {
     calculate();
     painter.begin(printer);
     printHeader();
@@ -64,19 +55,18 @@ void WorkingTimePrinter::print()
     painter.end();
 }
 
-void WorkingTimePrinter::calculate()
-{
+void WorkingTimePrinter::calculate() {
     std::sort(times.begin(), times.end(), WorkingTime::before);
     BaseRule * rule = 0;
-    for(QString type: rules){
-        if(rule){
+    for(QString type: rules) {
+        if(rule) {
             rule = RulesFactory::getRule(type, rule->getAccounts(), rule->getWorkingTimes());
-        }else{
+        } else {
             rule = RulesFactory::getRule(type, accounts, times);
         }
         rule->calculate();
     }
-    if(rule){
+    if(rule) {
         this->accounts = rule->getAccounts();
         this->times = rule->getWorkingTimes();
     }
@@ -89,13 +79,11 @@ void WorkingTimePrinter::calculate()
  * @return
  * returns height calculated to a printer height as 1000.
  */
-float WorkingTimePrinter::relHeight(int h)
-{
+float WorkingTimePrinter::relHeight(int h) {
     return h * height / 1000;
 }
 
-float WorkingTimePrinter::relWidth(int w)
-{
+float WorkingTimePrinter::relWidth(int w) {
     return w * width / 1000;
 }
 
@@ -103,8 +91,7 @@ float WorkingTimePrinter::relWidth(int w)
  * @brief WorkingTimePrinter::printHeader
  * prints the header with username, name and date
  */
-void WorkingTimePrinter::printHeader()
-{
+void WorkingTimePrinter::printHeader() {
     QRect rect(0,0,width, relHeight(100));
     painter.drawRect(rect);
     painter.drawText(rect, Qt::AlignLeft | Qt::TextWordWrap, username);
@@ -120,11 +107,10 @@ void WorkingTimePrinter::printHeader()
     painter.drawText(rect, Qt::AlignCenter | Qt::AlignBottom | Qt::TextWordWrap, "Type");
 }
 
-void WorkingTimePrinter::printDates()
-{
+void WorkingTimePrinter::printDates() {
     int y = relHeight(100);
     int rowHeight = relHeight(25);
-    foreach(WorkingTime *wt, times){
+    foreach(WorkingTime *wt, times) {
         QRect rect(relWidth(50), y, relWidth(100), rowHeight);
         painter.drawRect(rect);
         QString text = wt->getStart().toLocalTime().toString("ddd dd.");
@@ -133,11 +119,10 @@ void WorkingTimePrinter::printDates()
     }
 }
 
-void WorkingTimePrinter::printTimes()
-{
+void WorkingTimePrinter::printTimes() {
     int y = relHeight(100);
     int rowHeight = relHeight(25);
-    foreach(WorkingTime *wt, times){
+    foreach(WorkingTime *wt, times) {
         QRect rect(relWidth(150), y, relWidth(200), rowHeight);
         painter.drawRect(rect);
         QString text = wt->getStart().toLocalTime().toString("hh:mm") + "\t-\t" + wt->getEnd().toLocalTime().toString("hh:mm");
@@ -146,11 +131,10 @@ void WorkingTimePrinter::printTimes()
     }
 }
 
-void WorkingTimePrinter::printSum()
-{
+void WorkingTimePrinter::printSum() {
     int y = relHeight(100);
     int rowHeight = relHeight(25);
-    foreach(WorkingTime *wt, times){
+    foreach(WorkingTime *wt, times) {
         QRect rect(relWidth(350), y, relWidth(50), rowHeight);
         painter.drawRect(rect);
         QString text = QString::number(wt->hours(), 'g', 2)+" h";
@@ -159,11 +143,10 @@ void WorkingTimePrinter::printSum()
     }
 }
 
-void WorkingTimePrinter::printType()
-{
+void WorkingTimePrinter::printType() {
     int y = relHeight(100);
     int rowHeight = relHeight(25);
-    foreach(WorkingTime *wt, times){
+    foreach(WorkingTime *wt, times) {
         QRect rect(relWidth(400), y, relWidth(50), rowHeight);
         painter.drawRect(rect);
         QString text = wt->getType();
@@ -172,8 +155,7 @@ void WorkingTimePrinter::printType()
     }
 }
 
-void WorkingTimePrinter::printFooter()
-{
+void WorkingTimePrinter::printFooter() {
     QRect rect(0, relHeight(900), width, relHeight(80));
     painter.drawRect(rect);
     painter.drawText(rect, Qt::AlignLeft | Qt::TextWordWrap, QObject::trUtf8("Hours worked this Month: "));

@@ -6,16 +6,15 @@
 #include <QtCore/QDateTime>
 #include "model/workingtime.h"
 
-namespace hypha{
+namespace hypha {
 namespace database {
-    class Database;
-    class UserDatabase;
+class Database;
+class UserDatabase;
 }
 }
 
-class WorkingTimeAlgo
-{
-public:
+class WorkingTimeAlgo {
+  public:
     WorkingTimeAlgo();
     WorkingTimeAlgo(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase);
     void setUsername(QString username);
@@ -27,7 +26,7 @@ public:
 
 
 
-private:
+  private:
     hypha::database::Database *database;
     hypha::database::UserDatabase *userDatabase;
     QString username;

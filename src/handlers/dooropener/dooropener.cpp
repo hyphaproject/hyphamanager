@@ -15,42 +15,36 @@ using namespace hypha::handler;
 using namespace hypha::handler::dooropener;
 using namespace hypha::plugin;
 
-DoorOpener::DoorOpener()
-{
+DoorOpener::DoorOpener() {
     doorWidget = new DoorOpenerWidget();
 }
 
-DoorOpener::~DoorOpener()
-{
+DoorOpener::~DoorOpener() {
 
 }
 
-void DoorOpener::parse(std::string message){
+void DoorOpener::parse(std::string message) {
 
 }
 
-void DoorOpener::loadConfig(std::string config)
-{
+void DoorOpener::loadConfig(std::string config) {
     doorWidget->setId(QString::fromStdString(id));
     doorWidget->setDatabase(database);
     doorWidget->setUserDatabase(userDatabase);
     doorWidget->loadConfig(QString::fromStdString(config));
 }
 
-std::string DoorOpener::getConfig()
-{
+std::string DoorOpener::getConfig() {
     return doorWidget->getConfig().toStdString();
 }
 
-HyphaHandlerConfig *DoorOpener::getInstance(std::string id)
-{
+HyphaHandlerConfig *DoorOpener::getInstance(std::string id) {
     DoorOpener *dooropener = new DoorOpener();
     dooropener->setId(id);
     return dooropener;
 }
 
-QWidget *DoorOpener::widget()
-{
+QWidget *DoorOpener::widget() {
     return doorWidget;
 }
 

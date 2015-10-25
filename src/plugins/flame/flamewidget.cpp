@@ -5,32 +5,27 @@
 
 FlameWidget::FlameWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::FlameWidget)
-{
+    ui(new Ui::FlameWidget) {
     ui->setupUi(this);
 }
 
-FlameWidget::~FlameWidget()
-{
+FlameWidget::~FlameWidget() {
     delete ui;
 }
 
-void FlameWidget::setHost(QString host)
-{
+void FlameWidget::setHost(QString host) {
     this->host = host;
 }
 
-void FlameWidget::loadConfig(QString json)
-{
+void FlameWidget::loadConfig(QString json) {
     QJsonDocument document = QJsonDocument::fromJson(json.toUtf8());
     QJsonObject object = document.object();
-    if(object.contains("alarm")){
+    if(object.contains("alarm")) {
         ui->alarmCheckBox->setChecked(object.value("alarm").toBool());
     }
 }
 
-QString FlameWidget::getConfig()
-{
+QString FlameWidget::getConfig() {
     QJsonObject object;
     object["alarm"] = ui->alarmCheckBox->isChecked();
     QJsonDocument document(object);

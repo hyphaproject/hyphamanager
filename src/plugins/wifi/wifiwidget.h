@@ -7,15 +7,14 @@ namespace Ui {
 class WifiWidget;
 }
 
-class WifiWidget : public QWidget
-{
+class WifiWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit WifiWidget(QWidget *parent = 0);
     ~WifiWidget();
 
-private:
+  private:
     Ui::WifiWidget *ui;
 };
 

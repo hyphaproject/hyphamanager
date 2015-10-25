@@ -3,9 +3,8 @@
 
 #include <string>
 
-class ConfigGenerator
-{
-public:
+class ConfigGenerator {
+  public:
     ConfigGenerator();
 
     // Database

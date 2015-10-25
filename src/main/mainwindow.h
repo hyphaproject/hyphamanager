@@ -11,15 +11,14 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
-public:
+  public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private slots:
+  private slots:
     void onLanguageChosen();
     void on_actionAbout_Hypha_Client_triggered();
 
@@ -32,7 +31,7 @@ private slots:
 
     void on_actionNew_triggered();
 
-private:
+  private:
     Ui::MainWindow *ui;
     void createLanguageMenu();
     Instance *instance;

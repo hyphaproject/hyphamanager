@@ -4,15 +4,12 @@
 #include "configgenerator.h"
 
 
-ConfigGenerator::ConfigGenerator()
-{
+ConfigGenerator::ConfigGenerator() {
 }
 
-void ConfigGenerator::generateIniFile(std::string filename)
-{
+void ConfigGenerator::generateIniFile(std::string filename) {
     std::ofstream file (filename);
-    if (file.is_open())
-    {
+    if (file.is_open()) {
         file << "[database]" << std::endl;
         file << "database=" << dbDatabase << std::endl;
         file << "driver=" << dbDriver << std::endl;

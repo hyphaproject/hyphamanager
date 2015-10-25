@@ -3,12 +3,10 @@
 
 ESpeakWidget::ESpeakWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ESpeakWidget)
-{
+    ui(new Ui::ESpeakWidget) {
     ui->setupUi(this);
 }
 
-ESpeakWidget::~ESpeakWidget()
-{
+ESpeakWidget::~ESpeakWidget() {
     delete ui;
 }

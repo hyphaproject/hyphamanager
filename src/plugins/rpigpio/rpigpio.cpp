@@ -12,25 +12,21 @@
 using namespace hypha::plugin;
 using namespace hypha::plugin::rpigpio;
 
-void RpiGpio::loadConfig(std::string json)
-{
+void RpiGpio::loadConfig(std::string json) {
 
 }
 
-std::string RpiGpio::getConfig()
-{
+std::string RpiGpio::getConfig() {
     return "{}";
 }
 
-HyphaPluginConfig *RpiGpio::getInstance(std::string id)
-{
+HyphaPluginConfig *RpiGpio::getInstance(std::string id) {
     RpiGpio *instance = new RpiGpio();
     instance->setId(id);
     return instance;
 }
 
-QWidget *RpiGpio::widget()
-{
+QWidget *RpiGpio::widget() {
     return new RpiGpioWidget();
 }
 

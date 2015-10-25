@@ -5,30 +5,25 @@
 
 RpiLedWidget::RpiLedWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::RpiLedWidget)
-{
+    ui(new Ui::RpiLedWidget) {
     ui->setupUi(this);
 }
 
-RpiLedWidget::~RpiLedWidget()
-{
+RpiLedWidget::~RpiLedWidget() {
     delete ui;
 }
 
-void RpiLedWidget::setHost(QString host)
-{
+void RpiLedWidget::setHost(QString host) {
     this->host = host;
 }
 
-void RpiLedWidget::loadConfig(QString json)
-{
+void RpiLedWidget::loadConfig(QString json) {
     QJsonDocument document = QJsonDocument::fromJson(json.toUtf8());
     QJsonObject object = document.object();
-    if(object.contains("user")){
+    if(object.contains("user")) {
     }
 }
 
-QString RpiLedWidget::getConfig()
-{
+QString RpiLedWidget::getConfig() {
     return "{}";
 }

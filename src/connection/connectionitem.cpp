@@ -4,8 +4,7 @@
 
 ConnectionItem::ConnectionItem(QString id, QString handlerId, QString pluginId, hypha::database::Database *database, QWidget *parent):
     QWidget(parent),
-    ui(new Ui::ConnectionItem)
-{
+    ui(new Ui::ConnectionItem) {
     ui->setupUi(this);
     this->id = id;
     this->handlerId = handlerId;
@@ -14,21 +13,18 @@ ConnectionItem::ConnectionItem(QString id, QString handlerId, QString pluginId, 
     init();
 }
 
-ConnectionItem::~ConnectionItem()
-{
+ConnectionItem::~ConnectionItem() {
     delete ui;
 }
 
-void ConnectionItem::init()
-{
+void ConnectionItem::init() {
     ui->handlerEdit->setText(handlerId);
     ui->pluginEdit->setText(pluginId);
 }
 
-void ConnectionItem::deleteFromDatabase()
-{
+void ConnectionItem::deleteFromDatabase() {
     Poco::Data::Statement statement = database->getStatement();
     statement << "delete from connection where id = ?;",
-            Poco::Data::use(id.toStdString());
+              Poco::Data::use(id.toStdString());
     statement.execute();
 }

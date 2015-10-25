@@ -9,9 +9,8 @@
 #include "model/baseaccount.h"
 #include "model/rules/baserule.h"
 
-class WorkingTimePrinter
-{
-public:
+class WorkingTimePrinter {
+  public:
     WorkingTimePrinter(QPrinter * printer);
     ~WorkingTimePrinter();
 
@@ -24,7 +23,7 @@ public:
     void print();
     void calculate();
 
-protected:
+  protected:
     QPrinter * printer;
     QString username;
     QString name;

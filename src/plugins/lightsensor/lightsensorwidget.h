@@ -7,17 +7,16 @@ namespace Ui {
 class LightSensorWidget;
 }
 
-class LightSensorWidget : public QWidget
-{
+class LightSensorWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit LightSensorWidget(QWidget *parent = 0);
     ~LightSensorWidget();
     void setHost(QString host);
     void loadConfig(QString json);
     QString getConfig();
-private:
+  private:
     Ui::LightSensorWidget *ui;
     QString host;
 };

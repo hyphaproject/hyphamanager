@@ -17,8 +17,7 @@
 
 DeviceOnlineImportDialog::DeviceOnlineImportDialog(hypha::settings::HyphaSettings * settings, hypha::database::Database *database, hypha::database::UserDatabase * userDatabase, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::DeviceOnlineImportDialog)
-{
+    ui(new Ui::DeviceOnlineImportDialog) {
     this->settings = settings;
     this->username = username;
     this->database = database;
@@ -28,18 +27,15 @@ DeviceOnlineImportDialog::DeviceOnlineImportDialog(hypha::settings::HyphaSetting
     init();
 }
 
-DeviceOnlineImportDialog::~DeviceOnlineImportDialog()
-{
+DeviceOnlineImportDialog::~DeviceOnlineImportDialog() {
     delete ui;
 }
 
-void DeviceOnlineImportDialog::on_DeviceOnlineImportDialog_accepted()
-{
+void DeviceOnlineImportDialog::on_DeviceOnlineImportDialog_accepted() {
 
 }
 
-void DeviceOnlineImportDialog::reload()
-{
+void DeviceOnlineImportDialog::reload() {
     ui->webView->page()->mainFrame()->evaluateJavaScript("setUsername('"+ui->usernameComboBox->currentText()+"')");
     ui->webView->page()->mainFrame()->evaluateJavaScript("newTable()");
 
@@ -47,7 +43,7 @@ void DeviceOnlineImportDialog::reload()
     deviceOnlineImport.setUsername(ui->usernameComboBox->currentText());
     deviceOnlineImport.setDate(ui->dateEdit->date());
     times.clear();
-    for(WorkingTime wt: deviceOnlineImport.getMonth()){
+    for(WorkingTime wt: deviceOnlineImport.getMonth()) {
         times.append(new WorkingTime(wt));
         ui->webView->page()->mainFrame()->evaluateJavaScript(wt.toAddString(true));
     }
@@ -56,10 +52,9 @@ void DeviceOnlineImportDialog::reload()
     reloadTimesList();
 }
 
-void DeviceOnlineImportDialog::reloadTimesList()
-{
+void DeviceOnlineImportDialog::reloadTimesList() {
     ui->timesListWidget->clear();
-    for(WorkingTime *wt: times){
+    for(WorkingTime *wt: times) {
         QListWidgetItem *item = new QListWidgetItem(ui->timesListWidget);
         ui->timesListWidget->addItem(item);
         WorkingTimeItem *workingTimeItem = new WorkingTimeItem(wt->getUsername(), wt->getStart(), wt->getEnd(), wt->getType(), database);
@@ -68,10 +63,9 @@ void DeviceOnlineImportDialog::reloadTimesList()
     }
 }
 
-void DeviceOnlineImportDialog::init()
-{
+void DeviceOnlineImportDialog::init() {
     ui->usernameComboBox->clear();
-    for(std::string username: userDatabase->getUsers()){
+    for(std::string username: userDatabase->getUsers()) {
         ui->usernameComboBox->addItem(QString::fromStdString(username));
     }
 
@@ -83,42 +77,37 @@ void DeviceOnlineImportDialog::init()
     ui->webView->load(QUrl("qrc:/blechuhr/html/blechuhr/day.html"));
 }
 
-void DeviceOnlineImportDialog::on_dateEdit_editingFinished()
-{
+void DeviceOnlineImportDialog::on_dateEdit_editingFinished() {
     reload();
 }
 
-void DeviceOnlineImportDialog::on_usernameComboBox_currentTextChanged(const QString &arg1)
-{
+void DeviceOnlineImportDialog::on_usernameComboBox_currentTextChanged(const QString &arg1) {
     reload();
 }
 
-void DeviceOnlineImportDialog::on_exportCSVButton_clicked()
-{
-    if(ui->usernameComboBox->currentText() >= 0)
-    {
+void DeviceOnlineImportDialog::on_exportCSVButton_clicked() {
+    if(ui->usernameComboBox->currentText() >= 0) {
         QFileDialog fileDialog(this);
         fileDialog.setNameFilter(tr("Comma Separated Values (*.csv *.txt *.dat)"));
         QStringList fileNames;
         if (fileDialog.exec())
             fileNames = fileDialog.selectedFiles();
-        foreach(QString file, fileNames){
+        foreach(QString file, fileNames) {
             WorkingTimeImportExport importexport(ui->usernameComboBox->currentText(), times, file);
             importexport.exportData();
         }
-    }else{
+    } else {
         QMessageBox::warning(this, "Export", "Please select a user to export data from.");
     }
 }
 
-void DeviceOnlineImportDialog::on_printPDFButton_clicked()
-{
+void DeviceOnlineImportDialog::on_printPDFButton_clicked() {
     QFileDialog fileDialog(this);
     fileDialog.setNameFilter(tr("Portable Document Format (*.pdf)"));
     QStringList fileNames;
     if (fileDialog.exec())
         fileNames = fileDialog.selectedFiles();
-    foreach(QString file, fileNames){
+    foreach(QString file, fileNames) {
         QApplication::setOverrideCursor(Qt::WaitCursor);
         QPrinter printer(QPrinter::HighResolution);
         printer.setPaperSize(QPrinter::A4);
@@ -134,8 +123,7 @@ void DeviceOnlineImportDialog::on_printPDFButton_clicked()
     }
 }
 
-void DeviceOnlineImportDialog::on_mailPDFButton_clicked()
-{
+void DeviceOnlineImportDialog::on_mailPDFButton_clicked() {
     QTemporaryFile file(ui->usernameComboBox->currentText()+ui->dateEdit->date().toString("_MMM")+"_XXXXXX.pdf");
     if (file.open()) {
         QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -161,8 +149,7 @@ void DeviceOnlineImportDialog::on_mailPDFButton_clicked()
 
 }
 
-void DeviceOnlineImportDialog::on_mailCSVButton_clicked()
-{
+void DeviceOnlineImportDialog::on_mailCSVButton_clicked() {
     QTemporaryFile file(ui->usernameComboBox->currentText()+ui->dateEdit->date().toString("_MMM")+"_XXXXXX.csv");
     if (file.open()) {
         QApplication::setOverrideCursor(Qt::WaitCursor);

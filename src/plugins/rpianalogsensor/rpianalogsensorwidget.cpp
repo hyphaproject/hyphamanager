@@ -5,41 +5,36 @@
 
 RpiAnalogSensorWidget::RpiAnalogSensorWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::RpiAnalogSensorWidget)
-{
+    ui(new Ui::RpiAnalogSensorWidget) {
     ui->setupUi(this);
 }
 
-RpiAnalogSensorWidget::~RpiAnalogSensorWidget()
-{
+RpiAnalogSensorWidget::~RpiAnalogSensorWidget() {
     delete ui;
 }
 
-void RpiAnalogSensorWidget::setHost(QString host)
-{
+void RpiAnalogSensorWidget::setHost(QString host) {
     this->host = host;
 }
 
-void RpiAnalogSensorWidget::loadConfig(QString json)
-{
+void RpiAnalogSensorWidget::loadConfig(QString json) {
     QJsonDocument document = QJsonDocument::fromJson(json.toUtf8());
     QJsonObject object = document.object();
-    if(object.contains("alarm")){
+    if(object.contains("alarm")) {
         ui->alarmCheckBox->setChecked(object.value("alarm").toBool());
     }
-    if(object.contains("pin")){
+    if(object.contains("pin")) {
         ui->pinSpinBox->setValue(object.value("pin").toInt(0));
     }
-    if(object.contains("min")){
+    if(object.contains("min")) {
         ui->minSpinBox->setValue(object.value("min").toInt(0));
     }
-    if(object.contains("max")){
+    if(object.contains("max")) {
         ui->maxSpinBox->setValue(object.value("max").toInt(0));
     }
 }
 
-QString RpiAnalogSensorWidget::getConfig()
-{
+QString RpiAnalogSensorWidget::getConfig() {
     QJsonObject object;
     object["alarm"] = ui->alarmCheckBox->isChecked();
     object["pin"] = ui->pinSpinBox->value();

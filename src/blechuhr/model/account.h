@@ -4,9 +4,8 @@
 #include "baseaccount.h"
 
 
-class Account: public BaseAccount
-{
-public:
+class Account: public BaseAccount {
+  public:
     Account(QString username, QDateTime start, QDateTime end, float amount, hypha::blechuhr::TYPE type = hypha::blechuhr::TYPE::WORKING, QString name = "");
 
     QString getUsername();
@@ -15,7 +14,7 @@ public:
     QDateTime getEnd();
     float getAmount();
 
-protected:
+  protected:
     float amount;
     hypha::blechuhr::TYPE type;
     QString name;

@@ -12,8 +12,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
+    ui(new Ui::MainWindow) {
     instance = 0;
     SplashScreen splash(this);
     splash.show();
@@ -24,35 +23,33 @@ MainWindow::MainWindow(QWidget *parent) :
     splash.finish(this);
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::on_actionAbout_Hypha_Client_triggered()
-{
+void MainWindow::on_actionAbout_Hypha_Client_triggered() {
     AboutDialog dialog(this);
     dialog.exec();
 }
 
-void MainWindow::createLanguageMenu(){
+void MainWindow::createLanguageMenu() {
     QStringList languages = Translation::instance()->getLanguages();
-    foreach(QString language, languages){
+    foreach(QString language, languages) {
         QAction *action = new QAction(language, this);
         // Set current language as checked.
         connect(action, SIGNAL(triggered()), this, SLOT(onLanguageChosen()));
         action->setCheckable(true);
-        if(language == Translation::instance()->language()){
+        if(language == Translation::instance()->language()) {
             action->setChecked(true);
         }
         ui->menuLanguage->addAction(action);
     }
 }
 
-void MainWindow::onLanguageChosen(){
+void MainWindow::onLanguageChosen() {
     QAction *action = qobject_cast<QAction *>(sender());
     // set all actions as not checked
-    foreach(QAction *lang, ui->menuLanguage->actions()){
+    foreach(QAction *lang, ui->menuLanguage->actions()) {
         lang->setChecked(false);
     }
     // Set currently selected action as checked.
@@ -61,10 +58,9 @@ void MainWindow::onLanguageChosen(){
     QMessageBox::information(this,"Restart", "You have to restart the program to make changes effect.");
 }
 
-void MainWindow::on_actionOpen_triggered()
-{
+void MainWindow::on_actionOpen_triggered() {
     QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open Hypha Config"), "", tr("Hypha Config (*.xml)"));
+                       tr("Open Hypha Config"), "", tr("Hypha Config (*.xml)"));
     if(fileName.isEmpty()) return;
     instance = new Instance(fileName, this);
     userWindow = new UserWindow(instance);
@@ -75,28 +71,25 @@ void MainWindow::on_actionOpen_triggered()
     ui->tabWidget->insertTab(2,connectionWindow, QIcon(":/actions/images/actions/connections.svg"), "Designer");
 }
 
-void MainWindow::on_actionSettings_triggered()
-{
-    if(instance){
+void MainWindow::on_actionSettings_triggered() {
+    if(instance) {
         SettingsWindow settingsWindow(this->instance->getClientSettings(), this);
         settingsWindow.exec();
     }
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-        event->ignore();
-            if(this->instance){
-                if(this->connectionWindow){
-                    this->connectionWindow->savePositions();
-                    this->connectionWindow->saveConfig();
-                }
-            }
-        event->accept();
+void MainWindow::closeEvent(QCloseEvent *event) {
+    event->ignore();
+    if(this->instance) {
+        if(this->connectionWindow) {
+            this->connectionWindow->savePositions();
+            this->connectionWindow->saveConfig();
+        }
+    }
+    event->accept();
 }
 
-void MainWindow::on_actionNew_triggered()
-{
+void MainWindow::on_actionNew_triggered() {
     NewConfigWizzard newConfigWizzard(this);
     newConfigWizzard.exec();
 }

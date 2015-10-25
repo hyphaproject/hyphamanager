@@ -6,48 +6,44 @@
 
 VideoWidget::VideoWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::VideoWidget)
-{
+    ui(new Ui::VideoWidget) {
     ui->setupUi(this);
 }
 
-VideoWidget::~VideoWidget()
-{
+VideoWidget::~VideoWidget() {
     delete ui;
 }
 
-void VideoWidget::setHost(QString host)
-{
+void VideoWidget::setHost(QString host) {
     this->host = host;
 }
 
-void VideoWidget::loadConfig(QString json)
-{
+void VideoWidget::loadConfig(QString json) {
     QJsonDocument document = QJsonDocument::fromJson(json.toUtf8());
     QJsonObject object = document.object();
-    if(object.contains("fps")){
+    if(object.contains("fps")) {
         ui->framesSpinBox->setValue(object.value("fps").toInt(1));
     }
-    if(object.contains("width")){
+    if(object.contains("width")) {
         ui->widthSpinBox->setValue(object.value("width").toInt(320));
     }
-    if(object.contains("height")){
+    if(object.contains("height")) {
         ui->heightSpinBox->setValue(object.value("height").toInt(240));
     }
-    if(object.contains("port")){
+    if(object.contains("port")) {
         ui->portSpinBox->setValue(object.value("port").toInt(240));
     }
-    if(object.contains("findpersons")){
+    if(object.contains("findpersons")) {
         ui->findPersonsCheckBox->setChecked(object.value("findpersons").toBool());
     }
-    if(object.contains("user")){
+    if(object.contains("user")) {
         ui->userEdit->setText(object.value("user").toString(""));
     }
-    if(object.contains("password")){
+    if(object.contains("password")) {
         ui->userEdit->setText(object.value("password").toString(""));
     }
 
-    if(object.contains("devices")){
+    if(object.contains("devices")) {
         QJsonArray devices = object.value("devices").toArray();
         QJsonObject video0 = devices.at(0).toObject();
         ui->video0DeviceEdit->setText(video0.value("device").toString());
@@ -74,8 +70,7 @@ void VideoWidget::loadConfig(QString json)
 
 }
 
-QString VideoWidget::getConfig()
-{
+QString VideoWidget::getConfig() {
     QJsonObject video0;
     video0["device"] = ui->video0DeviceEdit->text();
     video0["upsidedown"] = ui->video0UpsideDownCheckBox->isChecked();

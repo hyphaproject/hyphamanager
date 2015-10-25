@@ -4,9 +4,8 @@
 #include <QtCore/QString>
 #include <QtCore/QDateTime>
 
-class WorkingTime
-{
-public:
+class WorkingTime {
+  public:
     WorkingTime(const WorkingTime &workingTime);
     WorkingTime(WorkingTime*workingTime);
     WorkingTime(QString username, QString date, QDateTime start, QDateTime end, QString type = "working");
@@ -39,7 +38,7 @@ public:
     QDateTime getStart();
     QDateTime getEnd();
 
-private:
+  private:
     QString username;
     QString date;
     QDateTime start;

@@ -4,19 +4,26 @@
 #include "../../handler/hyphahandlerconfig.h"
 #include "videocontrolwidget.h"
 
-namespace hypha{
-namespace handler{
-namespace videocontrol{
-class VideoControl : public HyphaHandlerConfig
-{
-public:
+namespace hypha {
+namespace handler {
+namespace videocontrol {
+class VideoControl : public HyphaHandlerConfig {
+  public:
     explicit VideoControl();
     ~VideoControl();
     static VideoControl * instance();
-    std::string name(){ return "videocontrol"; }
-    std::string getTitle() { return "VideoControl"; }
-    std::string getVersion() { return "0.1"; }
-    std::string getDescription() { return "Handler for Video Control.";}
+    std::string name() {
+        return "videocontrol";
+    }
+    std::string getTitle() {
+        return "VideoControl";
+    }
+    std::string getVersion() {
+        return "0.1";
+    }
+    std::string getDescription() {
+        return "Handler for Video Control.";
+    }
     void parse(std::string message);
     void loadConfig(std::string config);
     std::string getConfig();
@@ -24,7 +31,7 @@ public:
 
     QWidget *widget();
 
-protected:
+  protected:
     std::string mastercard;
     VideoControlWidget *vcwidget = nullptr;
 

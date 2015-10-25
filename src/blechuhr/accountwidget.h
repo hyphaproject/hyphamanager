@@ -5,7 +5,7 @@
 
 namespace hypha {
 namespace database {
-    class Database;
+class Database;
 }
 }
 
@@ -13,29 +13,28 @@ namespace Ui {
 class AccountWidget;
 }
 
-class AccountWidget : public QWidget
-{
+class AccountWidget : public QWidget {
     Q_OBJECT
 
-public:
+  public:
     explicit AccountWidget(QString username, hypha::database::Database * database, QWidget *parent = 0);
     ~AccountWidget();
     void init();
     void loadAccounts();
     void loadIterativeAccounts();
 
-private slots:
+  private slots:
     void on_addButton_clicked();
 
     void on_saveButton_clicked();
 
     void on_deleteButton_clicked();
 
-protected:
+  protected:
     QString username;
     hypha::database::Database *database;
 
-private:
+  private:
     Ui::AccountWidget *ui;
 };
 

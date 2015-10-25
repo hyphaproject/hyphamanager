@@ -3,12 +3,10 @@
 
 WifiWidget::WifiWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::WifiWidget)
-{
+    ui(new Ui::WifiWidget) {
     ui->setupUi(this);
 }
 
-WifiWidget::~WifiWidget()
-{
+WifiWidget::~WifiWidget() {
     delete ui;
 }

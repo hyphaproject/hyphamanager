@@ -5,8 +5,7 @@
 #include "connectionline.h"
 
 ConnectionLine::ConnectionLine(HandlerItem *handler, PluginItem *plugin, QGraphicsItem *parent) :
-    QGraphicsLineItem(parent)
-{
+    QGraphicsLineItem(parent) {
     if(!handler || !plugin)
         return;
     this->handler = handler;
@@ -17,8 +16,7 @@ ConnectionLine::ConnectionLine(HandlerItem *handler, PluginItem *plugin, QGraphi
     updatePosition();
 }
 
-void ConnectionLine::updatePosition()
-{
+void ConnectionLine::updatePosition() {
     QLineF line(mapFromItem(handler, 0, 0), mapFromItem(plugin, 0, 0));
     setLine(line);
 }

@@ -12,24 +12,20 @@
 using namespace hypha::plugin::fingerprintzfm;
 using namespace hypha::plugin;
 
-void FingerPrintZFM::loadConfig(std::string json)
-{
+void FingerPrintZFM::loadConfig(std::string json) {
 }
 
-std::string FingerPrintZFM::getConfig()
-{
+std::string FingerPrintZFM::getConfig() {
     return "{}";
 }
 
-HyphaPluginConfig *FingerPrintZFM::getInstance(std::string id)
-{
+HyphaPluginConfig *FingerPrintZFM::getInstance(std::string id) {
     FingerPrintZFM *instance = new FingerPrintZFM();
     instance->setId(id);
     return instance;
 }
 
-QWidget *FingerPrintZFM::widget()
-{
+QWidget *FingerPrintZFM::widget() {
     return new FingerPrintZFMWidget();
 }
 

@@ -10,58 +10,52 @@
 Translation *Translation::singleton = 0;
 
 Translation::Translation(QObject *parent) :
-    QObject(parent)
-{
+    QObject(parent) {
 }
 
-Translation *Translation::instance()
-{
+Translation *Translation::instance() {
     static QMutex mutex;
-    if (!singleton)
-    {
+    if (!singleton) {
         mutex.lock();
         if (!singleton)
             singleton = new Translation(0);
-            singleton->loadTranslations(QCoreApplication::applicationDirPath());
-            singleton->loadLanguage();
-            singleton->loadLanguageFile();
+        singleton->loadTranslations(QCoreApplication::applicationDirPath());
+        singleton->loadLanguage();
+        singleton->loadLanguageFile();
         mutex.unlock();
     }
     return singleton;
 }
 
 
-void Translation::loadLanguage(){
+void Translation::loadLanguage() {
     QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
     this->currentLanguage = settings.value(QString::fromUtf8("language"), "english").toString();
 }
 
-void Translation::setLanguage(QString lang)
-{
+void Translation::setLanguage(QString lang) {
     QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
     settings.setValue("language", lang);
 }
 
-QStringList Translation::getLanguages(){
+QStringList Translation::getLanguages() {
     return QStringList(languages.keys());
 }
-QString Translation::language(){
+QString Translation::language() {
     return this->currentLanguage;
 }
 
-QString Translation::locale()
-{
+QString Translation::locale() {
     return tr("en");
 }
 
-void Translation::loadLanguageFile(){
+void Translation::loadLanguageFile() {
     QTranslator *translator = new QTranslator();
     translator->load(languages.value(this->currentLanguage));
     QCoreApplication::installTranslator(translator);
 }
 
-void Translation::loadTranslations(QString dir)
-{
+void Translation::loadTranslations(QString dir) {
     QDir translationsDir(dir);
     if (translationsDir.exists(dir)) {
 #ifdef Q_OS_WIN32
@@ -72,17 +66,15 @@ void Translation::loadTranslations(QString dir)
             return;
 #endif
     }
-    foreach (QString qmFile, translationsDir.entryList(QStringList() << "*.qm"))
-    {
-        if(!languageName(translationsDir.absoluteFilePath(qmFile)).isEmpty()){
+    foreach (QString qmFile, translationsDir.entryList(QStringList() << "*.qm")) {
+        if(!languageName(translationsDir.absoluteFilePath(qmFile)).isEmpty()) {
             languages.insert(languageName(translationsDir.absoluteFilePath(qmFile)), translationsDir.absoluteFilePath(qmFile));
         }
     }
 }
 
 
-QString Translation::languageName(const QString &qmFile)
-{
+QString Translation::languageName(const QString &qmFile) {
     QTranslator translator;
     translator.load(qmFile);
     QString lang = translator.translate("Language", "english");

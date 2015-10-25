@@ -12,48 +12,42 @@
 
 UserWindow::UserWindow(Instance * instance, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::UserWindow)
-{
+    ui(new Ui::UserWindow) {
     ui->setupUi(this);
     this->instance = instance;
     reload();
 }
 
-UserWindow::~UserWindow()
-{
+UserWindow::~UserWindow() {
     delete ui;
 }
 
-void UserWindow::reload()
-{
+void UserWindow::reload() {
     ui->listWidget->clear();
-    for(std::string user: instance->getUserDatabase()->getUsers())
-    {
+    for(std::string user: instance->getUserDatabase()->getUsers()) {
         ui->listWidget->addItem(QString::fromStdString(user));
     }
     loadOnline();
 }
 
-void UserWindow::loadOnline()
-{
-    for(int i = 0; i < ui->listWidget->count(); ++i){
+void UserWindow::loadOnline() {
+    for(int i = 0; i < ui->listWidget->count(); ++i) {
         QListWidgetItem * item = ui->listWidget->item(i);
-        if(isOnline(item->text())){
+        if(isOnline(item->text())) {
             item->setIcon(QIcon(":/users/images/actions/online.svg"));
             item->setToolTip("present since: " + this->lastConnection(item->text()));
         }
     }
 }
 
-bool UserWindow::isOnline(QString username)
-{
+bool UserWindow::isOnline(QString username) {
     std::list<std::string> devices = instance->getUserDatabase()->getDevices(username.toStdString());
     // number of registrations today
     int connections = 0;
-    for(std::string device: devices){
+    for(std::string device: devices) {
         Poco::Data::Statement statement = instance->getDatabase()->getStatement();
         statement << "select count(id) from deviceonline where deviceid='" + device + "' and DATE(time) = '"
-                     + QDateTime::currentDateTimeUtc().date().toString("yyyy-MM-dd").toStdString() + "'";
+                  + QDateTime::currentDateTimeUtc().date().toString("yyyy-MM-dd").toStdString() + "'";
         Poco::Data::RecordSet rs(statement);
         bool more = rs.moveFirst();
         while(more) {
@@ -64,11 +58,10 @@ bool UserWindow::isOnline(QString username)
     return connections % 2 == 1;
 }
 
-void UserWindow::reloadUserStatus(QString username)
-{
+void UserWindow::reloadUserStatus(QString username) {
     std::list<std::string> devices = instance->getUserDatabase()->getDevices(username.toStdString());
     QDateTime datetime;
-    for(std::string device: devices){
+    for(std::string device: devices) {
         Poco::Data::Statement statement = instance->getDatabase()->getStatement();
         statement << "select time from deviceonline where deviceid='"+device+"' ORDER BY time desc";
         Poco::Data::RecordSet rs(statement);
@@ -77,7 +70,7 @@ void UserWindow::reloadUserStatus(QString username)
             std::string dateTimeStr = rs[0].convert<std::string>();
             QDateTime dt = QDateTime::fromString(QString::fromStdString(dateTimeStr));
             dt.setTimeSpec(Qt::UTC);
-            if(dt > datetime){
+            if(dt > datetime) {
                 ui->deviceOnlineLabel->setText(QString::fromStdString(device));
                 ui->dateTimeEdit->setDateTime(dt.toLocalTime());
                 datetime = dt;
@@ -88,11 +81,10 @@ void UserWindow::reloadUserStatus(QString username)
     }
 }
 
-QString UserWindow::lastConnection(QString username)
-{
+QString UserWindow::lastConnection(QString username) {
     std::list<std::string> devices = instance->getUserDatabase()->getDevices(username.toStdString());
     QDateTime datetime;
-    for(std::string device: devices){
+    for(std::string device: devices) {
         Poco::Data::Statement statement = instance->getDatabase()->getStatement();
         statement << "select time from deviceonline where deviceid='"+device+"' ORDER BY time desc";
         Poco::Data::RecordSet rs(statement);
@@ -101,7 +93,7 @@ QString UserWindow::lastConnection(QString username)
             std::string dateTimeStr = rs[0].convert<std::string>();
             QDateTime dt = QDateTime::fromString(QString::fromStdString(dateTimeStr));
             dt.setTimeSpec(Qt::UTC);
-            if(dt > datetime){
+            if(dt > datetime) {
                 datetime = dt;
             }
             more = rs.moveNext();
@@ -111,18 +103,16 @@ QString UserWindow::lastConnection(QString username)
     return datetime.toLocalTime().toString("hh:mm");
 }
 
-void UserWindow::on_newUserButton_clicked()
-{
+void UserWindow::on_newUserButton_clicked() {
     QString username = QInputDialog::getText(this, "New User", "Username");
-    if(instance->getUserDatabase()->createUser(username.toStdString(), "Unknown", "Unknown", "")){
+    if(instance->getUserDatabase()->createUser(username.toStdString(), "Unknown", "Unknown", "")) {
         reload();
-    }else{
+    } else {
         QMessageBox::warning(this, "Error", "The user could not been added to the database.");
     }
 }
 
-void UserWindow::on_listWidget_currentTextChanged(const QString &currentText)
-{
+void UserWindow::on_listWidget_currentTextChanged(const QString &currentText) {
     ui->groupBox->setTitle(currentText);
     ui->firstnameEdit->setText(QString::fromStdString(instance->getUserDatabase()->getFirstname(currentText.toStdString())));
     ui->lastnameEdit->setText(QString::fromStdString(instance->getUserDatabase()->getLastname(currentText.toStdString())));
@@ -130,11 +120,10 @@ void UserWindow::on_listWidget_currentTextChanged(const QString &currentText)
     std::list<std::string>  devs = instance->getUserDatabase()->getDevices(currentText.toStdString());
     std::ostringstream oss;
     std::list<std::string>::const_iterator iter;
-    while (iter != devs.end())
-    {
-     oss << *iter;
-     iter++;
-     if (iter != devs.end()) oss << ", ";
+    while (iter != devs.end()) {
+        oss << *iter;
+        iter++;
+        if (iter != devs.end()) oss << ", ";
     }
     std::string deviceids = oss.str();
     ui->deviceIdEdit->setText(QString::fromStdString(deviceids));
@@ -142,30 +131,25 @@ void UserWindow::on_listWidget_currentTextChanged(const QString &currentText)
     reloadUserStatus(currentText);
 }
 
-void UserWindow::on_firstnameEdit_editingFinished()
-{
+void UserWindow::on_firstnameEdit_editingFinished() {
     ui->saveButton->setEnabled(true);
 }
 
-void UserWindow::on_lastnameEdit_editingFinished()
-{
+void UserWindow::on_lastnameEdit_editingFinished() {
     ui->saveButton->setEnabled(true);
 }
 
-void UserWindow::on_mailEdit_editingFinished()
-{
+void UserWindow::on_mailEdit_editingFinished() {
     ui->saveButton->setEnabled(true);
 }
 
-void UserWindow::on_deviceIdEdit_editingFinished()
-{
+void UserWindow::on_deviceIdEdit_editingFinished() {
     ui->saveButton->setEnabled(true);
 }
 
-void UserWindow::on_saveButton_clicked()
-{
+void UserWindow::on_saveButton_clicked() {
     if(instance->getUserDatabase()->updateUser(ui->groupBox->title().toStdString(), ui->firstnameEdit->text().toStdString(),
-                                               ui->lastnameEdit->text().toStdString(), ui->mailEdit->text().toStdString(),
-                                               ui->deviceIdEdit->text().toStdString()))
+            ui->lastnameEdit->text().toStdString(), ui->mailEdit->text().toStdString(),
+            ui->deviceIdEdit->text().toStdString()))
         ui->saveButton->setEnabled(false);
 }
