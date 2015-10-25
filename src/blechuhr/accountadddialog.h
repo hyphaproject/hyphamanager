@@ -15,22 +15,22 @@ class AccountAddDialog;
 }
 
 class AccountAddDialog : public QDialog {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit AccountAddDialog(QString username, QDate date, hypha::database::Database * database, QWidget *parent = 0);
-    ~AccountAddDialog();
+ public:
+  explicit AccountAddDialog(QString username, QDate date, hypha::database::Database *database, QWidget *parent = 0);
+  ~AccountAddDialog();
 
-  private slots:
-    void on_buttonBox_accepted();
+ private slots:
+  void on_buttonBox_accepted();
 
-  private:
-    void init();
-    Ui::AccountAddDialog *ui;
-    QString username;
-    QDate date;
-    hypha::database::Database *database;
-    AccountItem *accountItem;
+ private:
+  void init();
+  Ui::AccountAddDialog *ui;
+  QString username;
+  QDate date;
+  hypha::database::Database *database;
+  AccountItem *accountItem;
 
 };
 

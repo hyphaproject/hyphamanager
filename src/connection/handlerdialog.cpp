@@ -6,37 +6,37 @@
 #include "ui_handlerdialog.h"
 
 HandlerDialog::HandlerDialog(hypha::handler::HandlerLoader *handlerLoader, hypha::database::Database *database, QWidget *parent):
-    QDialog(parent),
-    ui(new Ui::HandlerDialog) {
-    ui->setupUi(this);
-    this->handlerLoader = handlerLoader;
-    this->database = database;
-    init();
+  QDialog(parent),
+  ui(new Ui::HandlerDialog) {
+  ui->setupUi(this);
+  this->handlerLoader = handlerLoader;
+  this->database = database;
+  init();
 }
 
 HandlerDialog::~HandlerDialog() {
-    delete ui;
+  delete ui;
 }
 
 void HandlerDialog::init() {
-    ui->comboBox->clear();
-    for(hypha::handler::HyphaHandler * handler: handlerLoader->getHandlers()) {
-        ui->comboBox->addItem(QString::fromStdString(handler->name()));
-    }
+  ui->comboBox->clear();
+  for (hypha::handler::HyphaHandler *handler : handlerLoader->getHandlers()) {
+    ui->comboBox->addItem(QString::fromStdString(handler->name()));
+  }
 }
 
 void HandlerDialog::on_buttonBox_accepted() {
-    Poco::Data::Statement statement = database->getStatement();
-    statement << "INSERT INTO handler(id,host,type) values('"
-              + ui->idEdit->text().toStdString() + "','"
-              + ui->hostEdit->text().toStdString() + "','"
-              + ui->comboBox->currentText().toStdString() + "');";
-    try {
-        statement.execute();
-    } catch (Poco::Exception &e) {
-        QMessageBox::critical(0, "", QString::fromStdString(e.message()) );
-    }
+  Poco::Data::Statement statement = database->getStatement();
+  statement << "INSERT INTO handler(id,host,type) values('"
+            + ui->idEdit->text().toStdString() + "','"
+            + ui->hostEdit->text().toStdString() + "','"
+            + ui->comboBox->currentText().toStdString() + "');";
+  try {
+    statement.execute();
+  } catch (Poco::Exception &e) {
+    QMessageBox::critical(0, "", QString::fromStdString(e.message()) );
+  }
 
-    handlerLoader->loadAllInstances();
-    init();
+  handlerLoader->loadAllInstances();
+  init();
 }

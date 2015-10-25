@@ -17,17 +17,17 @@ void RpiGpio::loadConfig(std::string json) {
 }
 
 std::string RpiGpio::getConfig() {
-    return "{}";
+  return "{}";
 }
 
 HyphaPluginConfig *RpiGpio::getInstance(std::string id) {
-    RpiGpio *instance = new RpiGpio();
-    instance->setId(id);
-    return instance;
+  RpiGpio *instance = new RpiGpio();
+  instance->setId(id);
+  return instance;
 }
 
 QWidget *RpiGpio::widget() {
-    return new RpiGpioWidget();
+  return new RpiGpioWidget();
 }
 
 POCO_BEGIN_MANIFEST(HyphaPlugin)

@@ -15,28 +15,28 @@ class WorkingTimeItem;
 }
 
 class WorkingTimeItem : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    WorkingTimeItem();
-    WorkingTimeItem(QString id);
-    WorkingTimeItem(QString username, QDateTime start, QDateTime end, hypha::database::Database *database,  QWidget *parent = 0);
-    WorkingTimeItem(QString username, QDateTime start, QDateTime end, QString type, hypha::database::Database *database, QWidget *parent = 0);
-    WorkingTimeItem(QString id, QString username, QDateTime start, QDateTime end, QString type, hypha::database::Database *database, QWidget *parent = 0);
-    ~WorkingTimeItem();
+ public:
+  WorkingTimeItem();
+  WorkingTimeItem(QString id);
+  WorkingTimeItem(QString username, QDateTime start, QDateTime end, hypha::database::Database *database,  QWidget *parent = 0);
+  WorkingTimeItem(QString username, QDateTime start, QDateTime end, QString type, hypha::database::Database *database, QWidget *parent = 0);
+  WorkingTimeItem(QString id, QString username, QDateTime start, QDateTime end, QString type, hypha::database::Database *database, QWidget *parent = 0);
+  ~WorkingTimeItem();
 
-    void save();
-    void deleteFromDatabase();
+  void save();
+  void deleteFromDatabase();
 
-  private:
-    void init();
-    Ui::WorkingTimeItem *ui;
-    QString id;
-    QString username;
-    QDateTime start;
-    QDateTime end;
-    QString type;
-    hypha::database::Database *database;
+ private:
+  void init();
+  Ui::WorkingTimeItem *ui;
+  QString id;
+  QString username;
+  QDateTime start;
+  QDateTime end;
+  QString type;
+  hypha::database::Database *database;
 };
 
 #endif // WORKINGTIMEITEM_H

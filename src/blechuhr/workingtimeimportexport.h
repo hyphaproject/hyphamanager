@@ -13,22 +13,22 @@ class Database;
 }
 
 class WorkingTimeImportExport {
-  public:
-    WorkingTimeImportExport(hypha::database::Database *database, QString username, QString file);
-    WorkingTimeImportExport(QString username,QList<WorkingTime*> times, QString file);
-    ~WorkingTimeImportExport();
-    void importData(QDate *date = 0);
-    void exportDataFromDatabase(QDate *date = 0);
-    void exportData();
+ public:
+  WorkingTimeImportExport(hypha::database::Database *database, QString username, QString file);
+  WorkingTimeImportExport(QString username, QList<WorkingTime *> times, QString file);
+  ~WorkingTimeImportExport();
+  void importData(QDate *date = 0);
+  void exportDataFromDatabase(QDate *date = 0);
+  void exportData();
 
-  protected:
-    QString username;
-    QString file;
-    hypha::database::Database * database;
-    QList<WorkingTime*> times;
+ protected:
+  QString username;
+  QString file;
+  hypha::database::Database *database;
+  QList<WorkingTime *> times;
 
-    QList<WorkingTime*> fromDatabase(QDate * date);
-    void toDatabase(QList<WorkingTime*> list, QDate *date);
+  QList<WorkingTime *> fromDatabase(QDate *date);
+  void toDatabase(QList<WorkingTime *> list, QDate *date);
 
 };
 

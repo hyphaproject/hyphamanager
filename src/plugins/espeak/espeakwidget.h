@@ -8,14 +8,14 @@ class ESpeakWidget;
 }
 
 class ESpeakWidget : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit ESpeakWidget(QWidget *parent = 0);
-    ~ESpeakWidget();
+ public:
+  explicit ESpeakWidget(QWidget *parent = 0);
+  ~ESpeakWidget();
 
-  private:
-    Ui::ESpeakWidget *ui;
+ private:
+  Ui::ESpeakWidget *ui;
 };
 
 #endif // ESPEAKWIDGET_H

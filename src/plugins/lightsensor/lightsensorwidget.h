@@ -8,17 +8,17 @@ class LightSensorWidget;
 }
 
 class LightSensorWidget : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit LightSensorWidget(QWidget *parent = 0);
-    ~LightSensorWidget();
-    void setHost(QString host);
-    void loadConfig(QString json);
-    QString getConfig();
-  private:
-    Ui::LightSensorWidget *ui;
-    QString host;
+ public:
+  explicit LightSensorWidget(QWidget *parent = 0);
+  ~LightSensorWidget();
+  void setHost(QString host);
+  void loadConfig(QString json);
+  QString getConfig();
+ private:
+  Ui::LightSensorWidget *ui;
+  QString host;
 };
 
 #endif // LIGHTSENSORWIDGET_H

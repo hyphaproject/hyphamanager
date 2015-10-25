@@ -6,28 +6,28 @@
 #include <QtCore/QStringList>
 
 class Translation : public QObject {
-    Q_OBJECT
-  public:
-    static Translation * instance();
-    void loadLanguage();
-    void loadTranslations(QString dir);
-    void setLanguage(QString lang);
-    QString locale();
-    QStringList getLanguages();
-    QString language();
-    void loadLanguageFile();
-    static QString languageName(const QString &qmFile);
-  signals:
+  Q_OBJECT
+ public:
+  static Translation *instance();
+  void loadLanguage();
+  void loadTranslations(QString dir);
+  void setLanguage(QString lang);
+  QString locale();
+  QStringList getLanguages();
+  QString language();
+  void loadLanguageFile();
+  static QString languageName(const QString &qmFile);
+ signals:
 
-  public slots:
+ public slots:
 
-  protected:
-    explicit Translation(QObject *parent = 0);
+ protected:
+  explicit Translation(QObject *parent = 0);
 
-    static Translation *singleton;
+  static Translation *singleton;
 
-    QMultiMap<QString, QString> languages;
-    QString currentLanguage;
+  QMultiMap<QString, QString> languages;
+  QString currentLanguage;
 
 };
 

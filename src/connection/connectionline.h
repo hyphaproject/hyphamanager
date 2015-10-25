@@ -7,16 +7,16 @@ class HandlerItem;
 class PluginItem;
 
 class ConnectionLine : public QGraphicsLineItem {
-  public:
-    explicit ConnectionLine(HandlerItem * handler, PluginItem * plugin, QGraphicsItem *parent = 0);
-    void updatePosition();
-  signals:
+ public:
+  explicit ConnectionLine(HandlerItem *handler, PluginItem *plugin, QGraphicsItem *parent = 0);
+  void updatePosition();
+ signals:
 
-  public slots:
+ public slots:
 
-  protected:
-    HandlerItem * handler;
-    PluginItem * plugin;
+ protected:
+  HandlerItem *handler;
+  PluginItem *plugin;
 
 };
 

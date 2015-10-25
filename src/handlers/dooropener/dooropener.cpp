@@ -16,7 +16,7 @@ using namespace hypha::handler::dooropener;
 using namespace hypha::plugin;
 
 DoorOpener::DoorOpener() {
-    doorWidget = new DoorOpenerWidget();
+  doorWidget = new DoorOpenerWidget();
 }
 
 DoorOpener::~DoorOpener() {
@@ -28,24 +28,24 @@ void DoorOpener::parse(std::string message) {
 }
 
 void DoorOpener::loadConfig(std::string config) {
-    doorWidget->setId(QString::fromStdString(id));
-    doorWidget->setDatabase(database);
-    doorWidget->setUserDatabase(userDatabase);
-    doorWidget->loadConfig(QString::fromStdString(config));
+  doorWidget->setId(QString::fromStdString(id));
+  doorWidget->setDatabase(database);
+  doorWidget->setUserDatabase(userDatabase);
+  doorWidget->loadConfig(QString::fromStdString(config));
 }
 
 std::string DoorOpener::getConfig() {
-    return doorWidget->getConfig().toStdString();
+  return doorWidget->getConfig().toStdString();
 }
 
 HyphaHandlerConfig *DoorOpener::getInstance(std::string id) {
-    DoorOpener *dooropener = new DoorOpener();
-    dooropener->setId(id);
-    return dooropener;
+  DoorOpener *dooropener = new DoorOpener();
+  dooropener->setId(id);
+  return dooropener;
 }
 
 QWidget *DoorOpener::widget() {
-    return doorWidget;
+  return doorWidget;
 }
 
 POCO_BEGIN_MANIFEST(HyphaHandler)

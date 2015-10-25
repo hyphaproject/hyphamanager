@@ -14,7 +14,7 @@ using namespace hypha::handler::alarm;
 using namespace hypha::plugin;
 
 Alarm::Alarm() {
-    alarmWidget = new AlarmWidget();
+  alarmWidget = new AlarmWidget();
 }
 
 Alarm::~Alarm() {
@@ -26,21 +26,21 @@ void Alarm::parse(std::string message) {
 }
 
 void Alarm::loadConfig(std::string config) {
-    alarmWidget->loadConfig(QString::fromStdString(config));
+  alarmWidget->loadConfig(QString::fromStdString(config));
 }
 
 std::string Alarm::getConfig() {
-    return alarmWidget->getConfig().toStdString();
+  return alarmWidget->getConfig().toStdString();
 }
 
 HyphaHandlerConfig *Alarm::getInstance(std::string id) {
-    Alarm *instance = new Alarm();
-    instance->setId(id);
-    return instance;
+  Alarm *instance = new Alarm();
+  instance->setId(id);
+  return instance;
 }
 
 QWidget *Alarm::widget() {
-    return alarmWidget;
+  return alarmWidget;
 }
 
 POCO_BEGIN_MANIFEST(HyphaHandler)

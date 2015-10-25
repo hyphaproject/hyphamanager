@@ -8,17 +8,17 @@ class VideoWidget;
 }
 
 class VideoWidget : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit VideoWidget(QWidget *parent = 0);
-    ~VideoWidget();
-    void setHost(QString host);
-    void loadConfig(QString json);
-    QString getConfig();
-  private:
-    Ui::VideoWidget *ui;
-    QString host;
+ public:
+  explicit VideoWidget(QWidget *parent = 0);
+  ~VideoWidget();
+  void setHost(QString host);
+  void loadConfig(QString json);
+  QString getConfig();
+ private:
+  Ui::VideoWidget *ui;
+  QString host;
 };
 
 #endif // VIDEOWIDGET_H

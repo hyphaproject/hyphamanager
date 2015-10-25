@@ -9,25 +9,25 @@ using namespace hypha::plugin;
 using namespace hypha::plugin::video;
 
 void Video::loadConfig(std::string json) {
-    widget();
-    videoWidget->setHost(QString::fromStdString(host));
-    videoWidget->loadConfig(QString::fromStdString(json));
+  widget();
+  videoWidget->setHost(QString::fromStdString(host));
+  videoWidget->loadConfig(QString::fromStdString(json));
 }
 
 std::string Video::getConfig() {
-    return videoWidget->getConfig().toStdString();
+  return videoWidget->getConfig().toStdString();
 }
 
 HyphaPluginConfig *Video::getInstance(std::string id) {
-    Video *instance = new Video();
-    instance->setId(id);
-    return instance;
+  Video *instance = new Video();
+  instance->setId(id);
+  return instance;
 }
 
 QWidget *Video::widget() {
-    if(!videoWidget)
-        videoWidget = new VideoWidget();
-    return videoWidget;
+  if (!videoWidget)
+    videoWidget = new VideoWidget();
+  return videoWidget;
 }
 
 POCO_BEGIN_MANIFEST(HyphaPlugin)

@@ -4,9 +4,9 @@
 #include "baserule.h"
 
 class PauseRule: public BaseRule {
-  public:
-    PauseRule(QList<BaseAccount *> accounts, QList<WorkingTime *> workingTimes);
-    virtual void calculate();
+ public:
+  PauseRule(QList<BaseAccount *> accounts, QList<WorkingTime *> workingTimes);
+  virtual void calculate();
 };
 
 #endif // PAUSERULE_H

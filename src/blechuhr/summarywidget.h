@@ -11,25 +11,25 @@ class SummaryWidget;
 }
 
 class SummaryWidget : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit SummaryWidget(QString username, hypha::database::Database * database, hypha::database::UserDatabase * userDatabase, QWidget *parent = 0);
-    ~SummaryWidget();
+ public:
+  explicit SummaryWidget(QString username, hypha::database::Database *database, hypha::database::UserDatabase *userDatabase, QWidget *parent = 0);
+  ~SummaryWidget();
 
-  public slots:
-    void reloadSummary();
-    void calculateWorkingHours();
-    QDate getSelectedDate();
+ public slots:
+  void reloadSummary();
+  void calculateWorkingHours();
+  QDate getSelectedDate();
 
-  private slots:
-    void on_dateEdit_editingFinished();
+ private slots:
+  void on_dateEdit_editingFinished();
 
-  private:
-    Ui::SummaryWidget *ui;
-    QString username;
-    hypha::database::Database *database;
-    hypha::database::UserDatabase * userDatabase;
+ private:
+  Ui::SummaryWidget *ui;
+  QString username;
+  hypha::database::Database *database;
+  hypha::database::UserDatabase *userDatabase;
 
 };
 

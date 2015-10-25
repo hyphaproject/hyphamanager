@@ -16,17 +16,17 @@ void FingerPrintZFM::loadConfig(std::string json) {
 }
 
 std::string FingerPrintZFM::getConfig() {
-    return "{}";
+  return "{}";
 }
 
 HyphaPluginConfig *FingerPrintZFM::getInstance(std::string id) {
-    FingerPrintZFM *instance = new FingerPrintZFM();
-    instance->setId(id);
-    return instance;
+  FingerPrintZFM *instance = new FingerPrintZFM();
+  instance->setId(id);
+  return instance;
 }
 
 QWidget *FingerPrintZFM::widget() {
-    return new FingerPrintZFMWidget();
+  return new FingerPrintZFMWidget();
 }
 
 POCO_BEGIN_MANIFEST(HyphaPlugin)

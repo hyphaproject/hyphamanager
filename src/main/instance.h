@@ -24,36 +24,36 @@ class PluginLoader;
 }
 
 class Instance : public QObject {
-    Q_OBJECT
-  public:
-    explicit Instance(QString filename, QObject *parent = 0);
-    ~Instance();
+  Q_OBJECT
+ public:
+  explicit Instance(QString filename, QObject *parent = 0);
+  ~Instance();
 
-    hypha::settings::HyphaSettings * getClientSettings();
-    hypha::settings::DatabaseSettings * getDatabaseSettings();
-    hypha::database::UserDatabase * getUserDatabase();
-    hypha::database::Database *getDatabase();
-    hypha::settings::HandlerSettings * getHandlerSettings();
-    hypha::handler::HandlerLoader * getHandlerLoader();
-    hypha::plugin::PluginLoader * getPluginLoader();
+  hypha::settings::HyphaSettings *getClientSettings();
+  hypha::settings::DatabaseSettings *getDatabaseSettings();
+  hypha::database::UserDatabase *getUserDatabase();
+  hypha::database::Database *getDatabase();
+  hypha::settings::HandlerSettings *getHandlerSettings();
+  hypha::handler::HandlerLoader *getHandlerLoader();
+  hypha::plugin::PluginLoader *getPluginLoader();
 
-  signals:
+ signals:
 
-  public slots:
+ public slots:
 
-  protected:
-    QString filename;
-    hypha::settings::HyphaSettings *managerSettings;
-    hypha::settings::DatabaseSettings * databaseSettings;
-    hypha::database::Database * database;
-    hypha::settings::UserDatabaseSettings * userDatabaseSettings;
-    hypha::database::UserDatabase * userDatabase;
+ protected:
+  QString filename;
+  hypha::settings::HyphaSettings *managerSettings;
+  hypha::settings::DatabaseSettings *databaseSettings;
+  hypha::database::Database *database;
+  hypha::settings::UserDatabaseSettings *userDatabaseSettings;
+  hypha::database::UserDatabase *userDatabase;
 
-    hypha::settings::PluginSettings * pluginSettings;
-    hypha::settings::HandlerSettings * handlerSettings;
+  hypha::settings::PluginSettings *pluginSettings;
+  hypha::settings::HandlerSettings *handlerSettings;
 
-    hypha::plugin::PluginLoader * pluginLoader;
-    hypha::handler::HandlerLoader * handlerLoader;
+  hypha::plugin::PluginLoader *pluginLoader;
+  hypha::handler::HandlerLoader *handlerLoader;
 
 };
 

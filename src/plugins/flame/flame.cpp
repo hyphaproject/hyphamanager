@@ -9,25 +9,25 @@ using namespace hypha::plugin;
 using namespace hypha::plugin::flame;
 
 void Flame::loadConfig(std::string json) {
-    widget();
-    flameWidget->setHost(QString::fromStdString(host));
-    flameWidget->loadConfig(QString::fromStdString(json));
+  widget();
+  flameWidget->setHost(QString::fromStdString(host));
+  flameWidget->loadConfig(QString::fromStdString(json));
 }
 
 std::string Flame::getConfig() {
-    return flameWidget->getConfig().toStdString();
+  return flameWidget->getConfig().toStdString();
 }
 
 HyphaPluginConfig *Flame::getInstance(std::string id) {
-    Flame *instance = new Flame();
-    instance->setId(id);
-    return instance;
+  Flame *instance = new Flame();
+  instance->setId(id);
+  return instance;
 }
 
 QWidget *Flame::widget() {
-    if(!flameWidget)
-        flameWidget = new FlameWidget();
-    return flameWidget;
+  if (!flameWidget)
+    flameWidget = new FlameWidget();
+  return flameWidget;
 }
 
 POCO_BEGIN_MANIFEST(HyphaPlugin)

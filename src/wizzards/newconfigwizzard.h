@@ -8,25 +8,25 @@ class NewConfigWizzard;
 }
 
 class NewConfigWizzard : public QDialog {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit NewConfigWizzard(QWidget *parent = 0);
-    ~NewConfigWizzard();
+ public:
+  explicit NewConfigWizzard(QWidget *parent = 0);
+  ~NewConfigWizzard();
 
-  private slots:
-    void on_selectFileButton_clicked();
+ private slots:
+  void on_selectFileButton_clicked();
 
-    void on_selectDBButton_clicked();
+  void on_selectDBButton_clicked();
 
-    void on_selectUserDBButton_clicked();
+  void on_selectUserDBButton_clicked();
 
-    void on_cancelButton_clicked();
+  void on_cancelButton_clicked();
 
-    void on_nextButton_clicked();
+  void on_nextButton_clicked();
 
-  private:
-    Ui::NewConfigWizzard *ui;
+ private:
+  Ui::NewConfigWizzard *ui;
 };
 
 #endif // NEWCONFIGWIZZARD_H

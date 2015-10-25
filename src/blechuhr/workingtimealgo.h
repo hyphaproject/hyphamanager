@@ -14,24 +14,24 @@ class UserDatabase;
 }
 
 class WorkingTimeAlgo {
-  public:
-    WorkingTimeAlgo();
-    WorkingTimeAlgo(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase);
-    void setUsername(QString username);
-    void setDate(QDate date);
+ public:
+  WorkingTimeAlgo();
+  WorkingTimeAlgo(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase);
+  void setUsername(QString username);
+  void setDate(QDate date);
 
-    QList<WorkingTime> getDay();
-    QList<WorkingTime> getMonth();
-    static float getHours(QList<WorkingTime*> times);
+  QList<WorkingTime> getDay();
+  QList<WorkingTime> getMonth();
+  static float getHours(QList<WorkingTime *> times);
 
 
 
-  private:
-    hypha::database::Database *database;
-    hypha::database::UserDatabase *userDatabase;
-    QString username;
-    QDate date;
-    QList<WorkingTime> times;
+ private:
+  hypha::database::Database *database;
+  hypha::database::UserDatabase *userDatabase;
+  QString username;
+  QDate date;
+  QList<WorkingTime> times;
 };
 
 #endif // WORKINGTIMEALGO_H

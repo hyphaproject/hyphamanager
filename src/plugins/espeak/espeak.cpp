@@ -14,17 +14,17 @@ void ESpeak::loadConfig(std::string json) {
 }
 
 std::string ESpeak::getConfig() {
-    return "{}";
+  return "{}";
 }
 
 HyphaPluginConfig *ESpeak::getInstance(std::string id) {
-    ESpeak *instance = new ESpeak();
-    instance->setId(id);
-    return instance;
+  ESpeak *instance = new ESpeak();
+  instance->setId(id);
+  return instance;
 }
 
 QWidget *ESpeak::widget() {
-    return new ESpeakWidget();
+  return new ESpeakWidget();
 }
 
 POCO_BEGIN_MANIFEST(HyphaPlugin)

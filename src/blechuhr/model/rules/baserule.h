@@ -7,15 +7,15 @@
 
 
 class BaseRule {
-  public:
-    BaseRule(QList<BaseAccount *> accounts, QList<WorkingTime *> workingTimes);
-    virtual void calculate();
-    QList<BaseAccount *> getAccounts();
-    QList<WorkingTime *> getWorkingTimes();
+ public:
+  BaseRule(QList<BaseAccount *> accounts, QList<WorkingTime *> workingTimes);
+  virtual void calculate();
+  QList<BaseAccount *> getAccounts();
+  QList<WorkingTime *> getWorkingTimes();
 
-  protected:
-    QList<BaseAccount *> accounts;
-    QList<WorkingTime *> workingTimes;
+ protected:
+  QList<BaseAccount *> accounts;
+  QList<WorkingTime *> workingTimes;
 };
 
 #endif // BASERULE_H

@@ -13,7 +13,7 @@ using namespace hypha::handler::blechuhr;
 using namespace hypha::plugin;
 
 BlechUhr::BlechUhr() {
-    buwidget = new BlechUhrWidget();
+  buwidget = new BlechUhrWidget();
 }
 
 BlechUhr::~BlechUhr() {
@@ -29,17 +29,17 @@ void BlechUhr::loadConfig(std::string config) {
 }
 
 std::string BlechUhr::getConfig() {
-    return "{\"name\":\"blechuhr\"}";
+  return "{\"name\":\"blechuhr\"}";
 }
 
 HyphaHandlerConfig *BlechUhr::getInstance(std::string id) {
-    BlechUhr *blechuhr = new BlechUhr();
-    blechuhr->setId(id);
-    return blechuhr;
+  BlechUhr *blechuhr = new BlechUhr();
+  blechuhr->setId(id);
+  return blechuhr;
 }
 
 QWidget *BlechUhr::widget() {
-    return buwidget;
+  return buwidget;
 }
 
 POCO_BEGIN_MANIFEST(HyphaHandler)

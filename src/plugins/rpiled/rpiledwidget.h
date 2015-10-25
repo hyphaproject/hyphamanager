@@ -8,17 +8,17 @@ class RpiLedWidget;
 }
 
 class RpiLedWidget : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit RpiLedWidget(QWidget *parent = 0);
-    ~RpiLedWidget();
-    void setHost(QString host);
-    void loadConfig(QString json);
-    QString getConfig();
-  private:
-    Ui::RpiLedWidget *ui;
-    QString host;
+ public:
+  explicit RpiLedWidget(QWidget *parent = 0);
+  ~RpiLedWidget();
+  void setHost(QString host);
+  void loadConfig(QString json);
+  QString getConfig();
+ private:
+  Ui::RpiLedWidget *ui;
+  QString host;
 };
 
 #endif // RPILEDWIDGET_H

@@ -9,25 +9,25 @@ using namespace hypha::plugin;
 using namespace hypha::plugin::email;
 
 void EMail::loadConfig(std::string json) {
-    widget();
-    emailWidget->setHost(QString::fromStdString(host));
-    emailWidget->loadConfig(QString::fromStdString(json));
+  widget();
+  emailWidget->setHost(QString::fromStdString(host));
+  emailWidget->loadConfig(QString::fromStdString(json));
 }
 
 std::string EMail::getConfig() {
-    return emailWidget->getConfig().toStdString();
+  return emailWidget->getConfig().toStdString();
 }
 
 HyphaPluginConfig *EMail::getInstance(std::string id) {
-    EMail *instance = new EMail();
-    instance->setId(id);
-    return instance;
+  EMail *instance = new EMail();
+  instance->setId(id);
+  return instance;
 }
 
 QWidget *EMail::widget() {
-    if(!emailWidget)
-        emailWidget = new EMailWidget();
-    return emailWidget;
+  if (!emailWidget)
+    emailWidget = new EMailWidget();
+  return emailWidget;
 }
 
 POCO_BEGIN_MANIFEST(HyphaPlugin)

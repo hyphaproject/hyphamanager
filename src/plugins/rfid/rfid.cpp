@@ -16,17 +16,17 @@ void RFID::loadConfig(std::string json) {
 }
 
 std::string RFID::getConfig() {
-    return "{}";
+  return "{}";
 }
 
 HyphaPluginConfig *RFID::getInstance(std::string id) {
-    RFID *instance = new RFID();
-    instance->setId(id);
-    return instance;
+  RFID *instance = new RFID();
+  instance->setId(id);
+  return instance;
 }
 
 QWidget *RFID::widget() {
-    return new RFIDWidget();
+  return new RFIDWidget();
 }
 
 POCO_BEGIN_MANIFEST(HyphaPlugin)
