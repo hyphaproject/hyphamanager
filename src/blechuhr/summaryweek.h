@@ -3,9 +3,9 @@
 
 
 class SummaryWeek {
- public:
-  SummaryWeek();
-  ~SummaryWeek();
+  public:
+    SummaryWeek();
+    ~SummaryWeek();
 };
 
 #endif // SUMMARYWEEK_H

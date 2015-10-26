@@ -12,32 +12,32 @@ class MainWindow;
 }
 
 class MainWindow : public QMainWindow {
-  Q_OBJECT
+    Q_OBJECT
 
- public:
-  explicit MainWindow(QWidget *parent = 0);
-  ~MainWindow();
+  public:
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
 
- private slots:
-  void onLanguageChosen();
-  void on_actionAbout_Hypha_Client_triggered();
+  private slots:
+    void onLanguageChosen();
+    void on_actionAbout_Hypha_Client_triggered();
 
-  void on_actionOpen_triggered();
+    void on_actionOpen_triggered();
 
-  void on_actionSettings_triggered();
+    void on_actionSettings_triggered();
 
-  void closeEvent ( QCloseEvent *event );
+    void closeEvent ( QCloseEvent *event );
 
 
-  void on_actionNew_triggered();
+    void on_actionNew_triggered();
 
- private:
-  Ui::MainWindow *ui;
-  void createLanguageMenu();
-  Instance *instance;
-  UserWindow *userWindow;
-  ConnectionWindow *connectionWindow;
-  BlechuhrWindow *blechuhrWindow;
+  private:
+    Ui::MainWindow *ui;
+    void createLanguageMenu();
+    Instance *instance;
+    UserWindow *userWindow;
+    ConnectionWindow *connectionWindow;
+    BlechuhrWindow *blechuhrWindow;
 
 };
 

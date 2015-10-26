@@ -20,21 +20,21 @@ class HandlerDialog;
 }
 
 class HandlerDialog : public QDialog {
-  Q_OBJECT
+    Q_OBJECT
 
- public:
-  explicit HandlerDialog(hypha::handler::HandlerLoader *handlerLoader,
-                         hypha::database::Database *database, QWidget *parent = 0);
-  ~HandlerDialog();
-  void init();
+  public:
+    explicit HandlerDialog(hypha::handler::HandlerLoader *handlerLoader,
+                           hypha::database::Database *database, QWidget *parent = 0);
+    ~HandlerDialog();
+    void init();
 
- private slots:
-  void on_buttonBox_accepted();
+  private slots:
+    void on_buttonBox_accepted();
 
- private:
-  Ui::HandlerDialog *ui;
-  hypha::handler::HandlerLoader *handlerLoader;
-  hypha::database::Database *database;
+  private:
+    Ui::HandlerDialog *ui;
+    hypha::handler::HandlerLoader *handlerLoader;
+    hypha::database::Database *database;
 };
 
 #endif // HANDLERDIALOG_H

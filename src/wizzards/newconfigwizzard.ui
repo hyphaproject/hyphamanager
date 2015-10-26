@@ -82,21 +82,16 @@
        <item row="0" column="2">
         <widget class="QComboBox" name="udDriverBox">
          <property name="currentText">
-          <string>QSQLITE</string>
+          <string>SQLite</string>
          </property>
          <item>
           <property name="text">
-           <string>QSQLITE</string>
+           <string>SQLite</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>QMYSQL</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>QPSQL</string>
+           <string>MySQL</string>
           </property>
          </item>
         </widget>
@@ -413,17 +408,12 @@
         <widget class="QComboBox" name="dDriverBox">
          <item>
           <property name="text">
-           <string>QSQLITE</string>
+           <string>SQLite</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>QMYSQL</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>QPSQL</string>
+           <string>MySQL</string>
           </property>
          </item>
         </widget>

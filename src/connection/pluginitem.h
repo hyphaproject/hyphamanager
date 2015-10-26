@@ -11,24 +11,24 @@ class ConnectionWindow;
 class ConnectionLine;
 
 class PluginItem : public QGraphicsItem {
- public:
-  explicit PluginItem(HyphaPlugin *plugin, ConnectionWindow *window, QGraphicsItem *parent = 0);
+  public:
+    explicit PluginItem(HyphaPlugin *plugin, ConnectionWindow *window, QGraphicsItem *parent = 0);
 
-  QRectF boundingRect() const;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-             QWidget *widget);
-  void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
-  void addConnection(ConnectionLine *connection);
-  void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-  void mousePressEvent(QGraphicsSceneMouseEvent *event);
- signals:
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+               QWidget *widget);
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+    void addConnection(ConnectionLine *connection);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+  signals:
 
- public slots:
+  public slots:
 
- protected:
-  HyphaPlugin *plugin;
-  ConnectionWindow *wnd;
-  QList<ConnectionLine *> connections;
+  protected:
+    HyphaPlugin *plugin;
+    ConnectionWindow *wnd;
+    QList<ConnectionLine *> connections;
 
 };
 

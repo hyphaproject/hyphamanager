@@ -11,12 +11,12 @@ class UserDatabase;
 }
 
 class SummaryMonth: public Summary {
- public:
-  SummaryMonth(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase);
-  ~SummaryMonth();
+  public:
+    SummaryMonth(hypha::database::Database *database, hypha::database::UserDatabase *userDatabase);
+    ~SummaryMonth();
 
-  float getWorkedHours();
-  bool calculate();
+    float getWorkedHours();
+    bool calculate();
 
 };
 

@@ -10,19 +10,19 @@ class SettingsWindow;
 }
 
 class SettingsWindow : public QDialog {
-  Q_OBJECT
+    Q_OBJECT
 
- public:
-  explicit SettingsWindow(hypha::settings::HyphaSettings *settings, QWidget *parent = 0);
-  ~SettingsWindow();
-  void load();
+  public:
+    explicit SettingsWindow(hypha::settings::HyphaSettings *settings, QWidget *parent = 0);
+    ~SettingsWindow();
+    void load();
 
- private:
-  Ui::SettingsWindow *ui;
- protected:
-  hypha::settings::HyphaSettings *settings;
- private slots:
-  void on_buttonBox_accepted();
+  private:
+    Ui::SettingsWindow *ui;
+  protected:
+    hypha::settings::HyphaSettings *settings;
+  private slots:
+    void on_buttonBox_accepted();
 };
 
 #endif // SETTINGSWINDOW_H

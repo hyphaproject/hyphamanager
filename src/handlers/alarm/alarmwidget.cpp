@@ -6,23 +6,23 @@
 #include "ui_alarmwidget.h"
 
 AlarmWidget::AlarmWidget(QWidget *parent) :
-  QWidget(parent),
-  ui(new Ui::AlarmWidget) {
-  ui->setupUi(this);
+    QWidget(parent),
+    ui(new Ui::AlarmWidget) {
+    ui->setupUi(this);
 }
 
 AlarmWidget::~AlarmWidget() {
-  delete ui;
+    delete ui;
 }
 
 void AlarmWidget::loadConfig(QString config) {
-  QJsonDocument document = QJsonDocument::fromJson(config.toUtf8());
-  QJsonObject object = document.object();
-  if (object.contains("savedir")) {
-  }
+    QJsonDocument document = QJsonDocument::fromJson(config.toUtf8());
+    QJsonObject object = document.object();
+    if (object.contains("savedir")) {
+    }
 
 }
 
 QString AlarmWidget::getConfig() {
-  return "{\"savedir\":\"\"}";
+    return "{\"savedir\":\"\"}";
 }

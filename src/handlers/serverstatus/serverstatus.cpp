@@ -13,7 +13,7 @@ using namespace hypha::handler::serverstatus;
 using namespace hypha::plugin;
 
 ServerStatus::ServerStatus() {
-  serverStatusWidget = new ServerStatusWidget();
+    serverStatusWidget = new ServerStatusWidget();
 }
 
 ServerStatus::~ServerStatus() {
@@ -25,21 +25,21 @@ void ServerStatus::parse(std::string message) {
 }
 
 void ServerStatus::loadConfig(std::string config) {
-  serverStatusWidget->loadConfig(QString::fromStdString(config));
+    serverStatusWidget->loadConfig(QString::fromStdString(config));
 }
 
 std::string ServerStatus::getConfig() {
-  return serverStatusWidget->getConfig().toStdString();
+    return serverStatusWidget->getConfig().toStdString();
 }
 
 HyphaHandlerConfig *ServerStatus::getInstance(std::string id) {
-  ServerStatus *instance = new ServerStatus();
-  instance->setId(id);
-  return instance;
+    ServerStatus *instance = new ServerStatus();
+    instance->setId(id);
+    return instance;
 }
 
 QWidget *ServerStatus::widget() {
-  return serverStatusWidget;
+    return serverStatusWidget;
 }
 
 POCO_BEGIN_MANIFEST(HyphaHandler)

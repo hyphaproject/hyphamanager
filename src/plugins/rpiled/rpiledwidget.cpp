@@ -4,26 +4,26 @@
 #include "ui_rpiledwidget.h"
 
 RpiLedWidget::RpiLedWidget(QWidget *parent) :
-  QWidget(parent),
-  ui(new Ui::RpiLedWidget) {
-  ui->setupUi(this);
+    QWidget(parent),
+    ui(new Ui::RpiLedWidget) {
+    ui->setupUi(this);
 }
 
 RpiLedWidget::~RpiLedWidget() {
-  delete ui;
+    delete ui;
 }
 
 void RpiLedWidget::setHost(QString host) {
-  this->host = host;
+    this->host = host;
 }
 
 void RpiLedWidget::loadConfig(QString json) {
-  QJsonDocument document = QJsonDocument::fromJson(json.toUtf8());
-  QJsonObject object = document.object();
-  if (object.contains("user")) {
-  }
+    QJsonDocument document = QJsonDocument::fromJson(json.toUtf8());
+    QJsonObject object = document.object();
+    if (object.contains("user")) {
+    }
 }
 
 QString RpiLedWidget::getConfig() {
-  return "{}";
+    return "{}";
 }

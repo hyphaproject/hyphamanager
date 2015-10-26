@@ -16,28 +16,28 @@ class RulesItem;
 }
 
 class RulesItem : public QWidget {
-  Q_OBJECT
+    Q_OBJECT
 
- public:
-  explicit RulesItem(QWidget *parent = 0);
-  RulesItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::RTYPE type, hypha::database::Database *database, QWidget *parent = 0);
-  RulesItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::RTYPE type, hypha::database::Database *database, QWidget *parent = 0);
-  ~RulesItem();
+  public:
+    explicit RulesItem(QWidget *parent = 0);
+    RulesItem(QString username, QDateTime start, QDateTime end, hypha::blechuhr::RTYPE type, hypha::database::Database *database, QWidget *parent = 0);
+    RulesItem(QString id, QString username, QDateTime start, QDateTime end, hypha::blechuhr::RTYPE type, hypha::database::Database *database, QWidget *parent = 0);
+    ~RulesItem();
 
 
-  void save();
-  void deleteFromDatabase();
+    void save();
+    void deleteFromDatabase();
 
- private:
-  void init();
-  void initType();
-  Ui::RulesItem *ui;
-  QString id;
-  QString username;
-  QDateTime start;
-  QDateTime end;
-  hypha::blechuhr::RTYPE type;
-  hypha::database::Database *database;
+  private:
+    void init();
+    void initType();
+    Ui::RulesItem *ui;
+    QString id;
+    QString username;
+    QDateTime start;
+    QDateTime end;
+    hypha::blechuhr::RTYPE type;
+    hypha::database::Database *database;
 };
 
 #endif // RULESITEM_H

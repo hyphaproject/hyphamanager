@@ -15,17 +15,17 @@ void Wifi::loadConfig(std::string json) {
 }
 
 std::string Wifi::getConfig() {
-  return "{}";
+    return "{}";
 }
 
 HyphaPluginConfig *Wifi::getInstance(std::string id) {
-  Wifi *instance = new Wifi();
-  instance->setId(id);
-  return instance;
+    Wifi *instance = new Wifi();
+    instance->setId(id);
+    return instance;
 }
 
 QWidget *Wifi::widget() {
-  return new WifiWidget();
+    return new WifiWidget();
 }
 
 POCO_BEGIN_MANIFEST(HyphaPlugin)

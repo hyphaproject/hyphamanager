@@ -8,16 +8,16 @@ class AlarmWidget;
 }
 
 class AlarmWidget : public QWidget {
-  Q_OBJECT
+    Q_OBJECT
 
- public:
-  explicit AlarmWidget(QWidget *parent = 0);
-  ~AlarmWidget();
-  void loadConfig(QString config);
-  QString getConfig();
+  public:
+    explicit AlarmWidget(QWidget *parent = 0);
+    ~AlarmWidget();
+    void loadConfig(QString config);
+    QString getConfig();
 
- private:
-  Ui::AlarmWidget *ui;
+  private:
+    Ui::AlarmWidget *ui;
 };
 
 #endif // ALARMWIDGET_H

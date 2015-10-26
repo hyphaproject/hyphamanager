@@ -16,22 +16,22 @@ class WorkingTimeAddDialog;
 }
 
 class WorkingTimeAddDialog : public QDialog {
-  Q_OBJECT
+    Q_OBJECT
 
- public:
-  explicit WorkingTimeAddDialog(QString username, QDate date, hypha::database::Database *database, QWidget *parent = 0);
-  ~WorkingTimeAddDialog();
+  public:
+    explicit WorkingTimeAddDialog(QString username, QDate date, hypha::database::Database *database, QWidget *parent = 0);
+    ~WorkingTimeAddDialog();
 
- private slots:
-  void on_buttonBox_accepted();
+  private slots:
+    void on_buttonBox_accepted();
 
- private:
-  void init();
-  Ui::WorkingTimeAddDialog *ui;
-  QString username;
-  QDate date;
-  hypha::database::Database *database;
-  WorkingTimeItem *workingTimeItem;
+  private:
+    void init();
+    Ui::WorkingTimeAddDialog *ui;
+    QString username;
+    QDate date;
+    hypha::database::Database *database;
+    WorkingTimeItem *workingTimeItem;
 
 };
 

@@ -17,17 +17,17 @@ void ExploreNFC::loadConfig(std::string json) {
 }
 
 std::string ExploreNFC::getConfig() {
-  return "{}";
+    return "{}";
 }
 
 HyphaPluginConfig *ExploreNFC::getInstance(std::string id) {
-  ExploreNFC *instance = new ExploreNFC();
-  instance->setId(id);
-  return instance;
+    ExploreNFC *instance = new ExploreNFC();
+    instance->setId(id);
+    return instance;
 }
 
 QWidget *ExploreNFC::widget() {
-  return new ExploreNFCWidget();
+    return new ExploreNFCWidget();
 }
 
 POCO_BEGIN_MANIFEST(HyphaPlugin)

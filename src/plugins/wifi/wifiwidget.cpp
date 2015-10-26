@@ -2,11 +2,11 @@
 #include "ui_wifiwidget.h"
 
 WifiWidget::WifiWidget(QWidget *parent) :
-  QWidget(parent),
-  ui(new Ui::WifiWidget) {
-  ui->setupUi(this);
+    QWidget(parent),
+    ui(new Ui::WifiWidget) {
+    ui->setupUi(this);
 }
 
 WifiWidget::~WifiWidget() {
-  delete ui;
+    delete ui;
 }

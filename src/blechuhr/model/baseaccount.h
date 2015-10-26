@@ -6,17 +6,17 @@
 #include "type.h"
 
 class BaseAccount {
- public:
-  BaseAccount();
+  public:
+    BaseAccount();
 
-  QString getUsername();
-  QDateTime getStart();
-  QDateTime getEnd();
+    QString getUsername();
+    QDateTime getStart();
+    QDateTime getEnd();
 
- protected:
-  QString username;
-  QDateTime start;
-  QDateTime end;
+  protected:
+    QString username;
+    QDateTime start;
+    QDateTime end;
 };
 
 #endif // BASEACCOUNT_H

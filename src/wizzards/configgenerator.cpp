@@ -1,3 +1,6 @@
+#include <Poco/AutoPtr.h>
+#include <Poco/Util/IniFileConfiguration.h>
+#include <Poco/Util/XMLConfiguration.h>
 #include <iostream>
 #include <fstream>
 
@@ -7,28 +10,30 @@
 ConfigGenerator::ConfigGenerator() {
 }
 
-void ConfigGenerator::generateIniFile(std::string filename) {
-  std::ofstream file (filename);
-  if (file.is_open()) {
-    file << "[database]" << std::endl;
-    file << "database=" << dbDatabase << std::endl;
-    file << "driver=" << dbDriver << std::endl;
-    file << "host=" << dbHost << std::endl;
-    file << "password=" << dbPassword << std::endl;
-    file << "username=" << dbUsername << std::endl;
-    file << std::endl;
-    file << "[userdatabase]" << std::endl;
-    file << "attrDevices=" << udbAttributeDevices << std::endl;
-    file << "attrFirstname=" << udbAttributeFirstname << std::endl;
-    file << "attrLastname=" << udbAttributeLastname << std::endl;
-    file << "attrMail=" << udbAttributeMail << std::endl;
-    file << "attrUsername=" << udbAttributeUsername << std::endl;
-    file << "database=" << udbDatabase << std::endl;
-    file << "driver=" << udbDriver << std::endl;
-    file << "host=" << udbHost << std::endl;
-    file << "password=" << udbPassword << std::endl;
-    file << "table=" << udbTable << std::endl;
-    file << "username=" << udbUsername << std::endl;
-    file.close();
-  }
+void ConfigGenerator::generateConfigFile(std::string filename) {
+    Poco::AutoPtr<Poco::Util::XMLConfiguration> settings = new Poco::Util::XMLConfiguration();
+    settings->loadEmpty("hypha");
+    settings->save(filename);
+    settings->createView("database");
+    settings->setString("database.database", dbDatabase);
+    settings->setString("database.driver", dbDriver);
+    settings->setString("database.host", dbHost);
+    settings->setString("database.username", dbUsername);
+    settings->setString("database.password", dbPassword);
+
+    settings->createView("userdatabase");
+    settings->setString("userdatabase.database", udbDatabase);
+    settings->setString("userdatabase.driver", udbDriver);
+    settings->setString("userdatabase.host", udbHost);
+    settings->setString("userdatabase.username", udbUsername);
+    settings->setString("userdatabase.password", udbPassword);
+    settings->setString("userdatabase.table", udbTable);
+
+    settings->setString("userdatabase.attrDevices", udbAttributeDevices);
+    settings->setString("userdatabase.attrFirstname", udbAttributeFirstname);
+    settings->setString("userdatabase.attrLastname", udbAttributeLastname);
+    settings->setString("userdatabase.attrMail", udbAttributeMail);
+    settings->setString("userdatabase.attrUsername", udbAttributeUsername);
+
+    settings->save(filename);
 }

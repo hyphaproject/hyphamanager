@@ -20,20 +20,20 @@ class PluginDialog;
 }
 
 class PluginDialog : public QDialog {
-  Q_OBJECT
+    Q_OBJECT
 
- public:
-  explicit PluginDialog(hypha::plugin::PluginLoader *pluginLoader, hypha::database::Database *database, QWidget *parent = 0);
-  ~PluginDialog();
-  void init();
+  public:
+    explicit PluginDialog(hypha::plugin::PluginLoader *pluginLoader, hypha::database::Database *database, QWidget *parent = 0);
+    ~PluginDialog();
+    void init();
 
- private slots:
-  void on_buttonBox_accepted();
+  private slots:
+    void on_buttonBox_accepted();
 
- private:
-  Ui::PluginDialog *ui;
-  hypha::plugin::PluginLoader *pluginLoader;
-  hypha::database::Database *database;
+  private:
+    Ui::PluginDialog *ui;
+    hypha::plugin::PluginLoader *pluginLoader;
+    hypha::database::Database *database;
 };
 
 #endif // PLUGINDIALOG_H

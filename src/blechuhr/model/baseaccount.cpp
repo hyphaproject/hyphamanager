@@ -4,13 +4,13 @@ BaseAccount::BaseAccount() {
 }
 
 QString BaseAccount::getUsername() {
-  return username;
+    return username;
 }
 
 QDateTime BaseAccount::getStart() {
-  return start;
+    return start;
 }
 
 QDateTime BaseAccount::getEnd() {
-  return end;
+    return end;
 }
