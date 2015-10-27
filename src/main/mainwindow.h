@@ -5,7 +5,6 @@
 #include "instance.h"
 #include "../user/userwindow.h"
 #include "../connection/connectionwindow.h"
-#include "../blechuhr/blechuhrwindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -37,7 +36,6 @@ class MainWindow : public QMainWindow {
     Instance *instance;
     UserWindow *userWindow;
     ConnectionWindow *connectionWindow;
-    BlechuhrWindow *blechuhrWindow;
 
 };
 

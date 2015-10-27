@@ -16,14 +16,12 @@ ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK)
 include_directories ("." "../"
     ${Boost_INCLUDE_DIRS} )
 
-file(GLOB Sources "*.cpp" "../blechuhr/model/*.cpp"
-        "../blechuhr/model/rules/*.cpp" )
-file(GLOB Headers "*.h" "../blechuhr/model/*.h"
-        "../blechuhr/model/rules/*.h" ) 
+file(GLOB Sources "*.cpp")
+file(GLOB Headers "*.h")
 
-add_executable (hyphamanagertests ${Sources} ${Headers})
+#add_executable (hyphamanagertests ${Sources} ${Headers})
 
-target_link_libraries(hyphamanagertests
-    ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
-    Qt5::Core
-)
+#target_link_libraries(hyphamanagertests
+#    ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+#    Qt5::Core
+#)

@@ -38,14 +38,12 @@ ENDIF(WIN32)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/defines.h.cmake
 				${CMAKE_CURRENT_BINARY_DIR}/defines.h)
 
-file(GLOB Sources "*.cpp" "main/*.cpp" "database/*.cpp" "settings/*.cpp" "user/*.cpp" "connection/*.cpp" "blechuhr/*.cpp" "blechuhr/model/*.cpp"
-        "blechuhr/model/rules/*.cpp"
+file(GLOB Sources "*.cpp" "main/*.cpp" "database/*.cpp" "settings/*.cpp" "user/*.cpp" "connection/*.cpp"
         "handler/*.cpp" "plugin/*.cpp" "wizzards/*.cpp" )
-file(GLOB Headers "*.h" "main/*.cpp" "database/*.cpp" "settings/*.h" "user/*.h" "connection/*.h" "blechuhr/*.h" "blechuhr/model/*.h"
-        "blechuhr/model/rules/*.h"
+file(GLOB Headers "*.h" "main/*.cpp" "database/*.cpp" "settings/*.h" "user/*.h" "connection/*.h"
         "handler/*.h" "plugin/*.h" "wizzards/*.h" )
 file(GLOB Resources "res/*.qrc" )
-file(GLOB UIS "res/*.ui" "main/*.ui" "user/*.ui" "connection/*.ui" "blechuhr/*.ui" "settings/*.ui"
+file(GLOB UIS "res/*.ui" "main/*.ui" "user/*.ui" "connection/*.ui" "settings/*.ui"
 	"wizzards/*.ui" )
 file(GLOB Trans "i18n/*.ts" )
 

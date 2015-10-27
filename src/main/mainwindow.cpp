@@ -65,10 +65,8 @@ void MainWindow::on_actionOpen_triggered() {
     instance = new Instance(fileName, this);
     userWindow = new UserWindow(instance);
     connectionWindow = new ConnectionWindow(instance);
-    blechuhrWindow = new BlechuhrWindow(instance);
     ui->tabWidget->insertTab(0, userWindow, QIcon(":/actions/images/actions/users.svg"), "Users");
-    ui->tabWidget->insertTab(1, blechuhrWindow, QIcon(":/actions/images/actions/timetracker.svg"), "Blechuhr");
-    ui->tabWidget->insertTab(2, connectionWindow, QIcon(":/actions/images/actions/connections.svg"), "Designer");
+    ui->tabWidget->insertTab(1, connectionWindow, QIcon(":/actions/images/actions/connections.svg"), "Designer");
 }
 
 void MainWindow::on_actionSettings_triggered() {
