@@ -42,7 +42,6 @@ void PluginItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
     }
 }
 
-
 void PluginItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsItem::mouseReleaseEvent(event);
     update();

@@ -6,6 +6,7 @@
 #include <hypha/settings/pluginsettings.h>
 #include <hypha/handler/handlerloader.h>
 #include <hypha/plugin/pluginloader.h>
+#include "plugin/managerpluginloader.h"
 #include "instance.h"
 
 Instance::Instance(QString filename, QObject *parent): QObject(parent) {
@@ -22,7 +23,7 @@ Instance::Instance(QString filename, QObject *parent): QObject(parent) {
     pluginSettings = new hypha::settings::PluginSettings(database);
     handlerLoader = new hypha::handler::HandlerLoader(handlerSettings);
     handlerLoader->loadAllInstances();
-    pluginLoader = new hypha::plugin::PluginLoader(pluginSettings);
+    pluginLoader = new hypha::plugin::ManagerPluginLoader(pluginSettings);
     pluginLoader->loadAllInstances();
 
 }
@@ -51,6 +52,11 @@ hypha::database::Database *Instance::getDatabase() {
 
 hypha::settings::HandlerSettings *Instance::getHandlerSettings() {
     return handlerSettings;
+}
+
+hypha::settings::PluginSettings *Instance::getPluginSettings()
+{
+    return pluginSettings;
 }
 
 hypha::handler::HandlerLoader *Instance::getHandlerLoader() {

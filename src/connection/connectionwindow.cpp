@@ -14,6 +14,7 @@
 #include "connectionwindow.h"
 #include "ui_connectionwindow.h"
 #include "handler/hyphahandlerconfig.h"
+#include "plugin/unknownplugin.h"
 #include "connectiondialog.h"
 #include "handlerdialog.h"
 #include "plugindialog.h"
@@ -65,13 +66,13 @@ void ConnectionWindow::createPluginsTree() {
 }
 
 void ConnectionWindow::createPluginsTabs() {
-    foreach(hypha::handler::HyphaHandler * handler, instance->getHandlerLoader()->getInstances()) {
+    for(hypha::handler::HyphaHandler * handler: instance->getHandlerLoader()->getInstances()) {
         if (handler) {
             this->pluginTabs.insert(QString::fromStdString(handler->getId()), ((hypha::handler::HyphaHandlerConfig *)handler)->widget());
             ui->tabWidget->addTab(((hypha::handler::HyphaHandlerConfig *)handler)->widget(), QString::fromStdString(handler->getId() + " (" + handler->name() + ")"));
         }
     }
-    foreach(hypha::plugin::HyphaPlugin * plugin, instance->getPluginLoader()->getInstances()) {
+    for(hypha::plugin::HyphaPlugin * plugin: instance->getPluginLoader()->getInstances()) {
         if (plugin) {
             this->pluginTabs.insert(QString::fromStdString(plugin->getId()), ((hypha::plugin::HyphaPluginConfig *)plugin)->widget());
             ui->tabWidget->addTab(((hypha::plugin::HyphaPluginConfig *)plugin)->widget(), QString::fromStdString(plugin->getId() + " (" + plugin->name() + ")"));
@@ -80,7 +81,7 @@ void ConnectionWindow::createPluginsTabs() {
 }
 
 void ConnectionWindow::createHandlerItems() {
-    foreach(hypha::handler::HyphaHandler * handler, instance->getHandlerLoader()->getInstances()) {
+    for(hypha::handler::HyphaHandler * handler: instance->getHandlerLoader()->getInstances()) {
         if (handler) {
             HandlerItem *item = new HandlerItem(handler, this);
             this->handlerItems.insert(QString::fromStdString(handler->getId()), item);
@@ -90,7 +91,7 @@ void ConnectionWindow::createHandlerItems() {
 }
 
 void ConnectionWindow::updatePluginItems() {
-    foreach(hypha::plugin::HyphaPlugin * plugin, instance->getPluginLoader()->getInstances()) {
+    for(hypha::plugin::HyphaPlugin * plugin: instance->getPluginLoader()->getInstances()) {
         if (plugin) {
             HandlerItem *item = handlerItems[QString::fromStdString(plugin->getId())];
             if (!item) {
@@ -103,12 +104,12 @@ void ConnectionWindow::updatePluginItems() {
 }
 
 void ConnectionWindow::loadPositions() {
-    foreach(QString itemid, handlerItems.keys()) {
+    for(QString itemid: handlerItems.keys()) {
         HandlerItem *item = handlerItems[itemid];
         if (item)
             loadPosition(itemid, item);
     }
-    foreach(QString itemid, pluginItems.keys()) {
+    for(QString itemid: pluginItems.keys()) {
         PluginItem *item = pluginItems[itemid];
         if (item)
             loadPosition(itemid, item);
@@ -132,12 +133,12 @@ void ConnectionWindow::loadPosition(QString id, QGraphicsItem *item) {
 }
 
 void ConnectionWindow::savePositions() {
-    foreach(QString itemid, handlerItems.keys()) {
+    for(QString itemid: handlerItems.keys()) {
         HandlerItem *item = handlerItems[itemid];
         if (item)
             savePosition(itemid, item->x(), item->y());
     }
-    foreach(QString itemid, pluginItems.keys()) {
+    for(QString itemid: pluginItems.keys()) {
         PluginItem *item = pluginItems[itemid];
         if (item)
             savePosition(itemid, item->x(), item->y());
@@ -256,7 +257,7 @@ void ConnectionWindow::on_printButton_clicked() {
     QStringList fileNames;
     if (fileDialog.exec())
         fileNames = fileDialog.selectedFiles();
-    foreach(QString file, fileNames) {
+    for(QString file: fileNames) {
         QApplication::setOverrideCursor(Qt::WaitCursor);
         QPrinter printer(QPrinter::HighResolution);
         printer.setPaperSize(QPrinter::A4);

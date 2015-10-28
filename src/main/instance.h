@@ -20,6 +20,7 @@ class HandlerLoader;
 }
 namespace plugin {
 class PluginLoader;
+class ManagerPluginLoader;
 }
 }
 
@@ -34,6 +35,7 @@ class Instance : public QObject {
     hypha::database::UserDatabase *getUserDatabase();
     hypha::database::Database *getDatabase();
     hypha::settings::HandlerSettings *getHandlerSettings();
+    hypha::settings::PluginSettings *getPluginSettings();
     hypha::handler::HandlerLoader *getHandlerLoader();
     hypha::plugin::PluginLoader *getPluginLoader();
 
@@ -52,7 +54,7 @@ class Instance : public QObject {
     hypha::settings::PluginSettings *pluginSettings;
     hypha::settings::HandlerSettings *handlerSettings;
 
-    hypha::plugin::PluginLoader *pluginLoader;
+    hypha::plugin::ManagerPluginLoader *pluginLoader;
     hypha::handler::HandlerLoader *handlerLoader;
 
 };

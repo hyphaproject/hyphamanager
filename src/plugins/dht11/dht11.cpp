@@ -1,6 +1,3 @@
-#include <QtCore/QProcess>
-#include <QtCore/QJsonDocument>
-#include <QtCore/QJsonObject>
 #include <Poco/ClassLibrary.h>
 #include "dht11.h"
 

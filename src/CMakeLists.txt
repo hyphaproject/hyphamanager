@@ -44,7 +44,7 @@ file(GLOB Headers "*.h" "main/*.cpp" "database/*.cpp" "settings/*.h" "user/*.h" 
         "handler/*.h" "plugin/*.h" "wizzards/*.h" )
 file(GLOB Resources "res/*.qrc" )
 file(GLOB UIS "res/*.ui" "main/*.ui" "user/*.ui" "connection/*.ui" "settings/*.ui"
-	"wizzards/*.ui" )
+        "plugin/*.ui" "wizzards/*.ui" )
 file(GLOB Trans "i18n/*.ts" )
 
 set(hyphamanagerlibs ${Hypha_LIBRARIES} 
