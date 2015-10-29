@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>UnknownPluginWidget</class>
- <widget class="QWidget" name="UnknownPluginWidget">
+ <class>UnknownHandlerWidget</class>
+ <widget class="QWidget" name="UnknownHandlerWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -21,9 +21,6 @@
      </property>
      <property name="acceptRichText">
       <bool>false</bool>
-     </property>
-     <property name="placeholderText">
-      <string>{}</string>
      </property>
     </widget>
    </item>

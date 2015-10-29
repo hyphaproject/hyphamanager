@@ -12,7 +12,7 @@ public:
     ManagerPluginLoader(hypha::settings::PluginSettings *settings);
     void loadAllInstances();
 protected:
-    hypha::plugin::UnknownPlugin * unknownPlugin;
+    UnknownPlugin * unknownPlugin;
 };
 }
 }

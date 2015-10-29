@@ -206,6 +206,8 @@ void ConnectionWindow::setStatusMessageUrl(QString url) {
 }
 
 void ConnectionWindow::on_pluginsTreeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous) {
+    if(current == nullptr || current->columnCount() < 1)
+        return;
     QString name = current->text(0);
     if (name == "Handler" || name == "Plugins") {
         ui->descriptionBox->setTitle("");

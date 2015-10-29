@@ -8,10 +8,10 @@ namespace plugin {
 class UnknownPlugin: public HyphaPluginConfig {
 public:
     std::string name() {
-        return "unknown";
+        return "unknownplugin";
     }
     std::string getTitle() {
-        return "Unknown";
+        return "Unknown Plugin";
     }
     std::string getVersion() {
         return "0.1";

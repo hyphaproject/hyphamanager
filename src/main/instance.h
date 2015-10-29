@@ -17,6 +17,7 @@ class PluginSettings;
 }
 namespace handler {
 class HandlerLoader;
+class ManagerHandlerLoader;
 }
 namespace plugin {
 class PluginLoader;
@@ -55,7 +56,7 @@ class Instance : public QObject {
     hypha::settings::HandlerSettings *handlerSettings;
 
     hypha::plugin::ManagerPluginLoader *pluginLoader;
-    hypha::handler::HandlerLoader *handlerLoader;
+    hypha::handler::ManagerHandlerLoader *handlerLoader;
 
 };
 
