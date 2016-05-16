@@ -19,4 +19,4 @@ qt5_wrap_ui(rpipir_UI_SRCS ${rpipir_UIS})
 
 add_library( rpipir SHARED ${rpipir_Sources} ${rpipir_Headers} ${rpipir_ResourceSources} ${rpipir_UI_SRCS})
 
-target_link_libraries(rpipir Qt5::Core Qt5::Widgets )
+target_link_libraries(rpipir Qt5::Core Qt5::Widgets hypha::core hypha::plugin )

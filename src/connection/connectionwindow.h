@@ -36,11 +36,11 @@ class ConnectionWindow : public QWidget {
     void createHandlerItems();
     void updatePluginItems();
     void loadPositions();
-    void loadPosition(QString id, QGraphicsItem *item);
+    void loadPosition(std::string id, QGraphicsItem *item);
 
-    void savePosition(QString id, int x, int y);
-    void saveHandlerConfig(QString id, QString config);
-    void savePluginConfig(QString id, QString config);
+    void savePosition(std::string id, int x, int y);
+    void saveHandlerConfig(std::string id, std::string config);
+    void savePluginConfig(std::string id, std::string config);
 
     void addLines();
 

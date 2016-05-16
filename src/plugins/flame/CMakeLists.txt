@@ -19,4 +19,4 @@ qt5_wrap_ui(flame_UI_SRCS ${flame_UIS})
 
 add_library( flame SHARED ${flame_Sources} ${flame_Headers} ${flame_ResourceSources} ${flame_UI_SRCS})
 
-target_link_libraries(flame Qt5::Core Qt5::Widgets )
+target_link_libraries(flame Qt5::Core Qt5::Widgets hypha::core hypha::plugin )

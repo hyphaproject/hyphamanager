@@ -19,4 +19,4 @@ qt5_wrap_ui(rfid_UI_SRCS ${rfid_UIS})
 
 add_library( rfid SHARED ${rfid_Sources} ${rfid_Headers} ${rfid_ResourceSources} ${rfid_UI_SRCS})
 
-target_link_libraries(rfid Qt5::Core Qt5::Widgets )
+target_link_libraries(rfid Qt5::Core Qt5::Widgets hypha::core hypha::plugin )

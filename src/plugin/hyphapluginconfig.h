@@ -4,9 +4,9 @@
 #include <QtCore/QObject>
 #include <QtCore/QtPlugin>
 #include <QtCore/QThread>
-#include <hypha/database/database.h>
+#include <hypha/core/database/database.h>
 #include <hypha/plugin/hyphaplugin.h>
-#include <hypha/database/database.h>
+#include <hypha/core/database/database.h>
 
 namespace hypha {
 namespace plugin {

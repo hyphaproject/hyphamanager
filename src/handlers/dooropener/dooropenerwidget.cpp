@@ -86,9 +86,12 @@ void DoorOpenerWidget::on_addButton_clicked() {
     QString user = QInputDialog::getItem(this, tr("Add User"),
                                          tr("User:"), users, 0, false, &ok);
     if (ok && !user.isEmpty()) {
+        std::string idStr = id.toStdString();
+        std::string userStr = user.toStdString();
+        bool atworktime = false;
         Poco::Data::Statement statement = database->getStatement();
         statement << "insert into dooropener_user(id,user,atworktime) values(?, ?, ?);",
-                  Poco::Data::use(id.toStdString()), Poco::Data::use(user.toStdString()), Poco::Data::use(false);
+                  Poco::Data::Keywords::use(idStr), Poco::Data::Keywords::use(userStr), Poco::Data::Keywords::use(atworktime);
         statement.execute();
         reloadUser();
     }

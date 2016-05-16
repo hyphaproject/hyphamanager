@@ -19,4 +19,4 @@ qt5_wrap_ui(watersensor_UI_SRCS ${watersensor_UIS})
 
 add_library( watersensor SHARED ${watersensor_Sources} ${watersensor_Headers} ${watersensor_ResourceSources} ${watersensor_UI_SRCS})
 
-target_link_libraries(watersensor Qt5::Core Qt5::Widgets )
+target_link_libraries(watersensor Qt5::Core Qt5::Widgets hypha::core hypha::plugin )

@@ -1,5 +1,5 @@
 #include <hypha/plugin/pluginfactory.h>
-#include <hypha/settings/pluginsettings.h>
+#include <hypha/core/settings/pluginsettings.h>
 #include "plugin/unknownplugin.h"
 
 #include "managerpluginloader.h"

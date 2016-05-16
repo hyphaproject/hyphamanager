@@ -19,4 +19,4 @@ qt5_wrap_ui(lightsensor_UI_SRCS ${lightsensor_UIS})
 
 add_library( lightsensor SHARED ${lightsensor_Sources} ${lightsensor_Headers} ${lightsensor_ResourceSources} ${lightsensor_UI_SRCS})
 
-target_link_libraries(lightsensor Qt5::Core Qt5::Widgets )
+target_link_libraries(lightsensor Qt5::Core Qt5::Widgets hypha::core hypha::plugin )

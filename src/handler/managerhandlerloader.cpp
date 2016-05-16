@@ -1,5 +1,5 @@
 #include <hypha/handler/handlerfactory.h>
-#include <hypha/settings/hyphasettings.h>
+#include <hypha/core/settings/hyphasettings.h>
 #include "handler/unknownhandler.h"
 
 #include "managerhandlerloader.h"

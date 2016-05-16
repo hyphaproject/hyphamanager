@@ -5,8 +5,8 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QTimeZone>
 #include <Poco/Data/RecordSet.h>
-#include <hypha/database/database.h>
-#include <hypha/database/userdatabase.h>
+#include <hypha/core/database/database.h>
+#include <hypha/core/database/userdatabase.h>
 #include "userwindow.h"
 #include "ui_userwindow.h"
 

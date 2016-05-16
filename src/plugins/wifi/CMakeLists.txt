@@ -19,4 +19,4 @@ qt5_wrap_ui(wifi_UI_SRCS ${wifi_UIS})
 
 add_library( wifi SHARED ${wifi_Sources} ${wifi_Headers} ${wifi_ResourceSources} ${wifi_UI_SRCS})
 
-target_link_libraries(wifi Qt5::Core Qt5::Widgets )
+target_link_libraries(wifi Qt5::Core Qt5::Widgets hypha::core hypha::plugin )

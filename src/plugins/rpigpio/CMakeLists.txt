@@ -20,4 +20,4 @@ QT5_WRAP_UI(rpigpio_UI_SRCS ${rpigpio_UIS})
 
 add_library( rpigpio SHARED ${rpigpio_Sources} ${rpigpio_Headers} ${rpigpio_ResourceSources} ${rpigpio_UI_SRCS})
 
-target_link_libraries(rpigpio Qt5::Core Qt5::Widgets )
+target_link_libraries(rpigpio Qt5::Core Qt5::Widgets hypha::core hypha::plugin )

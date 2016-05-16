@@ -3,7 +3,7 @@
 
 
 #include <QDialog>
-#include <hypha/settings/hyphasettings.h>
+#include <hypha/core/settings/hyphasettings.h>
 
 namespace Ui {
 class SettingsWindow;

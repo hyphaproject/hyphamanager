@@ -7,6 +7,8 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Qt5WebKit REQUIRED)
 find_package(Qt5WebKitWidgets REQUIRED)
 
+find_package(Poco COMPONENTS Foundation Util Net Data DataMySQL DataSQLite REQUIRED)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -21,4 +23,4 @@ qt5_wrap_ui(video_UI_SRCS ${video_UIS})
 
 add_library( video SHARED ${video_Sources} ${video_Headers} ${video_ResourceSources} ${video_UI_SRCS})
 
-target_link_libraries(video Qt5::Core Qt5::Widgets Qt5::WebKit Qt5::WebKitWidgets)
+target_link_libraries(video Qt5::Core Qt5::Widgets Qt5::WebKit Qt5::WebKitWidgets hypha::core hypha::plugin )

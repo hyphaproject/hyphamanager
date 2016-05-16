@@ -30,7 +30,7 @@ void HandlerDialog::on_buttonBox_accepted() {
         database->getSession() << "INSERT INTO `handler`(`id`,`host`,`type`,`config`) values('"
                                + ui->idEdit->text().toStdString() + "','"
                                + ui->hostEdit->text().toStdString() + "','"
-                               + ui->comboBox->currentText().toStdString() + "','');", Poco::Data::now;
+                               + ui->comboBox->currentText().toStdString() + "','');", Poco::Data::Keywords::now;
     } catch (Poco::Exception &e) {
         QMessageBox::critical(0, "", QString::fromStdString(e.message()) );
     }

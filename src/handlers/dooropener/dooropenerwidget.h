@@ -4,8 +4,8 @@
 #include <QtWidgets/QWidget>
 #include <QtGui/QStandardItemModel>
 
-#include <hypha/database/database.h>
-#include <hypha/database/userdatabase.h>
+#include <hypha/core/database/database.h>
+#include <hypha/core/database/userdatabase.h>
 
 namespace Ui {
 class DoorOpenerWidget;

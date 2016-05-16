@@ -4,8 +4,8 @@
 #include <QtCore/QDebug>
 #include <QtCore/QTimer>
 #include <Poco/ClassLibrary.h>
-#include <hypha/database/database.h>
-#include <hypha/database/userdatabase.h>
+#include <hypha/core/database/database.h>
+#include <hypha/core/database/userdatabase.h>
 #include "serverstatus.h"
 
 using namespace hypha::handler;

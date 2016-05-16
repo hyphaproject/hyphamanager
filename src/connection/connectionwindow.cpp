@@ -5,8 +5,8 @@
 #include <QtPrintSupport/QPrinter>
 #include <QtWidgets/QMessageBox>
 #include <Poco/Data/RecordSet.h>
-#include <hypha/database/database.h>
-#include <hypha/database/userdatabase.h>
+#include <hypha/core/database/database.h>
+#include <hypha/core/database/userdatabase.h>
 #include <hypha/handler/handlerloader.h>
 #include <hypha/handler/hyphahandler.h>
 #include <hypha/plugin/pluginloader.h>
@@ -19,6 +19,8 @@
 #include "handlerdialog.h"
 #include "plugindialog.h"
 #include "connectionline.h"
+
+using namespace Poco::Data::Keywords;
 
 ConnectionWindow::ConnectionWindow(Instance *instance, QWidget *parent) :
     QWidget(parent),
@@ -107,18 +109,18 @@ void ConnectionWindow::loadPositions() {
     for(QString itemid: handlerItems.keys()) {
         HandlerItem *item = handlerItems[itemid];
         if (item)
-            loadPosition(itemid, item);
+            loadPosition(itemid.toStdString(), item);
     }
     for(QString itemid: pluginItems.keys()) {
         PluginItem *item = pluginItems[itemid];
         if (item)
-            loadPosition(itemid, item);
+            loadPosition(itemid.toStdString(), item);
     }
 }
 
-void ConnectionWindow::loadPosition(QString id, QGraphicsItem *item) {
+void ConnectionWindow::loadPosition(std::string id, QGraphicsItem *item) {
     Poco::Data::Statement statement = instance->getDatabase()->getStatement();
-    statement << "SELECT x,y FROM designerpositions WHERE id = '" + id.toStdString() + "';";
+    statement << "SELECT x,y FROM designerpositions WHERE id = '" + id + "';";
     statement.execute();
     Poco::Data::RecordSet rs(statement);
     bool more = rs.moveFirst();
@@ -136,42 +138,42 @@ void ConnectionWindow::savePositions() {
     for(QString itemid: handlerItems.keys()) {
         HandlerItem *item = handlerItems[itemid];
         if (item)
-            savePosition(itemid, item->x(), item->y());
+            savePosition(itemid.toStdString(), item->x(), item->y());
     }
     for(QString itemid: pluginItems.keys()) {
         PluginItem *item = pluginItems[itemid];
         if (item)
-            savePosition(itemid, item->x(), item->y());
+            savePosition(itemid.toStdString(), item->x(), item->y());
     }
 }
 
 void ConnectionWindow::saveConfig() {
     for (hypha::handler::HyphaHandler *handler : instance->getHandlerLoader()->getInstances()) {
         if (handler) {
-            saveHandlerConfig(QString::fromStdString(handler->getId()), QString::fromStdString(handler->getConfig()));
+            saveHandlerConfig(handler->getId(), handler->getConfig());
         }
     }
     for (hypha::plugin::HyphaPlugin *plugin : instance->getPluginLoader()->getInstances()) {
         if (plugin) {
-            savePluginConfig(QString::fromStdString(plugin->getId()), QString::fromStdString(plugin->getConfig()));
+            savePluginConfig(plugin->getId(), plugin->getConfig());
         }
     }
 }
 
-void ConnectionWindow::savePosition(QString id, int x, int y) {
+void ConnectionWindow::savePosition(std::string id, int x, int y) {
     instance->getDatabase()->getSession() << "UPDATE `designerpositions` SET `x`=?, `y`=? WHERE `id`=?",
-                                          Poco::Data::use(x), Poco::Data::use(y), Poco::Data::use(id.toStdString()), Poco::Data::now;
+                                          use(x), use(y), use(id), now;
 }
 
-void ConnectionWindow::saveHandlerConfig(QString id, QString config) {
+void ConnectionWindow::saveHandlerConfig(std::string id, std::string config) {
     instance->getDatabase()->getSession() << "UPDATE `handler` SET config='%s' WHERE id='%s';",
-                                          config.toStdString(), id.toStdString(), Poco::Data::now;
+                                          config, id, now;
 }
 
-void ConnectionWindow::savePluginConfig(QString id, QString config) {
+void ConnectionWindow::savePluginConfig(std::string id, std::string config) {
     instance->getDatabase()->getSession() << "UPDATE `plugins` SET `config`=? WHERE `id`=?",
-                                          Poco::Data::use(config.toStdString()), Poco::Data::use(id.toStdString()),
-                                          Poco::Data::now;
+                                          use(config), use(id),
+                                          now;
 }
 
 void ConnectionWindow::addLines() {

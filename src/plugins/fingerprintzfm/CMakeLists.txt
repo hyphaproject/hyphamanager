@@ -5,6 +5,8 @@ project(fingerprintzfm)
 find_package(Qt5Core)
 find_package(Qt5Widgets REQUIRED)
 
+find_package(Poco COMPONENTS Foundation Util Net Data DataMySQL DataSQLite REQUIRED)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -19,4 +21,4 @@ qt5_wrap_ui(fingerprintzfm_UI_SRCS ${fingerprintzfm_UIS})
 
 add_library( fingerprintzfm SHARED ${fingerprintzfm_Sources} ${fingerprintzfm_Headers} ${fingerprintzfm_ResourceSources} ${fingerprintzfm_UI_SRCS})
 
-target_link_libraries(fingerprintzfm Qt5::Core Qt5::Widgets )
+target_link_libraries(fingerprintzfm Qt5::Core Qt5::Widgets hypha::core hypha::plugin )

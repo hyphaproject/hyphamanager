@@ -12,24 +12,19 @@ find_package(Qt5LinguistTools REQUIRED)
 find_package(Qt5WebKit REQUIRED)
 find_package(Qt5WebKitWidgets REQUIRED)
 find_package(Qt5PrintSupport REQUIRED)
-
-find_package(Hypha COMPONENTS Utils Core Handler Plugin REQUIRED)
-#find_package(Poco REQUIRED)
-find_library(POCO_DATA PocoData)
-find_library(POCO_MYSQL PocoMySQL)
-find_library(POCO_SQLITE PocoSQLite)
-find_library(POCO_NET PocoNet)
-find_library(POCO_UTIL PocoUtil)
-find_library(POCO_FOUNDATION PocoFoundation)
+find_package(Qt5Network REQUIRED)
 
 find_package(Ldap)
 find_package(Boost COMPONENTS signals thread system filesystem REQUIRED)
+find_package(Poco COMPONENTS Foundation Util Net Data DataMySQL DataSQLite REQUIRED)
+
+find_package(hypha COMPONENTS utils core handler plugin REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIRS} ${Hypha_INCLUDE_DIRS} ${Poco_INCLUDE_DIRS})
 
 IF(WIN32)
     include_directories( "C:/poco/Net/include" "C:/poco/Foundation/include"
-        "C:/poco/Util/include" "C:/poco/Data/include" "C:/poco/Data/MySQL/include" ${Hypha_INCLUDE_DIRS} )
+        "C:/poco/Util/include" "C:/poco/Data/include" "C:/poco/Data/MySQL/include" ${hypha_INCLUDE_DIRS} )
     link_directories( "C:/poco/lib" "C:/Dev/hypha/lib" )
 else()
     #link_directories( "/usr/lib/" "/usr/local/lib/" )
@@ -47,8 +42,8 @@ file(GLOB UIS "res/*.ui" "main/*.ui" "user/*.ui" "connection/*.ui" "settings/*.u
         "handler/*.ui" "plugin/*.ui" "wizzards/*.ui" )
 file(GLOB Trans "i18n/*.ts" )
 
-set(hyphamanagerlibs ${Hypha_LIBRARIES} 
-     ${Boost_LIBRARIES} ${Poco_LIBRARIES} PocoNet PocoUtil PocoFoundation PocoData PocoMySQL PocoSQLite)
+set(hyphamanagerlibs hypha::core hypha::utils hypha::plugin hypha::handler 
+     ${Boost_LIBRARIES} ${Poco_LIBRARIES})
 
 qt5_add_resources(ResourceSources ${Resources})
 qt5_wrap_ui(UI_SRCS ${UIS})
@@ -69,7 +64,7 @@ if(LDAP_FOUND AND USE_LDAP)
 endif(LDAP_FOUND AND USE_LDAP)
 # Windows application icon
 if (WIN32)
-    set(hyphamanagerlibs HyphaUtils Qt5::Widgets Qt5::WinMain Qt5::WebKit Qt5::WebKitWidgets Qt5::PrintSupport)
+    set(hyphamanagerlibs hypha::utils Qt5::Widgets Qt5::WinMain Qt5::WebKit Qt5::WebKitWidgets Qt5::PrintSupport)
 
     set(WINDOWS_RES_FILE ${CMAKE_CURRENT_BINARY_DIR}/resources.obj)
     include_directories( C:/poco/Net/include C:/poco/Foundation/include C:/poco/Util/include)
@@ -93,8 +88,8 @@ if (WIN32)
   endif()
     add_executable(${CMAKE_PROJECT_NAME} WIN32 ${Sources} ${Headers} ${ResourceSources} ${UI_SRCS} ${QM})
 else()
-    set(hyphamanagerlibs ${hyphamanagerlibs} Qt5::Widgets Qt5::WebKit Qt5::WebKitWidgets Qt5::PrintSupport)
-    set(hyphamanagerlibs ${hyphamanagerlibs} ${Hypha_LIBRARIES} PocoNet PocoUtil PocoFoundation )
+    set(hyphamanagerlibs ${hyphamanagerlibs} Qt5::Widgets Qt5::Network Qt5::WebKit Qt5::WebKitWidgets Qt5::PrintSupport)
+    set(hyphamanagerlibs ${hyphamanagerlibs} ${hypha_LIBRARIES} PocoNet PocoUtil PocoFoundation PocoData PocoDataMySQL PocoDataSQLite )
     add_executable(${CMAKE_PROJECT_NAME} ${Sources} ${Headers} ${ResourceSources} ${UI_SRCS} ${QM})
 endif()
 

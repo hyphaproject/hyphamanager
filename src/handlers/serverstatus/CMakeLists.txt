@@ -5,6 +5,8 @@ project(serverstatus)
 find_package(Qt5Core)
 find_package(Qt5Widgets REQUIRED)
 
+find_package(Poco COMPONENTS Foundation Util Net Data DataMySQL DataSQLite REQUIRED)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -19,4 +21,4 @@ qt5_wrap_ui(serverstatus_UI_SRCS ${serverstatus_UIS})
 
 add_library( serverstatus SHARED ${serverstatus_Sources} ${serverstatus_Headers} ${serverstatus_ResourceSources} ${serverstatus_UI_SRCS})
 
-target_link_libraries(serverstatus Qt5::Core Qt5::Widgets )
+target_link_libraries(serverstatus Qt5::Core Qt5::Widgets hypha::core hypha::plugin hypha::handler)

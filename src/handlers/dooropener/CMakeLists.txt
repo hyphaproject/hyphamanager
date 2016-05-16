@@ -6,6 +6,8 @@ find_package(Qt5Core)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Sql REQUIRED)
 
+find_package(Poco COMPONENTS Foundation Util Net Data DataMySQL DataSQLite REQUIRED)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -20,4 +22,4 @@ qt5_wrap_ui(dooropener_UI_SRCS ${dooropener_UIS})
 
 add_library( dooropener SHARED ${dooropener_Sources} ${dooropener_Headers} ${dooropener_ResourceSources} ${dooropener_UI_SRCS})
 
-target_link_libraries(dooropener Qt5::Core Qt5::Widgets Qt5::Sql Qt5::Network)
+target_link_libraries(dooropener Qt5::Core Qt5::Widgets Qt5::Sql Qt5::Network hypha::core hypha::plugin hypha::handler)

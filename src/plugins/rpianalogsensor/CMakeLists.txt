@@ -19,4 +19,4 @@ qt5_wrap_ui(rpianalogsensor_UI_SRCS ${rpianalogsensor_UIS})
 
 add_library( rpianalogsensor SHARED ${rpianalogsensor_Sources} ${rpianalogsensor_Headers} ${rpianalogsensor_ResourceSources} ${rpianalogsensor_UI_SRCS})
 
-target_link_libraries(rpianalogsensor Qt5::Core Qt5::Widgets )
+target_link_libraries(rpianalogsensor Qt5::Core Qt5::Widgets hypha::core hypha::plugin )

@@ -4,6 +4,8 @@ project(dht11)
 find_package(Qt5Core)
 find_package(Qt5Widgets REQUIRED)
 
+find_package(Poco COMPONENTS Foundation Util Net Data DataMySQL DataSQLite REQUIRED)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -18,4 +20,4 @@ qt5_wrap_ui(dht11_UI_SRCS ${dht11_UIS})
 
 add_library( dht11 SHARED ${dht11_Sources} ${dht11_Headers} ${dht11_ResourceSources} ${dht11_UI_SRCS})
 
-target_link_libraries(dht11 Qt5::Core Qt5::Widgets )
+target_link_libraries(dht11 Qt5::Core Qt5::Widgets hypha::core hypha::plugin )

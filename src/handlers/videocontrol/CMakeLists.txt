@@ -5,6 +5,8 @@ project(videocontrol)
 find_package(Qt5Core)
 find_package(Qt5Widgets REQUIRED)
 
+find_package(Poco COMPONENTS Foundation Util Net Data DataMySQL DataSQLite REQUIRED)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -19,4 +21,4 @@ qt5_wrap_ui(videocontrol_UI_SRCS ${videocontrol_UIS})
 
 add_library( videocontrol SHARED ${videocontrol_Sources} ${videocontrol_Headers} ${videocontrol_ResourceSources} ${videocontrol_UI_SRCS})
 
-target_link_libraries(videocontrol Qt5::Core Qt5::Widgets )
+target_link_libraries(videocontrol Qt5::Core Qt5::Widgets hypha::core hypha::plugin hypha::handler )

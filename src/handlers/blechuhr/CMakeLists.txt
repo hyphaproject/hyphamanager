@@ -19,4 +19,4 @@ qt5_wrap_ui(blechuhr_UI_SRCS ${blechuhr_UIS})
 
 add_library( blechuhr SHARED ${blechuhr_Sources} ${blechuhr_Headers} ${blechuhr_ResourceSources} ${blechuhr_UI_SRCS} )
 
-target_link_libraries(blechuhr Qt5::Core Qt5::Widgets )
+target_link_libraries(blechuhr Qt5::Core Qt5::Widgets hypha::core hypha::plugin hypha::handler)

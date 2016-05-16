@@ -1,7 +1,7 @@
 #include <Poco/Data/RecordSet.h>
 #include <hypha/plugin/pluginloader.h>
 #include <hypha/handler/handlerloader.h>
-#include <hypha/database/database.h>
+#include <hypha/core/database/database.h>
 #include "connectiondialog.h"
 #include "connectionitem.h"
 #include "ui_connectiondialog.h"
@@ -65,6 +65,6 @@ void ConnectionDialog::on_deleteButton_clicked() {
 void ConnectionDialog::on_addButton_clicked() {
     database->getSession() << "INSERT INTO `connection`(`handler_id`,`plugin_id`) VALUES('"
                            + ui->handlerComboBox->currentText().toStdString() + "','"
-                           + ui->pluginComboBox->currentText().toStdString() + "');", Poco::Data::now;
+                           + ui->pluginComboBox->currentText().toStdString() + "');", Poco::Data::Keywords::now;
     init();
 }

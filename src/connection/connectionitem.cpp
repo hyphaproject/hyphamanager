@@ -1,6 +1,8 @@
-#include <hypha/database/database.h>
+#include <hypha/core/database/database.h>
 #include "connectionitem.h"
 #include "ui_connectionitem.h"
+
+using namespace Poco::Data::Keywords;
 
 ConnectionItem::ConnectionItem(QString id, QString handlerId, QString pluginId, hypha::database::Database *database, QWidget *parent):
     QWidget(parent),
@@ -23,8 +25,9 @@ void ConnectionItem::init() {
 }
 
 void ConnectionItem::deleteFromDatabase() {
+    std::string idStr = id.toStdString();
     Poco::Data::Statement statement = database->getStatement();
     statement << "delete from connection where id = ?;",
-              Poco::Data::use(id.toStdString());
+              use(idStr);
     statement.execute();
 }
