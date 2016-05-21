@@ -7,16 +7,16 @@ namespace hypha {
 namespace plugin {
 class UnknownPlugin: public HyphaPluginConfig {
 public:
-    std::string name() {
+    const std::string name() {
         return "unknownplugin";
     }
-    std::string getTitle() {
+    const std::string getTitle() {
         return "Unknown Plugin";
     }
-    std::string getVersion() {
+    const std::string getVersion() {
         return "0.1";
     }
-    std::string getDescription() {
+    const std::string getDescription() {
         return "";
     }
     void loadConfig(std::string json);

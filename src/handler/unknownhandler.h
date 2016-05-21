@@ -7,16 +7,16 @@ namespace hypha {
 namespace handler {
 class UnknownHandler: public HyphaHandlerConfig {
 public:
-    std::string name() {
+    const std::string name() {
         return "unknownhandler";
     }
-    std::string getTitle() {
+    const std::string getTitle() {
         return "Unknown Handler";
     }
-    std::string getVersion() {
+    const std::string getVersion() {
         return "0.1";
     }
-    std::string getDescription() {
+    const std::string getDescription() {
         return "";
     }
     void loadConfig(std::string json);

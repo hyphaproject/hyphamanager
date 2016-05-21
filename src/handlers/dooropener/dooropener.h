@@ -9,35 +9,26 @@ namespace hypha {
 namespace handler {
 namespace dooropener {
 class DoorOpener : public HyphaHandlerConfig {
-  public:
-    explicit DoorOpener();
-    ~DoorOpener();
-    static DoorOpener *instance();
-    std::string name() {
-        return "dooropener";
-    }
-    std::string getTitle() {
-        return "DoorOpener";
-    }
-    std::string getVersion() {
-        return "0.1";
-    }
-    std::string getDescription() {
-        return "Handler to open doors.";
-    }
-    void parse(std::string message);
-    void loadConfig(std::string config);
-    std::string getConfig();
-    HyphaHandlerConfig *getInstance(std::string id);
+ public:
+  explicit DoorOpener();
+  ~DoorOpener();
+  static DoorOpener *instance();
+  const std::string name() { return "dooropener"; }
+  const std::string getTitle() { return "DoorOpener"; }
+  const std::string getVersion() { return "0.1"; }
+  const std::string getDescription() { return "Handler to open doors."; }
+  void parse(std::string message);
+  void loadConfig(std::string config);
+  std::string getConfig();
+  HyphaHandlerConfig *getInstance(std::string id);
 
-    QWidget *widget();
+  QWidget *widget();
 
-  protected:
-    DoorOpenerWidget *doorWidget = nullptr;
-
+ protected:
+  DoorOpenerWidget *doorWidget = nullptr;
 };
 }
 }
 }
 
-#endif // DOOROPENER_H
+#endif  // DOOROPENER_H

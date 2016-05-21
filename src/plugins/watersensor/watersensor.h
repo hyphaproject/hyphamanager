@@ -6,30 +6,22 @@ namespace hypha {
 namespace plugin {
 namespace watersensor {
 class WaterSensor : public HyphaPluginConfig {
-  public:
-    std::string name() {
-        return "watersensor";
-    }
-    std::string getTitle() {
-        return "WaterSensor";
-    }
-    std::string getVersion() {
-        return "0.1";
-    }
-    std::string getDescription() {
-        return "Read Water Sensor.";
-    }
-    void loadConfig(std::string json);
-    std::string getConfig();
-    HyphaPluginConfig *getInstance(std::string id);
+ public:
+  const std::string name() { return "watersensor"; }
+  const std::string getTitle() { return "WaterSensor"; }
+  const std::string getVersion() { return "0.1"; }
+  const std::string getDescription() { return "Read Water Sensor."; }
+  void loadConfig(std::string json);
+  std::string getConfig();
+  HyphaPluginConfig *getInstance(std::string id);
 
-    QWidget *widget();
+  QWidget *widget();
 
-  private:
-    WaterSensorWidget *waterSensorWidget = nullptr;
-    std::string language;
+ private:
+  WaterSensorWidget *waterSensorWidget = nullptr;
+  std::string language;
 };
 }
 }
 }
-#endif // WATERSENSOR_H
+#endif  // WATERSENSOR_H

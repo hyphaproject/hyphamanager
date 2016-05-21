@@ -8,37 +8,27 @@ namespace hypha {
 namespace handler {
 namespace blechuhr {
 class BlechUhr : public HyphaHandlerConfig {
-  public:
-    explicit BlechUhr();
-    ~BlechUhr();
-    static BlechUhr *instance();
-    std::string name() {
-        return "blechuhr";
-    }
-    std::string getTitle() {
-        return "Blechuhr";
-    }
-    std::string getVersion() {
-        return "0.1";
-    }
-    std::string getDescription() {
-        return "Handler like a time recorder.";
-    }
-    void parse(std::string message);
-    void loadConfig(std::string config);
-    std::string getConfig();
-    HyphaHandlerConfig *getInstance(std::string id);
+ public:
+  explicit BlechUhr();
+  ~BlechUhr();
+  static BlechUhr *instance();
+  const std::string name() { return "blechuhr"; }
+  const std::string getTitle() { return "Blechuhr"; }
+  const std::string getVersion() { return "0.1"; }
+  const std::string getDescription() { return "Handler like a time recorder."; }
+  void parse(std::string message);
+  void loadConfig(std::string config);
+  std::string getConfig();
+  HyphaHandlerConfig *getInstance(std::string id);
 
-    QWidget *widget();
+  QWidget *widget();
 
-  private:
-  protected:
-    BlechUhrWidget *buwidget = nullptr;
-
-
+ private:
+ protected:
+  BlechUhrWidget *buwidget = nullptr;
 };
 }
 }
 }
 
-#endif // BLECHUHR_H
+#endif  // BLECHUHR_H
