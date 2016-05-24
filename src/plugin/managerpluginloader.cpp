@@ -17,6 +17,8 @@ void hypha::plugin::ManagerPluginLoader::loadAllInstances()
     for (std::string id : settings->getAllPluginIds()) {
         if (getPluginInstance(id) == 0) {
             HyphaPlugin *plugin = factory->loadPlugin(id);
+            if(dynamic_cast<const HyphaPluginConfig*>(plugin) == nullptr)
+                plugin = AutoPlugin::getInstance(plugin);
             if (plugin)
                 pluginInstances[id] = plugin;
             else {

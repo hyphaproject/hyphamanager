@@ -19,6 +19,7 @@ find_package(Boost COMPONENTS signals thread system filesystem REQUIRED)
 find_package(Poco COMPONENTS Foundation Util Net Data DataMySQL DataSQLite REQUIRED)
 
 find_package(hypha COMPONENTS utils core handler plugin REQUIRED)
+find_package(confdesc COMPONENTS confdesc REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIRS} ${Hypha_INCLUDE_DIRS} ${Poco_INCLUDE_DIRS})
 
@@ -42,7 +43,7 @@ file(GLOB UIS "res/*.ui" "main/*.ui" "user/*.ui" "connection/*.ui" "settings/*.u
         "handler/*.ui" "plugin/*.ui" "wizzards/*.ui" )
 file(GLOB Trans "i18n/*.ts" )
 
-set(hyphamanagerlibs hypha::core hypha::utils hypha::plugin hypha::handler 
+set(hyphamanagerlibs hypha::core hypha::utils hypha::plugin hypha::handler confdesc::confdesc
      ${Boost_LIBRARIES} ${Poco_LIBRARIES})
 
 qt5_add_resources(ResourceSources ${Resources})

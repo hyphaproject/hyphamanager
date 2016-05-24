@@ -22,6 +22,7 @@ class HyphaHandlerConfig: public HyphaHandler {
     std::string communicate(std::string message) {
         return "";
     }
+    const std::string getConfigDescription(){ return "{}"; }
     virtual HyphaHandlerConfig *getInstance(std::string id) = 0;
     std::string getHost() {
         return host;

@@ -19,6 +19,7 @@ class HyphaPluginConfig: public HyphaPlugin {
     std::string communicate(std::string message) {
         return "";
     }
+    const std::string getConfigDescription(){ return "{}"; }
     virtual HyphaPluginConfig *getInstance(std::string id) = 0;
     void setDatabase(hypha::database::Database *database) {
         this->database = database;

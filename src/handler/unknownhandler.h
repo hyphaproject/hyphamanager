@@ -19,6 +19,7 @@ public:
     const std::string getDescription() {
         return "";
     }
+    const std::string getConfigDescription(){ return "{}"; }
     void loadConfig(std::string json);
     std::string getConfig();
     HyphaHandlerConfig *getInstance(std::string id);
