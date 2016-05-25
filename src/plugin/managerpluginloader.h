@@ -3,7 +3,6 @@
 
 #include <hypha/plugin/pluginloader.h>
 #include "plugin/unknownplugin.h"
-#include "plugin/autoplugin.h"
 
 namespace hypha {
 namespace plugin {

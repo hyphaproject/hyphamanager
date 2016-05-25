@@ -1,6 +1,6 @@
 #include <hypha/handler/handlerfactory.h>
 #include <hypha/core/settings/hyphasettings.h>
-#include "handler/unknownhandler.h"
+#include "handler/autohandler.h"
 
 #include "managerhandlerloader.h"
 
@@ -17,6 +17,10 @@ void ManagerHandlerLoader::loadAllInstances()
     for (std::string id : settings->getAllHandlerIds()) {
         if (getHandlerInstance(id) == 0) {
             HyphaHandler *handler = factory->loadHandler(id);
+            if (handler) {
+              if (dynamic_cast<const HyphaHandlerConfig *>(handler) == nullptr)
+                handler = AutoHandler::getInstance(handler);
+            }
             if (handler)
                 handlerInstances[id] = handler;
             else {

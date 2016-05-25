@@ -23,8 +23,11 @@ Instance::Instance(QString filename, QObject *parent): QObject(parent) {
     handlerSettings = new hypha::settings::HandlerSettings(database);
     pluginSettings = new hypha::settings::PluginSettings(database);
     handlerLoader = new hypha::handler::ManagerHandlerLoader(handlerSettings);
+    handlerLoader->loadHandlers(hyphaSettings->getString("system.handlerspath", "plugins"));
     handlerLoader->loadAllInstances();
     pluginLoader = new hypha::plugin::ManagerPluginLoader(pluginSettings);
+    std::string pluginspath = hyphaSettings->getString("system.pluginspath", "plugins");
+    pluginLoader->loadPlugins(pluginspath);
     pluginLoader->loadAllInstances();
 
 }
