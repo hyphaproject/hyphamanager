@@ -17,19 +17,19 @@ void hypha::plugin::ManagerPluginLoader::loadAllInstances() {
     if (getPluginInstance(id) == 0) {
       HyphaPlugin *plugin = factory->loadPlugin(id);
       if (plugin) {
-        if (dynamic_cast<const HyphaPluginConfig *>(plugin) == nullptr)
+        if (dynamic_cast<HyphaPluginConfig *>(plugin) == nullptr)
           plugin = AutoPlugin::getInstance(plugin);
       }
-      if (plugin)
-        pluginInstances[id] = plugin;
+      if (plugin){}
       else {
         plugin = unknownPlugin->getInstance(id);
-        std::string host = settings->getHost(id);
-        std::string config = settings->getConfig(id);
-        plugin->setHost(host);
-        plugin->loadConfig(config);
-        pluginInstances[id] = plugin;
+
       }
+      std::string host = settings->getHost(id);
+      std::string config = settings->getConfig(id);
+      plugin->setHost(host);
+      plugin->loadConfig(config);
+      pluginInstances[id] = plugin;
     }
   }
 }
