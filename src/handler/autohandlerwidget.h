@@ -21,6 +21,9 @@ public:
     void loadConfig(std::string json);
     std::string getConfig();
 
+protected:
+    void addWidgets(QWidget* widget1, QWidget* widget2);
+
 private:
     hypha::handler::HyphaHandler * handler;
     Ui::AutoHandlerWidget *ui;

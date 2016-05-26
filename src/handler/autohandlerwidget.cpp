@@ -32,7 +32,7 @@ void AutoHandlerWidget::setupUi() {
         case cd::DataType::BOOLEAN: {
           QCheckBox* checkbox = new QCheckBox();
           checkbox->setChecked(item.getValue<bool>());
-          checkbox->setText(QString::fromStdString(item.getName()) + " ");
+          checkbox->setText(QString::fromStdString(item.getDescription()) + " ");
           ui->layout->addWidget(checkbox);
           this->items.insert(
               std::pair<std::string, QWidget*>(item.getName(), checkbox));
@@ -42,7 +42,7 @@ void AutoHandlerWidget::setupUi() {
           doubleSpinBox->setValue(item.getValue<double>());
           doubleSpinBox->setPrefix(QString::fromStdString(item.getName()) +
                                    " ");
-          ui->layout->addWidget(doubleSpinBox);
+          addWidgets(new QLabel(QString::fromStdString(item.getDescription())), doubleSpinBox);
           this->items.insert(
               std::pair<std::string, QWidget*>(item.getName(), doubleSpinBox));
         } break;
@@ -52,7 +52,7 @@ void AutoHandlerWidget::setupUi() {
           spinBox->setMaximum(item.getMax());
           spinBox->setMinimum(item.getMin());
           spinBox->setPrefix(QString::fromStdString(item.getName()) + " ");
-          ui->layout->addWidget(spinBox);
+          addWidgets(new QLabel(QString::fromStdString(item.getDescription())), spinBox);
           this->items.insert(
               std::pair<std::string, QWidget*>(item.getName(), spinBox));
         } break;
@@ -62,7 +62,7 @@ void AutoHandlerWidget::setupUi() {
               QString::fromStdString(item.getValue<std::string>()));
           lineEdit->setMaxLength(item.getMax());
           lineEdit->setToolTip(QString::fromStdString(item.getName()));
-          ui->layout->addWidget(lineEdit);
+          addWidgets(new QLabel(QString::fromStdString(item.getDescription())), lineEdit);
           this->items.insert(
               std::pair<std::string, QWidget*>(item.getName(), lineEdit));
         } break;
@@ -172,4 +172,14 @@ std::string AutoHandlerWidget::getConfig() {
 
   QJsonDocument document(object);
   return document.toJson(QJsonDocument::Compact).toStdString();
+}
+
+void AutoHandlerWidget::addWidgets(QWidget* widget1, QWidget* widget2) {
+  QHBoxLayout* hLayout = new QHBoxLayout();
+  hLayout->addWidget(widget1);
+
+  if (widget2) hLayout->addWidget(widget2);
+  QWidget* w = new QWidget();
+  w->setLayout(hLayout);
+  ui->layout->addWidget(w);
 }
