@@ -22,15 +22,8 @@ Instance::Instance(QString filename, QObject *parent): QObject(parent) {
     //
     handlerSettings = new hypha::settings::HandlerSettings(database);
     pluginSettings = new hypha::settings::PluginSettings(database);
-    handlerLoader = new hypha::handler::ManagerHandlerLoader(handlerSettings);
-    handlerLoader->loadHandlers(hyphaSettings->getString("system.handlerspath", "handlers"));
-    handlerLoader->loadHandlers("handlers");
-    handlerLoader->loadAllInstances();
-    pluginLoader = new hypha::plugin::ManagerPluginLoader(pluginSettings);
-    std::string pluginspath = hyphaSettings->getString("system.pluginspath", "plugins");
-    pluginLoader->loadPlugins(pluginspath);
-    pluginLoader->loadPlugins("plugins");
-    pluginLoader->loadAllInstances();
+    initHandlerLoader();
+    initPluginLoader();
 
 }
 
@@ -39,6 +32,31 @@ Instance::~Instance() {
     //delete databaseSettings;
     //delete userDatabase;
 }
+
+void Instance::initHandlerLoader(){
+    handlerLoader = new hypha::handler::ManagerHandlerLoader(handlerSettings);
+    handlerLoader->loadHandlers(hyphaSettings->getString("system.handlerspath", "handlers"));
+    handlerLoader->loadHandlers("handlers");
+#ifdef __linux__
+    pluginLoader->loadPlugins("/usr/local/lib/hyphamanager/handlers");
+#else
+    // on windows the plugins folder should be relative to executable
+#endif
+    handlerLoader->loadAllInstances();
+}
+
+void Instance::initPluginLoader(){
+    pluginLoader = new hypha::plugin::ManagerPluginLoader(pluginSettings);
+    pluginLoader->loadPlugins(hyphaSettings->getString("system.pluginspath", "plugins"));
+    pluginLoader->loadPlugins("plugins");
+#ifdef __linux__
+    pluginLoader->loadPlugins("/usr/local/lib/hyphamanager/plugins");
+#else
+    // on windows the plugins folder should be relative to executable
+#endif
+    pluginLoader->loadAllInstances();
+}
+
 
 hypha::settings::HyphaSettings *Instance::getClientSettings() {
     return hyphaSettings;

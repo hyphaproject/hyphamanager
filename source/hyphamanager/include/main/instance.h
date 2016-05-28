@@ -58,6 +58,8 @@ class Instance : public QObject {
     hypha::plugin::ManagerPluginLoader *pluginLoader;
     hypha::handler::ManagerHandlerLoader *handlerLoader;
 
+    void initHandlerLoader();
+    void initPluginLoader();
 };
 
 #endif // INSTANCE_H
