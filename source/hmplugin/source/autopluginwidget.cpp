@@ -174,7 +174,7 @@ std::string AutoPluginWidget::getConfig() {
   }
 
   QJsonDocument document(object);
-  std::string json = document.toJson(QJsonDocument::Compact).toStdString();
+  std::string json = QString(document.toJson(QJsonDocument::Compact)).toStdString();
   return json;
 }
 

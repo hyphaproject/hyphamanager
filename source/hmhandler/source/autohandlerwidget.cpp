@@ -171,7 +171,7 @@ std::string AutoHandlerWidget::getConfig() {
   }
 
   QJsonDocument document(object);
-  return document.toJson(QJsonDocument::Compact).toStdString();
+  return QString(document.toJson(QJsonDocument::Compact)).toStdString();
 }
 
 void AutoHandlerWidget::addWidgets(QWidget* widget1, QWidget* widget2) {
