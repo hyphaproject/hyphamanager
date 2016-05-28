@@ -1,0 +1,20 @@
+#ifndef MANAGERHANDLERLOADER_H
+#define MANAGERHANDLERLOADER_H
+
+#include <hypha/handler/handlerloader.h>
+#include <hyphamanager/hmhandler/unknownhandler.h>
+#include <hyphamanager/hmhandler/hmhandler_api.h>
+
+namespace hypha {
+namespace handler {
+class HMHANDLER_API ManagerHandlerLoader: public HandlerLoader
+{
+public:
+    ManagerHandlerLoader(hypha::settings::HandlerSettings *settings);
+    void loadAllInstances();
+protected:
+    UnknownHandler * unknownHandler;
+};
+}
+}
+#endif // MANAGERHANDLERLOADER_H
