@@ -1,6 +1,6 @@
 #include <QFileDialog>
 #include "wizzards/newconfigwizzard.h"
-#include "wizzards/configgenerator.h"
+#include "hypha/core/settings/configgenerator.h"
 #include "ui_newconfigwizzard.h"
 
 NewConfigWizzard::NewConfigWizzard(QWidget *parent) :
@@ -37,7 +37,7 @@ void NewConfigWizzard::on_cancelButton_clicked() {
 
 void NewConfigWizzard::on_nextButton_clicked() {
     if (ui->tabWidget->currentIndex() == ui->tabWidget->count() - 1) {
-        ConfigGenerator generator;
+        hypha::settings::ConfigGenerator generator;
         generator.dbDatabase = ui->dDatabaseEdit->text().toStdString();
         generator.dbDriver = ui->dDriverBox->currentText().toStdString();
         generator.dbHost = ui->dHostEdit->text().toStdString();
