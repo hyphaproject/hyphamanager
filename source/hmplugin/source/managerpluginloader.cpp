@@ -20,10 +20,9 @@ void hypha::plugin::ManagerPluginLoader::loadAllInstances() {
         if (dynamic_cast<HyphaPluginConfig *>(plugin) == nullptr)
           plugin = AutoPlugin::getInstance(plugin);
       }
-      if (plugin){}
-      else {
+      if (plugin) {
+      } else {
         plugin = unknownPlugin->getInstance(id);
-
       }
       std::string host = settings->getHost(id);
       std::string config = settings->getConfig(id);

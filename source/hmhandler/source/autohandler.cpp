@@ -39,7 +39,7 @@ std::string AutoHandler::getConfig()
     return handlerWidget->getConfig();
 }
 
-HyphaHandlerConfig *AutoHandler::getInstance(std::string id)
+HyphaHandlerConfig *AutoHandler::getInstance(std::string UNUSED(id))
 {
     return nullptr;
 }
