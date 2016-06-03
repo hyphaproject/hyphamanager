@@ -30,7 +30,7 @@ find_package(Poco COMPONENTS Foundation Util Net Data DataMySQL DataSQLite REQUI
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
-find_package(hypha COMPONENTS core utils plugin handler)
+find_package(hypha COMPONENTS controller core utils plugin handler)
 find_package(confdesc COMPONENTS confdesc REQUIRED)
 
 # 
@@ -46,7 +46,7 @@ set(DEFAULT_INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR} ${Poco_INCLUDE_DIR})
 set(DEFAULT_LIBRARIES ${Boost_LIBRARIES} ${Poco_LIBRARIES}
     Qt5::Core Qt5::Gui Qt5::Widgets
     confdesc::confdesc
-    hypha::core hypha::utils hypha::plugin hypha::handler
+    hypha::controller hypha::core hypha::utils hypha::plugin hypha::handler
 )
 
 
