@@ -1,4 +1,5 @@
 #include <hypha/core/database/database.h>
+#include <hypha/controller/connection.h>
 #include "connection/connectionitem.h"
 #include "ui_connectionitem.h"
 
@@ -25,9 +26,6 @@ void ConnectionItem::init() {
 }
 
 void ConnectionItem::deleteFromDatabase() {
-    std::string idStr = id.toStdString();
-    Poco::Data::Statement statement = database->getStatement();
-    statement << "delete from connection where id = ?;",
-              use(idStr);
-    statement.execute();
+    hypha::controller::Connection con(this->database);
+    con.remove(id.toStdString());
 }
