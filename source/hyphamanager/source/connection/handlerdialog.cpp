@@ -2,6 +2,7 @@
 #include <Poco/Data/MySQL/MySQLException.h>
 #include <hypha/handler/handlerloader.h>
 #include <hypha/handler/hyphahandler.h>
+#include <hypha/controller/handler.h>
 #include "connection/handlerdialog.h"
 #include "ui_handlerdialog.h"
 
@@ -26,11 +27,9 @@ void HandlerDialog::init() {
 }
 
 void HandlerDialog::on_buttonBox_accepted() {
+    hypha::controller::Handler handler(this->database);
     try {
-        database->getSession() << "INSERT INTO `handler`(`id`,`host`,`type`,`config`) values('"
-                               + ui->idEdit->text().toStdString() + "','"
-                               + ui->hostEdit->text().toStdString() + "','"
-                               + ui->comboBox->currentText().toStdString() + "','');", Poco::Data::Keywords::now;
+        handler.add(ui->idEdit->text().toStdString(), ui->hostEdit->text().toStdString(), ui->comboBox->currentText().toStdString(), "{}");
     } catch (Poco::Exception &e) {
         QMessageBox::critical(0, "", QString::fromStdString(e.message()) );
     }
