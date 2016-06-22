@@ -1,0 +1,94 @@
+name: @META_PROJECT_NAME@
+version: @META_VERSION@
+summary: @META_PROJECT_DESCRIPTION@
+description:
+  @META_PROJECT_DESCRIPTION@
+confinement: strict
+
+build-packages: [gcc, g++, libc6-dev, git, cmake, rpm, openssl, libssl-dev,libmysqlclient-dev, libpq-dev, libiodbc2, libiodbc2-dev]
+
+apps:
+  @META_PROJECT_NAME@:
+    command: qt5-launch bin/hyphamanager
+    plugs: [x11, unity7, home, opengl, network, network-bind]
+
+parts:
+  qt:
+    plugin: nil
+    stage-packages:
+      - libqt5core5a
+      - libqt5concurrent5
+      - libqt5sql5
+      - libqt5xml5
+      - libqt5printsupport5
+      - libqt5webkit5
+      - libqt5dbus5
+      - libqt5gui5
+      - libqt5network5
+      - libqt5multimedia5
+      - libqt5multimediawidgets5
+      - libqt5opengl5
+      - libqt5widgets5
+      - libqt5x11extras5
+
+  confdesc:
+    plugin: cmake
+    configflags: [-DCMAKE_INSTALL_PREFIX=/usr]
+    source: https://github.com/FalseCAM/confdesc
+    source-type: git
+    build-packages: 
+      - extra-cmake-modules
+      - libboost-dev
+      - libpoco-dev
+      - pkg-config
+      - doxygen
+    stage-packages:
+      - libqt5sql5-sqlite
+      - sqlite3
+    filesets:
+      binaries:
+        - usr/bin/*
+      libraries:
+        - usr/local/lib/*
+      headers:
+        - usr/local/include/*
+        - usr/local/lib/*/cmake/*
+    stage:
+      - $binaries
+      - $libraries
+      - $headers
+    snap:
+      - $libraries
+      - $binaries
+      - usr/share/*
+    after: [qt]  
+
+  environment:
+    plugin: copy
+    files:
+      qt5-launch: bin/qt5-launch
+  integration:
+    plugin: nil
+    stage-packages:
+      - ttf-ubuntu-font-family
+      - breeze-icon-theme
+      - hicolor-icon-theme
+      - oxygen-icon-theme
+    snap:
+      - usr/share
+
+  @META_PROJECT_NAME@:
+    plugin: copy
+    build-packages:
+     - qtbase5-dev
+    stage-packages:
+     - libqt5gui5
+     - ubuntu-sdk-libs
+     - qtubuntu-desktop
+     - libopencv-dev
+    files:
+      hyphamanager: bin/hyphamanager
+      libhmhandler.so: bin/libhmhandler.so
+      plugins: bin/plugins
+      handlers: bin/handlers
+    after: [qt, environment, integration]
