@@ -1,8 +1,8 @@
 #ifndef BLECHUHR_H
 #define BLECHUHR_H
 
-#include "hyphamanager/hmhandler/hyphahandlerconfig.h"
 #include "blechuhrwidget.h"
+#include "hyphamanager/hmhandler/hyphahandlerconfig.h"
 
 namespace hypha {
 namespace handler {

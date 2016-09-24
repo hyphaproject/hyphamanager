@@ -2,8 +2,8 @@
 #define DOOROPENER_H
 
 #include <QtCore/QObject>
-#include "hyphamanager/hmhandler/hyphahandlerconfig.h"
 #include "dooropenerwidget.h"
+#include "hyphamanager/hmhandler/hyphahandlerconfig.h"
 
 namespace hypha {
 namespace handler {

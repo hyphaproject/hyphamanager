@@ -8,16 +8,16 @@ class ServerStatusWidget;
 }
 
 class ServerStatusWidget : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit ServerStatusWidget(QWidget *parent = 0);
-    ~ServerStatusWidget();
-    void loadConfig(QString config);
-    QString getConfig();
+ public:
+  explicit ServerStatusWidget(QWidget *parent = 0);
+  ~ServerStatusWidget();
+  void loadConfig(QString config);
+  QString getConfig();
 
-  private:
-    Ui::ServerStatusWidget *ui;
+ private:
+  Ui::ServerStatusWidget *ui;
 };
 
-#endif // SERVERSTATUSWIDGET_H
+#endif  // SERVERSTATUSWIDGET_H

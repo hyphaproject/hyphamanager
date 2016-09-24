@@ -14,21 +14,23 @@ class ConnectionItem;
 }
 
 class ConnectionItem : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit ConnectionItem(QString id, QString handlerId, QString pluginId, hypha::database::Database *database, QWidget *parent = 0);
-    ~ConnectionItem();
+ public:
+  explicit ConnectionItem(QString id, QString handlerId, QString pluginId,
+                          hypha::database::Database *database,
+                          QWidget *parent = 0);
+  ~ConnectionItem();
 
-    void deleteFromDatabase();
-    void init();
+  void deleteFromDatabase();
+  void init();
 
-  private:
-    Ui::ConnectionItem *ui;
-    QString id;
-    QString handlerId;
-    QString pluginId;
-    hypha::database::Database *database;
+ private:
+  Ui::ConnectionItem *ui;
+  QString id;
+  QString handlerId;
+  QString pluginId;
+  hypha::database::Database *database;
 };
 
-#endif // CONNECTIONITEM_H
+#endif  // CONNECTIONITEM_H

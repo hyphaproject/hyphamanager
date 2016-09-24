@@ -1,7 +1,7 @@
 #ifndef LIGHTSENSOR_H
 #define LIGHTSENSOR_H
-#include "lightsensorwidget.h"
 #include "hyphamanager/hmplugin/hyphapluginconfig.h"
+#include "lightsensorwidget.h"
 namespace hypha {
 namespace plugin {
 namespace lightsensor {

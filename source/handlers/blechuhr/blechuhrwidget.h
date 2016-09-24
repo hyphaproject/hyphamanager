@@ -8,14 +8,14 @@ class BlechUhrWidget;
 }
 
 class BlechUhrWidget : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit BlechUhrWidget(QWidget *parent = 0);
-    ~BlechUhrWidget();
+ public:
+  explicit BlechUhrWidget(QWidget *parent = 0);
+  ~BlechUhrWidget();
 
-  private:
-    Ui::BlechUhrWidget *ui;
+ private:
+  Ui::BlechUhrWidget *ui;
 };
 
-#endif // BLECHUHRWIDGET_H
+#endif  // BLECHUHRWIDGET_H

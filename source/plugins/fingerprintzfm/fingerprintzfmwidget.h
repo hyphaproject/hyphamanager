@@ -8,14 +8,14 @@ class FingerPrintZFMWidget;
 }
 
 class FingerPrintZFMWidget : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit FingerPrintZFMWidget(QWidget *parent = 0);
-    ~FingerPrintZFMWidget();
+ public:
+  explicit FingerPrintZFMWidget(QWidget *parent = 0);
+  ~FingerPrintZFMWidget();
 
-  private:
-    Ui::FingerPrintZFMWidget *ui;
+ private:
+  Ui::FingerPrintZFMWidget *ui;
 };
 
-#endif // FINGERPRINTZFMWIDGET_H
+#endif  // FINGERPRINTZFMWIDGET_H

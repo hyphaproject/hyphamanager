@@ -2,8 +2,8 @@
 #define HYPHAHANDLERCONFIG_H
 
 #include <hypha/handler/hyphahandler.h>
-#include <QtWidgets/QWidget>
 #include <hyphamanager/hmhandler/hmhandler_api.h>
+#include <QtWidgets/QWidget>
 
 using namespace hypha::plugin;
 

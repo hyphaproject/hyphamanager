@@ -8,14 +8,14 @@ class RpiGpioWidget;
 }
 
 class RpiGpioWidget : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit RpiGpioWidget(QWidget *parent = 0);
-    ~RpiGpioWidget();
+ public:
+  explicit RpiGpioWidget(QWidget *parent = 0);
+  ~RpiGpioWidget();
 
-  private:
-    Ui::RpiGpioWidget *ui;
+ private:
+  Ui::RpiGpioWidget *ui;
 };
 
-#endif // RPIGPIOWIDGET_H
+#endif  // RPIGPIOWIDGET_H

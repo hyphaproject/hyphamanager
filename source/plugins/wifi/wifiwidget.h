@@ -8,14 +8,14 @@ class WifiWidget;
 }
 
 class WifiWidget : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit WifiWidget(QWidget *parent = 0);
-    ~WifiWidget();
+ public:
+  explicit WifiWidget(QWidget *parent = 0);
+  ~WifiWidget();
 
-  private:
-    Ui::WifiWidget *ui;
+ private:
+  Ui::WifiWidget *ui;
 };
 
-#endif // WIFIWIDGET_H
+#endif  // WIFIWIDGET_H

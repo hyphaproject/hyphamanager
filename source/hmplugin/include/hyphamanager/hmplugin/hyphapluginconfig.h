@@ -4,10 +4,10 @@
 #include <hypha/core/database/database.h>
 #include <hypha/core/database/database.h>
 #include <hypha/plugin/hyphaplugin.h>
+#include <hyphamanager/hmplugin/hmplugin_api.h>
 #include <QtCore/QObject>
 #include <QtCore/QThread>
 #include <QtCore/QtPlugin>
-#include <hyphamanager/hmplugin/hmplugin_api.h>
 
 namespace hypha {
 namespace plugin {

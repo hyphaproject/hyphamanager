@@ -32,7 +32,8 @@ void AutoPluginWidget::setupUi() {
         case cd::DataType::BOOLEAN: {
           QCheckBox* checkbox = new QCheckBox();
           checkbox->setChecked(item.getValue<bool>());
-          checkbox->setText(QString::fromStdString(item.getDescription()) + " ");
+          checkbox->setText(QString::fromStdString(item.getDescription()) +
+                            " ");
           addWidgets(checkbox);
           this->items.insert(
               std::pair<std::string, QWidget*>(item.getName(), checkbox));
@@ -174,7 +175,8 @@ std::string AutoPluginWidget::getConfig() {
   }
 
   QJsonDocument document(object);
-  std::string json = QString(document.toJson(QJsonDocument::Compact)).toStdString();
+  std::string json =
+      QString(document.toJson(QJsonDocument::Compact)).toStdString();
   return json;
 }
 

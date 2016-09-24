@@ -1,34 +1,28 @@
 
-#include <QtCore/QProcess>
-#include <QtCore/QThread>
+#include "explorenfc.h"
+#include <Poco/ClassLibrary.h>
+#include <QtCore/QDebug>
+#include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include <QtCore/QJsonArray>
-#include <QtCore/QDebug>
-#include <Poco/ClassLibrary.h>
-#include "explorenfc.h"
+#include <QtCore/QProcess>
+#include <QtCore/QThread>
 #include "explorenfcwidget.h"
 
 using namespace hypha::plugin::explorenfc;
 using namespace hypha::plugin;
 
-void ExploreNFC::loadConfig(std::string json) {
+void ExploreNFC::loadConfig(std::string json) {}
 
-}
-
-std::string ExploreNFC::getConfig() {
-    return "{}";
-}
+std::string ExploreNFC::getConfig() { return "{}"; }
 
 HyphaPluginConfig *ExploreNFC::getInstance(std::string id) {
-    ExploreNFC *instance = new ExploreNFC();
-    instance->setId(id);
-    return instance;
+  ExploreNFC *instance = new ExploreNFC();
+  instance->setId(id);
+  return instance;
 }
 
-QWidget *ExploreNFC::widget() {
-    return new ExploreNFCWidget();
-}
+QWidget *ExploreNFC::widget() { return new ExploreNFCWidget(); }
 
 POCO_BEGIN_MANIFEST(HyphaPlugin)
 POCO_EXPORT_CLASS(ExploreNFC)

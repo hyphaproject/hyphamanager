@@ -8,14 +8,14 @@ class RFIDWidget;
 }
 
 class RFIDWidget : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit RFIDWidget(QWidget *parent = 0);
-    ~RFIDWidget();
+ public:
+  explicit RFIDWidget(QWidget *parent = 0);
+  ~RFIDWidget();
 
-  private:
-    Ui::RFIDWidget *ui;
+ private:
+  Ui::RFIDWidget *ui;
 };
 
-#endif // RFIDWIDGET_H
+#endif  // RFIDWIDGET_H

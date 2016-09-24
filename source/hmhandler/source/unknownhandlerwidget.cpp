@@ -1,24 +1,17 @@
 #include "hyphamanager/hmhandler/unknownhandlerwidget.h"
 #include "ui_unknownhandlerwidget.h"
 
-UnknownHandlerWidget::UnknownHandlerWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::UnknownHandlerWidget)
-{
-    ui->setupUi(this);
+UnknownHandlerWidget::UnknownHandlerWidget(QWidget *parent)
+    : QWidget(parent), ui(new Ui::UnknownHandlerWidget) {
+  ui->setupUi(this);
 }
 
-UnknownHandlerWidget::~UnknownHandlerWidget()
-{
-    delete ui;
+UnknownHandlerWidget::~UnknownHandlerWidget() { delete ui; }
+
+void UnknownHandlerWidget::loadConfig(std::string json) {
+  ui->textBrowser->setText(QString::fromStdString(json));
 }
 
-void UnknownHandlerWidget::loadConfig(std::string json)
-{
-    ui->textBrowser->setText(QString::fromStdString(json));
-}
-
-std::string UnknownHandlerWidget::getConfig()
-{
-    return ui->textBrowser->toPlainText().toStdString();
+std::string UnknownHandlerWidget::getConfig() {
+  return ui->textBrowser->toPlainText().toStdString();
 }

@@ -8,14 +8,14 @@ class ExploreNFCWidget;
 }
 
 class ExploreNFCWidget : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-  public:
-    explicit ExploreNFCWidget(QWidget *parent = 0);
-    ~ExploreNFCWidget();
+ public:
+  explicit ExploreNFCWidget(QWidget *parent = 0);
+  ~ExploreNFCWidget();
 
-  private:
-    Ui::ExploreNFCWidget *ui;
+ private:
+  Ui::ExploreNFCWidget *ui;
 };
 
-#endif // EXPLORENFCWIDGET_H
+#endif  // EXPLORENFCWIDGET_H
