@@ -1,4 +1,4 @@
-# Hypha libraries
+# Hypha Manager
 
 ### Quick start
 
