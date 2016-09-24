@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef WATERSENSOR_H
 #define WATERSENSOR_H
 #include "hyphamanager/hmplugin/hyphapluginconfig.h"

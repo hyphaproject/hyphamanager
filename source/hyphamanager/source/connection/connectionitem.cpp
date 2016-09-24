@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "connection/connectionitem.h"
 #include <hypha/controller/connection.h>
 #include <hypha/core/database/database.h>

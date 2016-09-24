@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "connection/plugindialog.h"
 #include <hypha/controller/plugin.h>
 #include <hypha/plugin/pluginloader.h>

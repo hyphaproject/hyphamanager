@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef RPIGPIO_H
 #define RPIGPIO_H
 #include "hyphamanager/hmplugin/hyphapluginconfig.h"

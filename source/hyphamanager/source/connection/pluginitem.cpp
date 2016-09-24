@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "connection/pluginitem.h"
 #include <QDebug>
 #include <QtGui/QPainter>

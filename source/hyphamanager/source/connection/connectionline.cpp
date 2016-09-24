@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "connection/connectionline.h"
 #include <QtGui/QPen>
 #include <QtWidgets/QGraphicsLineItem>

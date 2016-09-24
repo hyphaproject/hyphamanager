@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "fingerprintzfmwidget.h"
 #include "ui_fingerprintzfmwidget.h"
 

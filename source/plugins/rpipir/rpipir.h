@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef RPIPIR_H
 #define RPIPIR_H
 #include "hyphamanager/hmplugin/hyphapluginconfig.h"

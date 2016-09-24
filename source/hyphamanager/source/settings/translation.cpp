@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QMutex>

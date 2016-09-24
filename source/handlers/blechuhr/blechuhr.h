@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef BLECHUHR_H
 #define BLECHUHR_H
 

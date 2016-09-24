@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "main/splashscreen.h"
 
 SplashScreen::SplashScreen(QWidget *parent) : QSplashScreen(parent) {

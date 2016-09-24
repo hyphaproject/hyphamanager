@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef LIGHTSENSOR_H
 #define LIGHTSENSOR_H
 #include "hyphamanager/hmplugin/hyphapluginconfig.h"

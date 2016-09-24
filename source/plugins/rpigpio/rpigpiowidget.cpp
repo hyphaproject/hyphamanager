@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "rpigpiowidget.h"
 #include "ui_rpigpiowidget.h"
 

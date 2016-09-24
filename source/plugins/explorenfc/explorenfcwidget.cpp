@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "explorenfcwidget.h"
 #include "ui_explorenfcwidget.h"
 

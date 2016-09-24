@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef LIGHTSENSORWIDGET_H
 #define LIGHTSENSORWIDGET_H
 

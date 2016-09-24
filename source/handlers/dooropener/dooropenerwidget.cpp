@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "dooropenerwidget.h"
 #include <Poco/Data/RecordSet.h>
 #include <QDebug>

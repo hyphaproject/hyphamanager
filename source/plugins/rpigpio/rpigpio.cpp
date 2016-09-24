@@ -1,4 +1,4 @@
-
+// Copyright (c) 2015-2016 Hypha
 #include "rpigpio.h"
 #include <Poco/ClassLibrary.h>
 #include <QtCore/QDebug>

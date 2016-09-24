@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "rpiledwidget.h"
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>

@@ -1,4 +1,4 @@
-
+// Copyright (c) 2015-2016 Hypha
 #include <Poco/ClassLibrary.h>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>

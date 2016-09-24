@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef RPILED_H
 #define RPILED_H
 #include "hyphamanager/hmplugin/hyphapluginconfig.h"

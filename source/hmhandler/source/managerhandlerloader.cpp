@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include <hypha/core/settings/hyphasettings.h>
 #include <hypha/handler/handlerfactory.h>
 #include "hyphamanager/hmhandler/autohandler.h"

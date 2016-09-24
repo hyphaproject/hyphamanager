@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef UNKNOWNPLUGINWIDGET_H
 #define UNKNOWNPLUGINWIDGET_H
 

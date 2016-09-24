@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "wizzards/newconfigwizzard.h"
 #include <QFileDialog>
 #include "hypha/core/settings/configgenerator.h"

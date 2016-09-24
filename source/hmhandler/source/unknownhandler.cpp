@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "hyphamanager/hmhandler/unknownhandler.h"
 
 using namespace hypha::handler;

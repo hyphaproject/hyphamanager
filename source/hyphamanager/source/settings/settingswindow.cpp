@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "settings/settingswindow.h"
 #include "ui_settingswindow.h"
 

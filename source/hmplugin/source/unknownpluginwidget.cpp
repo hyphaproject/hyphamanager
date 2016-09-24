@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "hyphamanager/hmplugin/unknownpluginwidget.h"
 #include "ui_unknownpluginwidget.h"
 

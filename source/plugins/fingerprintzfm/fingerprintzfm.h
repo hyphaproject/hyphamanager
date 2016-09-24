@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef FINGERPRINTZFM_H
 #define FINGERPRINTZFM_H
 #include <iostream>

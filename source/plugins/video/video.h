@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef VIDEO_H
 #define VIDEO_H
 #include "hyphamanager/hmplugin/hyphapluginconfig.h"

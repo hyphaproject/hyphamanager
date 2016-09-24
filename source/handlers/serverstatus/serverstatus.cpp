@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "serverstatus.h"
 #include <Poco/ClassLibrary.h>
 #include <hypha/core/database/database.h>

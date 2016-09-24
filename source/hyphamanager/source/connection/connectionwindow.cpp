@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "connection/connectionwindow.h"
 #include <Poco/Data/RecordSet.h>
 #include <hypha/controller/handler.h>

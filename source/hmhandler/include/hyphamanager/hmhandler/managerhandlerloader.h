@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef MANAGERHANDLERLOADER_H
 #define MANAGERHANDLERLOADER_H
 

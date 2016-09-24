@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "main/mainwindow.h"
 #include <QtCore/QThread>
 #include <QtGui/QCloseEvent>

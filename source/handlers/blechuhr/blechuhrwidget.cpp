@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "blechuhrwidget.h"
 #include "ui_blechuhrwidget.h"
 

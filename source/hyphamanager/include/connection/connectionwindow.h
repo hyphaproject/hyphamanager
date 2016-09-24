@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef CONNECTIONWINDOW_H
 #define CONNECTIONWINDOW_H
 

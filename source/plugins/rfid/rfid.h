@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef RFID_H
 #define RFID_H
 #include "hyphamanager/hmplugin/hyphapluginconfig.h"

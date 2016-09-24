@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "connection/handleritem.h"
 #include <QtGui/QPainter>
 #include <QtWidgets/QAction>

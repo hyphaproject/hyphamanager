@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef TRANSLATION_H
 #define TRANSLATION_H
 

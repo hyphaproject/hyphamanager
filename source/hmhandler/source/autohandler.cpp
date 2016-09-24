@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "hyphamanager/hmhandler/autohandler.h"
 #include <hypha/plugin/pluginfactory.h>
 

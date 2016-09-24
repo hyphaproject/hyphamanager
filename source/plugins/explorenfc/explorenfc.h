@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef EXPLORENFC_H
 #define EXPLORENFC_H
 

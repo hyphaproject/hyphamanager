@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "videowidget.h"
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>

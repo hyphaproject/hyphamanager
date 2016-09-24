@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef AUTOHANDLER_H
 #define AUTOHANDLER_H
 

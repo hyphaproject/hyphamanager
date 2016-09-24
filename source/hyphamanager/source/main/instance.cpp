@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "main/instance.h"
 #include <hypha/core/database/database.h>
 #include <hypha/core/database/userdatabase.h>

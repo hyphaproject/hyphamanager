@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include "connection/handlerdialog.h"
 #include <Poco/Data/MySQL/MySQLException.h>
 #include <hypha/controller/handler.h>

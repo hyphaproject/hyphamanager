@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #ifndef EMAIL_H
 #define EMAIL_H
 #include "emailwidget.h"

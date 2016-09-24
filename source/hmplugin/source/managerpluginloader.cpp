@@ -1,3 +1,4 @@
+// Copyright (c) 2015-2016 Hypha
 #include <hypha/core/settings/pluginsettings.h>
 #include <hypha/plugin/pluginfactory.h>
 #include "hyphamanager/hmplugin/autoplugin.h"
