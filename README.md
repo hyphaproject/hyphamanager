@@ -30,7 +30,7 @@ make
 
 ```sh
 git clone https://github.com/hyphaproject/hyphamanager.git
-cd hypha
+cd hyphamanager
 mkdir build
 cd build
 cmake -Dhypha_DIR=../hypha -Dconfdesc_DIR=../confdesc ..
