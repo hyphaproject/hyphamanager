@@ -1,15 +1,15 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
 #ifndef CONNECTIONWINDOW_H
 #define CONNECTIONWINDOW_H
+
+#include "../main/instance.h"
+#include "pluginitem.h"
 
 #include <QtCore/QList>
 #include <QtCore/QMap>
 #include <QtWidgets/QGraphicsScene>
 #include <QtWidgets/QTreeWidgetItem>
 #include <QtWidgets/QWidget>
-#include "../main/instance.h"
-#include "handleritem.h"
-#include "pluginitem.h"
 
 namespace Ui {
 class ConnectionWindow;
@@ -33,7 +33,6 @@ class ConnectionWindow : public QWidget {
  protected:
   void createPluginsTree();
   void createPluginsTabs();
-  void createHandlerItems();
   void updatePluginItems();
   void loadPositions();
   void loadPosition(std::string id, QGraphicsItem *item);
@@ -46,7 +45,6 @@ class ConnectionWindow : public QWidget {
   QGraphicsScene *scene;
   QList<QTreeWidgetItem *> pluginsTreeItems;
   QMap<QString, QWidget *> pluginTabs;
-  QMap<QString, HandlerItem *> handlerItems;
   QMap<QString, PluginItem *> pluginItems;
 
  private slots:

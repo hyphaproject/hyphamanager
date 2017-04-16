@@ -1,23 +1,24 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
+
 #include "connection/connectionline.h"
-#include <QtGui/QPen>
-#include <QtWidgets/QGraphicsLineItem>
-#include "connection/handleritem.h"
 #include "connection/pluginitem.h"
 
-ConnectionLine::ConnectionLine(HandlerItem *handler, PluginItem *plugin,
+#include <QtGui/QPen>
+#include <QtWidgets/QGraphicsLineItem>
+
+ConnectionLine::ConnectionLine(PluginItem *sender, PluginItem *receiver,
                                QGraphicsItem *parent)
     : QGraphicsLineItem(parent) {
-  if (!handler || !plugin) return;
-  this->handler = handler;
-  this->plugin = plugin;
+  if (!sender || !receiver) return;
+  this->sender = sender;
+  this->receiver = receiver;
   setPen(QPen(Qt::green, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-  handler->addConnection(this);
-  plugin->addConnection(this);
+  sender->addConnection(this);
+  receiver->addConnection(this);
   updatePosition();
 }
 
 void ConnectionLine::updatePosition() {
-  QLineF line(mapFromItem(handler, 0, 0), mapFromItem(plugin, 0, 0));
+  QLineF line(mapFromItem(sender, 0, 0), mapFromItem(receiver, 0, 0));
   setLine(line);
 }

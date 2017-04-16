@@ -5,9 +5,6 @@
 #include <QtWidgets/QDialog>
 
 namespace hypha {
-namespace handler {
-class HandlerLoader;
-}
 namespace plugin {
 class PluginLoader;
 }
@@ -24,8 +21,7 @@ class ConnectionDialog : public QDialog {
   Q_OBJECT
 
  public:
-  explicit ConnectionDialog(hypha::handler::HandlerLoader *handlerLoader,
-                            hypha::plugin::PluginLoader *pluginLoader,
+  explicit ConnectionDialog(hypha::plugin::PluginLoader *pluginLoader,
                             hypha::database::Database *database,
                             QWidget *parent = 0);
   ~ConnectionDialog();
@@ -38,7 +34,6 @@ class ConnectionDialog : public QDialog {
  private:
   Ui::ConnectionDialog *ui;
   hypha::database::Database *database;
-  hypha::handler::HandlerLoader *handlerLoader;
   hypha::plugin::PluginLoader *pluginLoader;
 };
 

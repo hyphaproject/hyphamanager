@@ -46,7 +46,7 @@ set(DEFAULT_INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR} ${Poco_INCLUDE_DIR})
 set(DEFAULT_LIBRARIES ${Boost_LIBRARIES} ${Poco_LIBRARIES}
     Qt5::Core Qt5::Gui Qt5::Widgets
     confdesc::confdesc
-    hypha::controller hypha::core hypha::utils hypha::plugin hypha::handler
+    hypha::controller hypha::core hypha::utils hypha::plugin
 )
 
 

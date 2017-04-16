@@ -69,6 +69,15 @@ file(GLOB sources
 "${source_path}/connection/*.cpp"
 "${source_path}/wizzards/*.cpp" )
 
+file(GLOB uis
+"${source_path}/*.ui"
+"${source_path}/main/*.ui"
+"${source_path}/database/*.ui"
+"${source_path}/settings/*.ui"
+"${source_path}/user/*.ui"
+"${source_path}/connection/*.ui"
+"${source_path}/wizzards/*.ui" )
+
 
 file(GLOB resources "${resource_path}/*.qrc" )
 qt5_add_resources(resourcesources ${resources})
@@ -91,6 +100,7 @@ add_executable(${target}
     MACOSX_BUNDLE
     ${sources}
     ${headers}
+    ${uis}
     ${resourcesources}
 )
 
@@ -140,7 +150,6 @@ target_link_libraries(${target}
     PRIVATE
 
     ${DEFAULT_LIBRARIES}
-    ${META_PROJECT_NAME}::hmhandler
     ${META_PROJECT_NAME}::hmplugin
     Qt5::WebKit Qt5::WebKitWidgets Qt5::PrintSupport )
 

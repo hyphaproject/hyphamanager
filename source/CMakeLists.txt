@@ -15,14 +15,13 @@ configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/${META_PROJECT_N
 # Libraries
 set(IDE_FOLDER "")
 
-add_subdirectory(hmhandler)
 add_subdirectory(hmplugin)
 add_subdirectory(hyphamanager)
 
 # Examples
 set(IDE_FOLDER "Plugins")
-add_subdirectory(handlers)
-add_subdirectory(plugins)
+#add_subdirectory(handlers)
+#add_subdirectory(plugins)
 
 # Tests
 set(IDE_FOLDER "Tests")

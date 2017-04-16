@@ -6,18 +6,16 @@
 
 #include <hypha/controller/connection.h>
 #include <hypha/core/database/database.h>
-#include <hypha/handler/handlerloader.h>
 #include <hypha/plugin/pluginloader.h>
+#include <hypha/plugin/pluginutil.h>
 
 #include <Poco/Data/RecordSet.h>
 
-ConnectionDialog::ConnectionDialog(hypha::handler::HandlerLoader *handlerLoader,
-                                   hypha::plugin::PluginLoader *pluginLoader,
+ConnectionDialog::ConnectionDialog(hypha::plugin::PluginLoader *pluginLoader,
                                    hypha::database::Database *database,
                                    QWidget *parent)
     : QDialog(parent), ui(new Ui::ConnectionDialog) {
   ui->setupUi(this);
-  this->handlerLoader = handlerLoader;
   this->pluginLoader = pluginLoader;
   this->database = database;
   init();
@@ -27,26 +25,28 @@ ConnectionDialog::~ConnectionDialog() { delete ui; }
 
 void ConnectionDialog::init() {
   ui->listWidget->clear();
-  ui->handlerComboBox->clear();
-  ui->pluginComboBox->clear();
-  for (hypha::handler::HyphaHandler *handler : handlerLoader->getInstances()) {
-    ui->handlerComboBox->addItem(QString::fromStdString(handler->getId()));
+  ui->senderComboBox->clear();
+  ui->receiverComboBox->clear();
+  for (hypha::plugin::HyphaBasePlugin *plugin : pluginLoader->getInstances()) {
+    if (hypha::plugin::PluginUtil::isSender(plugin))
+      ui->senderComboBox->addItem(QString::fromStdString(plugin->getId()));
   }
   for (hypha::plugin::HyphaBasePlugin *plugin : pluginLoader->getInstances()) {
-    ui->pluginComboBox->addItem(QString::fromStdString(plugin->getId()));
+    if (hypha::plugin::PluginUtil::isReceiver(plugin))
+      ui->receiverComboBox->addItem(QString::fromStdString(plugin->getId()));
   }
 
   hypha::controller::Connection con(this->database);
   for (std::tuple<std::string, std::string, std::string> t :
        con.getConnections()) {
     std::string id = std::get<0>(t);
-    std::string handlerId = std::get<1>(t);
-    std::string pluginId = std::get<2>(t);
+    std::string senderId = std::get<1>(t);
+    std::string receiverId = std::get<2>(t);
     QListWidgetItem *item = new QListWidgetItem(ui->listWidget);
     ui->listWidget->addItem(item);
     ConnectionItem *connectionItem = new ConnectionItem(
-        QString::fromStdString(id), QString::fromStdString(handlerId),
-        QString::fromStdString(pluginId), database);
+        QString::fromStdString(id), QString::fromStdString(senderId),
+        QString::fromStdString(receiverId), database);
     item->setSizeHint(connectionItem->minimumSizeHint());
     ui->listWidget->setItemWidget(item, connectionItem);
   }
@@ -63,7 +63,7 @@ void ConnectionDialog::on_deleteButton_clicked() {
 
 void ConnectionDialog::on_addButton_clicked() {
   hypha::controller::Connection con(this->database);
-  con.create(ui->handlerComboBox->currentText().toStdString(),
-             ui->pluginComboBox->currentText().toStdString());
+  con.create(ui->senderComboBox->currentText().toStdString(),
+             ui->receiverComboBox->currentText().toStdString());
   init();
 }

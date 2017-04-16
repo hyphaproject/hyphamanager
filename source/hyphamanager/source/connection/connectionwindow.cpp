@@ -3,21 +3,17 @@
 #include "connection/connectionwindow.h"
 #include "connection/connectiondialog.h"
 #include "connection/connectionline.h"
-#include "connection/handlerdialog.h"
 #include "connection/plugindialog.h"
-#include "hyphamanager/hmhandler/hyphahandlerconfig.h"
 #include "hyphamanager/hmplugin/unknownplugin.h"
 #include "ui_connectionwindow.h"
 
 #include <Poco/Data/RecordSet.h>
-#include <hypha/controller/handler.h>
 #include <hypha/controller/plugin.h>
 #include <hypha/core/database/database.h>
 #include <hypha/core/database/userdatabase.h>
-#include <hypha/handler/handlerloader.h>
-#include <hypha/handler/hyphahandler.h>
 #include <hypha/plugin/hyphabaseplugin.h>
 #include <hypha/plugin/pluginloader.h>
+#include <hypha/plugin/pluginutil.h>
 #include <QtCore/QDebug>
 #include <QtCore/QtAlgorithms>
 #include <QtPrintSupport/QPrinter>
@@ -35,7 +31,6 @@ ConnectionWindow::ConnectionWindow(Instance *instance, QWidget *parent)
   createPluginsTabs();
   scene = new QGraphicsScene(0, 0, 2048, 2048);
   ui->graphicsView->setScene(scene);
-  createHandlerItems();
   updatePluginItems();
   loadPositions();
   addLines();
@@ -54,42 +49,47 @@ ConnectionWindow::~ConnectionWindow() {
 
 void ConnectionWindow::moveTab(QString name) {
   ui->tabWidget->setCurrentWidget(this->pluginTabs[name]);
-  this->pluginTabs[name]->setFocus();
+  if (this->pluginTabs[name]) this->pluginTabs[name]->setFocus();
 }
 
 void ConnectionWindow::createPluginsTree() {
-  QTreeWidgetItem *handlerWidget = new QTreeWidgetItem(ui->pluginsTreeWidget);
-  handlerWidget->setText(0, "Handler");
   QTreeWidgetItem *pluginsWidget = new QTreeWidgetItem(ui->pluginsTreeWidget);
   pluginsWidget->setText(0, "Plugins");
-  for (hypha::handler::HyphaHandler *handler :
-       instance->getHandlerLoader()->getHandlers()) {
+  QTreeWidgetItem *handlerWidget = new QTreeWidgetItem(ui->pluginsTreeWidget);
+  handlerWidget->setText(0, "Handler");
+  QTreeWidgetItem *actorsWidget = new QTreeWidgetItem(ui->pluginsTreeWidget);
+  actorsWidget->setText(0, "Actors");
+  QTreeWidgetItem *sensorsWidget = new QTreeWidgetItem(ui->pluginsTreeWidget);
+  sensorsWidget->setText(0, "Sensors");
+
+  for (hypha::plugin::HyphaBasePlugin *plugin :
+       instance->getPluginLoader()->getPlugins()) {
     pluginsTreeItems.append(new QTreeWidgetItem(
         handlerWidget, QStringList(QString("%1").arg(
-                           QString::fromStdString(handler->name())))));
+                           QString::fromStdString(plugin->name())))));
   }
   for (hypha::plugin::HyphaBasePlugin *plugin :
        instance->getPluginLoader()->getPlugins()) {
     pluginsTreeItems.append(new QTreeWidgetItem(
         pluginsWidget, QStringList(QString("%1").arg(
                            QString::fromStdString(plugin->name())))));
+    if (hypha::plugin::PluginUtil::isHandler(plugin))
+      pluginsTreeItems.append(new QTreeWidgetItem(
+          handlerWidget, QStringList(QString("%1").arg(
+                             QString::fromStdString(plugin->name())))));
+    if (hypha::plugin::PluginUtil::isActor(plugin))
+      pluginsTreeItems.append(new QTreeWidgetItem(
+          actorsWidget, QStringList(QString("%1").arg(
+                            QString::fromStdString(plugin->name())))));
+    if (hypha::plugin::PluginUtil::isSensor(plugin))
+      pluginsTreeItems.append(new QTreeWidgetItem(
+          sensorsWidget, QStringList(QString("%1").arg(
+                             QString::fromStdString(plugin->name())))));
   }
   ui->pluginsTreeWidget->header()->resizeSection(0, 250);
 }
 
 void ConnectionWindow::createPluginsTabs() {
-  for (hypha::handler::HyphaHandler *handler :
-       instance->getHandlerLoader()->getInstances()) {
-    if (handler) {
-      this->pluginTabs.insert(
-          QString::fromStdString(handler->getId()),
-          ((hypha::handler::HyphaHandlerConfig *)handler)->widget());
-      ui->tabWidget->addTab(
-          ((hypha::handler::HyphaHandlerConfig *)handler)->widget(),
-          QString::fromStdString(handler->getId() + " (" + handler->name() +
-                                 ")"));
-    }
-  }
   for (hypha::plugin::HyphaBasePlugin *plugin :
        instance->getPluginLoader()->getInstances()) {
     if (plugin) {
@@ -104,24 +104,13 @@ void ConnectionWindow::createPluginsTabs() {
   }
 }
 
-void ConnectionWindow::createHandlerItems() {
-  for (hypha::handler::HyphaHandler *handler :
-       instance->getHandlerLoader()->getInstances()) {
-    if (handler) {
-      HandlerItem *item = new HandlerItem(handler, this);
-      this->handlerItems.insert(QString::fromStdString(handler->getId()), item);
-      scene->addItem(item);
-    }
-  }
-}
-
 void ConnectionWindow::updatePluginItems() {
   for (hypha::plugin::HyphaBasePlugin *plugin :
        instance->getPluginLoader()->getInstances()) {
     if (plugin) {
-      HandlerItem *item = handlerItems[QString::fromStdString(plugin->getId())];
+      PluginItem *item = pluginItems[QString::fromStdString(plugin->getId())];
       if (!item) {
-        PluginItem *item = new PluginItem(plugin, this);
+        item = new PluginItem(plugin, this);
         this->pluginItems.insert(QString::fromStdString(plugin->getId()), item);
         scene->addItem(item);
       }
@@ -130,10 +119,6 @@ void ConnectionWindow::updatePluginItems() {
 }
 
 void ConnectionWindow::loadPositions() {
-  for (QString itemid : handlerItems.keys()) {
-    HandlerItem *item = handlerItems[itemid];
-    if (item) loadPosition(itemid.toStdString(), item);
-  }
   for (QString itemid : pluginItems.keys()) {
     PluginItem *item = pluginItems[itemid];
     if (item) loadPosition(itemid.toStdString(), item);
@@ -157,10 +142,6 @@ void ConnectionWindow::loadPosition(std::string id, QGraphicsItem *item) {
 }
 
 void ConnectionWindow::savePositions() {
-  for (QString itemid : handlerItems.keys()) {
-    HandlerItem *item = handlerItems[itemid];
-    if (item) savePosition(itemid.toStdString(), item->x(), item->y());
-  }
   for (QString itemid : pluginItems.keys()) {
     PluginItem *item = pluginItems[itemid];
     if (item) savePosition(itemid.toStdString(), item->x(), item->y());
@@ -168,14 +149,8 @@ void ConnectionWindow::savePositions() {
 }
 
 void ConnectionWindow::saveConfig() {
-  hypha::controller::Handler handlerController(instance->getDatabase());
   hypha::controller::Plugin pluginController(instance->getDatabase());
-  for (hypha::handler::HyphaHandler *handler :
-       instance->getHandlerLoader()->getInstances()) {
-    if (handler) {
-      handlerController.updateConfig(handler->getId(), handler->getConfig());
-    }
-  }
+
   for (hypha::plugin::HyphaBasePlugin *plugin :
        instance->getPluginLoader()->getInstances()) {
     if (plugin) {
@@ -204,11 +179,11 @@ void ConnectionWindow::addLines() {
   bool more = rs.moveFirst();
   while (more) {
     std::string id = rs[0].convert<std::string>();
-    std::string handlerId = rs[1].convert<std::string>();
-    std::string pluginId = rs[2].convert<std::string>();
+    std::string senderId = rs[1].convert<std::string>();
+    std::string receiverId = rs[2].convert<std::string>();
     ConnectionLine *line = new ConnectionLine(
-        this->handlerItems[QString::fromStdString(handlerId)],
-        this->pluginItems[QString::fromStdString(pluginId)]);
+        this->pluginItems[QString::fromStdString(senderId)],
+        this->pluginItems[QString::fromStdString(receiverId)]);
     scene->addItem(line);
     more = rs.moveNext();
   }
@@ -224,17 +199,12 @@ void ConnectionWindow::on_pluginsTreeWidget_currentItemChanged(
     QTreeWidgetItem *current, QTreeWidgetItem *previous) {
   if (current == nullptr || current->columnCount() < 1) return;
   QString name = current->text(0);
-  if (name == "Handler" || name == "Plugins") {
+  if (name == "Plugins" || name == "Handler" || name == "Actors" ||
+      name == "Sensors") {
     ui->descriptionBox->setTitle("");
     ui->descriptionLineEdit->setText("");
   } else {
     ui->descriptionBox->setTitle(name);
-    hypha::handler::HyphaHandler *handler =
-        instance->getHandlerLoader()->getHandler(name.toStdString());
-    if (handler) {
-      ui->descriptionLineEdit->setText(
-          QString::fromStdString(handler->getDescription()));
-    }
     hypha::plugin::HyphaBasePlugin *plugin =
         instance->getPluginLoader()->getPlugin(name.toStdString());
     if (plugin) {
@@ -246,8 +216,7 @@ void ConnectionWindow::on_pluginsTreeWidget_currentItemChanged(
 
 void ConnectionWindow::on_connectionsButton_clicked() {
   saveConfig();
-  ConnectionDialog dialog(instance->getHandlerLoader(),
-                          instance->getPluginLoader(), instance->getDatabase(),
+  ConnectionDialog dialog(instance->getPluginLoader(), instance->getDatabase(),
                           this);
   dialog.exec();
   updatePluginItems();
@@ -257,9 +226,9 @@ void ConnectionWindow::on_connectionsButton_clicked() {
 
 void ConnectionWindow::on_handlerButton_clicked() {
   saveConfig();
-  HandlerDialog dialog(instance->getHandlerLoader(), instance->getDatabase(),
-                       this);
-  dialog.exec();
+  // HandlerDialog dialog(instance->getHandlerLoader(), instance->getDatabase(),
+  //                     this);
+  // dialog.exec();
   updatePluginItems();
   loadPositions();
   updateDesigner();

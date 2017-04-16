@@ -36,9 +36,7 @@ class Instance : public QObject {
   hypha::settings::DatabaseSettings *getDatabaseSettings();
   hypha::database::UserDatabase *getUserDatabase();
   hypha::database::Database *getDatabase();
-  hypha::settings::HandlerSettings *getHandlerSettings();
   hypha::settings::PluginSettings *getPluginSettings();
-  hypha::handler::HandlerLoader *getHandlerLoader();
   hypha::plugin::PluginLoader *getPluginLoader();
 
  signals:
@@ -52,14 +50,9 @@ class Instance : public QObject {
   hypha::database::Database *database;
   hypha::settings::UserDatabaseSettings *userDatabaseSettings;
   hypha::database::UserDatabase *userDatabase;
-
   hypha::settings::PluginSettings *pluginSettings;
-  hypha::settings::HandlerSettings *handlerSettings;
-
   hypha::plugin::ManagerPluginLoader *pluginLoader;
-  hypha::handler::ManagerHandlerLoader *handlerLoader;
 
-  void initHandlerLoader();
   void initPluginLoader();
 };
 

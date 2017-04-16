@@ -4,12 +4,11 @@
 
 #include <QtWidgets/QGraphicsLineItem>
 
-class HandlerItem;
 class PluginItem;
 
 class ConnectionLine : public QGraphicsLineItem {
  public:
-  explicit ConnectionLine(HandlerItem *handler, PluginItem *plugin,
+  explicit ConnectionLine(PluginItem *sender, PluginItem *receiver,
                           QGraphicsItem *parent = 0);
   void updatePosition();
  signals:
@@ -17,8 +16,8 @@ class ConnectionLine : public QGraphicsLineItem {
  public slots:
 
  protected:
-  HandlerItem *handler;
-  PluginItem *plugin;
+  PluginItem *sender;
+  PluginItem *receiver;
 };
 
 #endif  // CONNECTIONLINE_H
