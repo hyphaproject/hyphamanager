@@ -27,7 +27,7 @@ std::string AutoPlugin::getConfig() { return pluginWidget->getConfig(); }
 
 HyphaPluginConfig *AutoPlugin::getInstance(std::string id) { return nullptr; }
 
-HyphaPluginConfig *AutoPlugin::getInstance(HyphaPlugin *plugin) {
+HyphaPluginConfig *AutoPlugin::getInstance(HyphaBasePlugin *plugin) {
   AutoPlugin *instance = new AutoPlugin();
   instance->plugin = plugin;
   instance->setId(plugin->getId());

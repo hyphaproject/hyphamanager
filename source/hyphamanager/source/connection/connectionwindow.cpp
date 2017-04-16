@@ -1,20 +1,6 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
+
 #include "connection/connectionwindow.h"
-#include <Poco/Data/RecordSet.h>
-#include <hypha/controller/handler.h>
-#include <hypha/controller/plugin.h>
-#include <hypha/core/database/database.h>
-#include <hypha/core/database/userdatabase.h>
-#include <hypha/handler/handlerloader.h>
-#include <hypha/handler/hyphahandler.h>
-#include <hypha/plugin/hyphaplugin.h>
-#include <hypha/plugin/pluginloader.h>
-#include <QtCore/QDebug>
-#include <QtCore/QtAlgorithms>
-#include <QtPrintSupport/QPrinter>
-#include <QtSql/QSqlError>
-#include <QtWidgets/QFileDialog>
-#include <QtWidgets/QMessageBox>
 #include "connection/connectiondialog.h"
 #include "connection/connectionline.h"
 #include "connection/handlerdialog.h"
@@ -22,6 +8,22 @@
 #include "hyphamanager/hmhandler/hyphahandlerconfig.h"
 #include "hyphamanager/hmplugin/unknownplugin.h"
 #include "ui_connectionwindow.h"
+
+#include <Poco/Data/RecordSet.h>
+#include <hypha/controller/handler.h>
+#include <hypha/controller/plugin.h>
+#include <hypha/core/database/database.h>
+#include <hypha/core/database/userdatabase.h>
+#include <hypha/handler/handlerloader.h>
+#include <hypha/handler/hyphahandler.h>
+#include <hypha/plugin/hyphabaseplugin.h>
+#include <hypha/plugin/pluginloader.h>
+#include <QtCore/QDebug>
+#include <QtCore/QtAlgorithms>
+#include <QtPrintSupport/QPrinter>
+#include <QtSql/QSqlError>
+#include <QtWidgets/QFileDialog>
+#include <QtWidgets/QMessageBox>
 
 using namespace Poco::Data::Keywords;
 
@@ -66,7 +68,7 @@ void ConnectionWindow::createPluginsTree() {
         handlerWidget, QStringList(QString("%1").arg(
                            QString::fromStdString(handler->name())))));
   }
-  for (hypha::plugin::HyphaPlugin *plugin :
+  for (hypha::plugin::HyphaBasePlugin *plugin :
        instance->getPluginLoader()->getPlugins()) {
     pluginsTreeItems.append(new QTreeWidgetItem(
         pluginsWidget, QStringList(QString("%1").arg(
@@ -88,7 +90,7 @@ void ConnectionWindow::createPluginsTabs() {
                                  ")"));
     }
   }
-  for (hypha::plugin::HyphaPlugin *plugin :
+  for (hypha::plugin::HyphaBasePlugin *plugin :
        instance->getPluginLoader()->getInstances()) {
     if (plugin) {
       this->pluginTabs.insert(
@@ -114,7 +116,7 @@ void ConnectionWindow::createHandlerItems() {
 }
 
 void ConnectionWindow::updatePluginItems() {
-  for (hypha::plugin::HyphaPlugin *plugin :
+  for (hypha::plugin::HyphaBasePlugin *plugin :
        instance->getPluginLoader()->getInstances()) {
     if (plugin) {
       HandlerItem *item = handlerItems[QString::fromStdString(plugin->getId())];
@@ -174,7 +176,7 @@ void ConnectionWindow::saveConfig() {
       handlerController.updateConfig(handler->getId(), handler->getConfig());
     }
   }
-  for (hypha::plugin::HyphaPlugin *plugin :
+  for (hypha::plugin::HyphaBasePlugin *plugin :
        instance->getPluginLoader()->getInstances()) {
     if (plugin) {
       pluginController.updateConfig(plugin->getId(), plugin->getConfig());
@@ -233,7 +235,7 @@ void ConnectionWindow::on_pluginsTreeWidget_currentItemChanged(
       ui->descriptionLineEdit->setText(
           QString::fromStdString(handler->getDescription()));
     }
-    hypha::plugin::HyphaPlugin *plugin =
+    hypha::plugin::HyphaBasePlugin *plugin =
         instance->getPluginLoader()->getPlugin(name.toStdString());
     if (plugin) {
       ui->descriptionLineEdit->setText(

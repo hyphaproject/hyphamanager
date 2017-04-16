@@ -1,5 +1,8 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
+
 #include "explorenfc.h"
+#include "explorenfcwidget.h"
+
 #include <Poco/ClassLibrary.h>
 #include <QtCore/QDebug>
 #include <QtCore/QJsonArray>
@@ -7,7 +10,6 @@
 #include <QtCore/QJsonObject>
 #include <QtCore/QProcess>
 #include <QtCore/QThread>
-#include "explorenfcwidget.h"
 
 using namespace hypha::plugin::explorenfc;
 using namespace hypha::plugin;
@@ -24,6 +26,6 @@ HyphaPluginConfig *ExploreNFC::getInstance(std::string id) {
 
 QWidget *ExploreNFC::widget() { return new ExploreNFCWidget(); }
 
-POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_BEGIN_MANIFEST(HyphaBasePlugin)
 POCO_EXPORT_CLASS(ExploreNFC)
 POCO_END_MANIFEST

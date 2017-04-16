@@ -1,10 +1,11 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
 #ifndef PLUGINITEM_H
 #define PLUGINITEM_H
 
+#include "hyphamanager/hmplugin/hyphapluginconfig.h"
+
 #include <QtCore/QList>
 #include <QtWidgets/QGraphicsItem>
-#include "hyphamanager/hmplugin/hyphapluginconfig.h"
 
 using namespace hypha::plugin;
 
@@ -13,7 +14,7 @@ class ConnectionLine;
 
 class PluginItem : public QGraphicsItem {
  public:
-  explicit PluginItem(HyphaPlugin *plugin, ConnectionWindow *window,
+  explicit PluginItem(HyphaBasePlugin *plugin, ConnectionWindow *window,
                       QGraphicsItem *parent = 0);
 
   QRectF boundingRect() const;
@@ -28,7 +29,7 @@ class PluginItem : public QGraphicsItem {
  public slots:
 
  protected:
-  HyphaPlugin *plugin;
+  HyphaBasePlugin *plugin;
   ConnectionWindow *wnd;
   QList<ConnectionLine *> connections;
 };

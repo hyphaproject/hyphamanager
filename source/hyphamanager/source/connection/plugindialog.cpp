@@ -1,9 +1,11 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
+
 #include "connection/plugindialog.h"
+#include "ui_plugindialog.h"
+
 #include <hypha/controller/plugin.h>
 #include <hypha/plugin/pluginloader.h>
 #include <QtWidgets/QMessageBox>
-#include "ui_plugindialog.h"
 
 PluginDialog::PluginDialog(hypha::plugin::PluginLoader *pluginLoader,
                            hypha::database::Database *database, QWidget *parent)
@@ -18,7 +20,7 @@ PluginDialog::~PluginDialog() { delete ui; }
 
 void PluginDialog::init() {
   ui->comboBox->clear();
-  for (hypha::plugin::HyphaPlugin *plugin : pluginLoader->getPlugins()) {
+  for (hypha::plugin::HyphaBasePlugin *plugin : pluginLoader->getPlugins()) {
     ui->comboBox->addItem(QString::fromStdString(plugin->name()));
   }
 }

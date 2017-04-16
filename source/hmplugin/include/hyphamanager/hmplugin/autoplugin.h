@@ -18,12 +18,12 @@ class HMPLUGIN_API AutoPlugin : public HyphaPluginConfig {
   void loadConfig(std::string json);
   std::string getConfig();
   HyphaPluginConfig *getInstance(std::string id);
-  static HyphaPluginConfig *getInstance(HyphaPlugin *plugin);
+  static HyphaPluginConfig *getInstance(HyphaBasePlugin *plugin);
 
   QWidget *widget();
 
  private:
-  HyphaPlugin *plugin = nullptr;
+  HyphaBasePlugin *plugin = nullptr;
   AutoPluginWidget *pluginWidget = nullptr;
 };
 }

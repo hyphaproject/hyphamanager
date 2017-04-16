@@ -1,5 +1,8 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
+
 #include "fingerprintzfm.h"
+#include "fingerprintzfmwidget.h"
+
 #include <Poco/ClassLibrary.h>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
@@ -7,8 +10,6 @@
 #include <QtCore/QProcess>
 #include <QtCore/QThread>
 #include <QtCore/QVariant>
-#include <QtSerialPort/QSerialPortInfo>
-#include "fingerprintzfmwidget.h"
 
 using namespace hypha::plugin::fingerprintzfm;
 using namespace hypha::plugin;
@@ -25,6 +26,6 @@ HyphaPluginConfig *FingerPrintZFM::getInstance(std::string id) {
 
 QWidget *FingerPrintZFM::widget() { return new FingerPrintZFMWidget(); }
 
-POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_BEGIN_MANIFEST(HyphaBasePlugin)
 POCO_EXPORT_CLASS(FingerPrintZFM)
 POCO_END_MANIFEST

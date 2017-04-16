@@ -1,5 +1,7 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
+
 #include "rpianalogsensor.h"
+
 #include <Poco/ClassLibrary.h>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
@@ -30,6 +32,6 @@ QWidget *RpiAnalogSensor::widget() {
   return rpiAnalogSensorWidget;
 }
 
-POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_BEGIN_MANIFEST(HyphaBasePlugin)
 POCO_EXPORT_CLASS(RpiAnalogSensor)
 POCO_END_MANIFEST

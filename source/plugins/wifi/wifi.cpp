@@ -1,11 +1,13 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
+
 #include "wifi.h"
+#include "wifiwidget.h"
+
 #include <Poco/ClassLibrary.h>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 #include <QtCore/QProcess>
-#include "wifiwidget.h"
 
 using namespace hypha::plugin;
 using namespace hypha::plugin::wifi;
@@ -22,6 +24,6 @@ HyphaPluginConfig *Wifi::getInstance(std::string id) {
 
 QWidget *Wifi::widget() { return new WifiWidget(); }
 
-POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_BEGIN_MANIFEST(HyphaBasePlugin)
 POCO_EXPORT_CLASS(Wifi)
 POCO_END_MANIFEST

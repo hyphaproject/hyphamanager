@@ -1,5 +1,8 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
+
 #include "rpigpio.h"
+#include "rpigpiowidget.h"
+
 #include <Poco/ClassLibrary.h>
 #include <QtCore/QDebug>
 #include <QtCore/QJsonArray>
@@ -7,7 +10,6 @@
 #include <QtCore/QJsonObject>
 #include <QtCore/QProcess>
 #include <QtCore/QThread>
-#include "rpigpiowidget.h"
 
 using namespace hypha::plugin;
 using namespace hypha::plugin::rpigpio;
@@ -24,6 +26,6 @@ HyphaPluginConfig *RpiGpio::getInstance(std::string id) {
 
 QWidget *RpiGpio::widget() { return new RpiGpioWidget(); }
 
-POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_BEGIN_MANIFEST(HyphaBasePlugin)
 POCO_EXPORT_CLASS(RpiGpio)
 POCO_END_MANIFEST

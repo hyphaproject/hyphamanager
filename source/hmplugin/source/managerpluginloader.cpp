@@ -16,7 +16,7 @@ ManagerPluginLoader::ManagerPluginLoader(
 void hypha::plugin::ManagerPluginLoader::loadAllInstances() {
   for (std::string id : settings->getAllPluginIds()) {
     if (getPluginInstance(id) == 0) {
-      HyphaPlugin *plugin = factory->loadPlugin(id);
+      HyphaBasePlugin *plugin = factory->loadPlugin(id);
       if (plugin) {
         if (dynamic_cast<HyphaPluginConfig *>(plugin) == nullptr)
           plugin = AutoPlugin::getInstance(plugin);

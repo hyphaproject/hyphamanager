@@ -1,14 +1,16 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
+
 #include "connection/pluginitem.h"
+#include "connection/connectionline.h"
+#include "connection/connectionwindow.h"
+
 #include <QDebug>
 #include <QtGui/QPainter>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QGraphicsSceneContextMenuEvent>
 #include <QtWidgets/QMenu>
-#include "connection/connectionline.h"
-#include "connection/connectionwindow.h"
 
-PluginItem::PluginItem(HyphaPlugin *plugin, ConnectionWindow *window,
+PluginItem::PluginItem(HyphaBasePlugin *plugin, ConnectionWindow *window,
                        QGraphicsItem *parent)
     : QGraphicsItem(parent) {
   this->plugin = plugin;

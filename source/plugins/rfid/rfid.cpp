@@ -24,6 +24,6 @@ HyphaPluginConfig *RFID::getInstance(std::string id) {
 
 QWidget *RFID::widget() { return new RFIDWidget(); }
 
-POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_BEGIN_MANIFEST(HyphaBasePlugin)
 POCO_EXPORT_CLASS(RFID)
 POCO_END_MANIFEST

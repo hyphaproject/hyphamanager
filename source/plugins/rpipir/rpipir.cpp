@@ -1,10 +1,12 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
+
 #include "rpipir.h"
+#include "rpipirwidget.h"
+
 #include <Poco/ClassLibrary.h>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 #include <QtCore/QProcess>
-#include "rpipirwidget.h"
 
 using namespace hypha::plugin;
 using namespace hypha::plugin::rpipir;
@@ -29,6 +31,6 @@ QWidget *RpiPir::widget() {
   return rpipirWidget;
 }
 
-POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_BEGIN_MANIFEST(HyphaBasePlugin)
 POCO_EXPORT_CLASS(RpiPir)
 POCO_END_MANIFEST

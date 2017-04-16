@@ -1,13 +1,13 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
+
+#include "connection/connectiondialog.h"
+#include "connection/connectionitem.h"
+#include "ui_connectiondialog.h"
 
 #include <hypha/controller/connection.h>
 #include <hypha/core/database/database.h>
 #include <hypha/handler/handlerloader.h>
 #include <hypha/plugin/pluginloader.h>
-
-#include "connection/connectiondialog.h"
-#include "connection/connectionitem.h"
-#include "ui_connectiondialog.h"
 
 #include <Poco/Data/RecordSet.h>
 
@@ -32,7 +32,7 @@ void ConnectionDialog::init() {
   for (hypha::handler::HyphaHandler *handler : handlerLoader->getInstances()) {
     ui->handlerComboBox->addItem(QString::fromStdString(handler->getId()));
   }
-  for (hypha::plugin::HyphaPlugin *plugin : pluginLoader->getInstances()) {
+  for (hypha::plugin::HyphaBasePlugin *plugin : pluginLoader->getInstances()) {
     ui->pluginComboBox->addItem(QString::fromStdString(plugin->getId()));
   }
 

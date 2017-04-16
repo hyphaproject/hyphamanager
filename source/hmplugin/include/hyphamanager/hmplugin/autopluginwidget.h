@@ -1,12 +1,13 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
 #ifndef AUTOPLUGINWIDGET_H
 #define AUTOPLUGINWIDGET_H
 
-#include <hypha/plugin/hyphaplugin.h>
-#include <hyphamanager/hmplugin/hmplugin_api.h>
-#include <QWidget>
 #include <map>
 #include <string>
+
+#include <hypha/plugin/hyphabaseplugin.h>
+#include <hyphamanager/hmplugin/hmplugin_api.h>
+#include <QWidget>
 
 namespace Ui {
 class AutoPluginWidget;
@@ -16,7 +17,7 @@ class HMPLUGIN_API AutoPluginWidget : public QWidget {
   Q_OBJECT
 
  public:
-  explicit AutoPluginWidget(hypha::plugin::HyphaPlugin* plugin,
+  explicit AutoPluginWidget(hypha::plugin::HyphaBasePlugin* plugin,
                             QWidget* parent = 0);
   ~AutoPluginWidget();
   void setupUi();
@@ -27,7 +28,7 @@ class HMPLUGIN_API AutoPluginWidget : public QWidget {
   void addWidgets(QWidget* widget1, QWidget* widget2 = nullptr);
 
  private:
-  hypha::plugin::HyphaPlugin* plugin;
+  hypha::plugin::HyphaBasePlugin* plugin;
   Ui::AutoPluginWidget* ui;
   std::map<std::string, QWidget*> items;
 };

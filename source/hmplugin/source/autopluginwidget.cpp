@@ -13,7 +13,7 @@
 #include <confdesc/confdesc.h>
 #include <confdesc/datatypes.h>
 
-AutoPluginWidget::AutoPluginWidget(hypha::plugin::HyphaPlugin* plugin,
+AutoPluginWidget::AutoPluginWidget(hypha::plugin::HyphaBasePlugin* plugin,
                                    QWidget* parent)
     : QWidget(parent), ui(new Ui::AutoPluginWidget) {
   this->plugin = plugin;

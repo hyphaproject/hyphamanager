@@ -1,5 +1,7 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
+
 #include "lightsensor.h"
+
 #include <Poco/ClassLibrary.h>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
@@ -29,6 +31,6 @@ QWidget *LightSensor::widget() {
   return lightSensorWidget;
 }
 
-POCO_BEGIN_MANIFEST(HyphaPlugin)
+POCO_BEGIN_MANIFEST(HyphaBasePlugin)
 POCO_EXPORT_CLASS(LightSensor)
 POCO_END_MANIFEST
