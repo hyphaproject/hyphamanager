@@ -25,7 +25,6 @@ class SettingsWindow : public QDialog {
   hypha::settings::HyphaSettings *settings;
  private slots:
   void on_buttonBox_accepted();
-  void on_handlersButton_clicked();
   void on_pluginsButton_clicked();
 };
 
