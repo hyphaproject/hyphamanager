@@ -4,7 +4,8 @@
 #include "connection/connectiondialog.h"
 #include "connection/connectionline.h"
 #include "connection/plugindialog.h"
-#include "hyphamanager/hmplugin/unknownplugin.h"
+#include "plugin/autopluginwidget.h"
+#include "plugin/unknownpluginwidget.h"
 #include "ui_connectionwindow.h"
 
 #include <Poco/Data/RecordSet.h>
@@ -93,16 +94,22 @@ void ConnectionWindow::createPluginsTabs() {
   while (ui->tabWidget->count() > 1) {
     ui->tabWidget->removeTab(1);
   }
-  for (hypha::plugin::HyphaBasePlugin *plugin :
-       instance->getPluginLoader()->getInstances()) {
-    if (plugin) {
-      // this->pluginTabs.insert(
-      //    QString::fromStdString(plugin->getId()),
-      //    ((hypha::plugin::HyphaPluginConfig *)plugin)->widget());
-      // ui->tabWidget->addTab(
-      //    ((hypha::plugin::HyphaPluginConfig *)plugin)->widget(),
-      //    QString::fromStdString(plugin->getId() + " (" + plugin->name() +
-      //                           ")"));
+  for (std::string pluginId :
+       instance->getPluginSettings()->getAllPluginIds()) {
+    hypha::plugin::HyphaBasePlugin *plugin =
+        instance->getPluginLoader()->getPluginInstance(pluginId);
+    if (!plugin) {  // Add unknown plugin
+      std::string pluginName = instance->getPluginSettings()->getName(pluginId);
+      UnknownPluginWidget *widget = new UnknownPluginWidget(pluginId, this);
+      this->pluginTabs.insert(QString::fromStdString(pluginId), widget);
+      ui->tabWidget->addTab(
+          widget, QString::fromStdString(pluginId + " (" + pluginName + ")"));
+    } else if (plugin) {  // Add known auto plugin
+      AutoPluginWidget *widget = new AutoPluginWidget(plugin, this);
+      this->pluginTabs.insert(QString::fromStdString(plugin->getId()), widget);
+      ui->tabWidget->addTab(widget,
+                            QString::fromStdString(plugin->getId() + " (" +
+                                                   plugin->name() + ")"));
     }
   }
 }

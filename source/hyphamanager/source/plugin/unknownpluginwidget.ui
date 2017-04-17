@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="1" column="0">
     <widget class="QTextBrowser" name="textBrowser">
      <property name="readOnly">
       <bool>false</bool>
@@ -24,6 +24,13 @@
      </property>
      <property name="placeholderText">
       <string>{}</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="pluginIdLabel">
+     <property name="text">
+      <string>pluginId</string>
      </property>
     </widget>
    </item>

@@ -33,9 +33,9 @@ class MainWindow : public QMainWindow {
  private:
   Ui::MainWindow *ui;
   void createLanguageMenu();
-  Instance *instance;
-  UserWindow *userWindow;
-  ConnectionWindow *connectionWindow;
+  Instance *instance = nullptr;
+  UserWindow *userWindow = nullptr;
+  ConnectionWindow *connectionWindow = nullptr;
 };
 
 #endif  // MAINWINDOW_H

@@ -1,10 +1,12 @@
 // Copyright (c) 2015-2016 Hypha
-#include "hyphamanager/hmplugin/unknownpluginwidget.h"
+#include "plugin/unknownpluginwidget.h"
 #include "ui_unknownpluginwidget.h"
 
-UnknownPluginWidget::UnknownPluginWidget(QWidget *parent)
+UnknownPluginWidget::UnknownPluginWidget(std::string pluginId, QWidget *parent)
     : QWidget(parent), ui(new Ui::UnknownPluginWidget) {
   ui->setupUi(this);
+  this->pluginId = pluginId;
+  ui->pluginIdLabel->setText(QString::fromStdString(pluginId));
 }
 
 UnknownPluginWidget::~UnknownPluginWidget() { delete ui; }

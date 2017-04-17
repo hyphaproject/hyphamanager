@@ -23,7 +23,18 @@ MainWindow::MainWindow(QWidget *parent)
   splash.finish(this);
 }
 
-MainWindow::~MainWindow() { delete ui; }
+MainWindow::~MainWindow() {
+  if (this->instance) {
+    if (this->connectionWindow) {
+      this->connectionWindow->savePositions();
+      this->connectionWindow->saveConfig();
+
+      delete connectionWindow;
+    }
+    delete instance;
+  }
+  delete ui;
+}
 
 void MainWindow::on_actionAbout_Hypha_Client_triggered() {
   AboutDialog dialog(this);
@@ -63,8 +74,8 @@ void MainWindow::on_actionOpen_triggered() {
       this, tr("Open Hypha Config"), "", tr("Hypha Config (*.xml)"));
   if (fileName.isEmpty()) return;
   instance = new Instance(fileName, this);
-  userWindow = new UserWindow(instance);
-  connectionWindow = new ConnectionWindow(instance);
+  userWindow = new UserWindow(instance, this);
+  connectionWindow = new ConnectionWindow(instance, this);
   ui->tabWidget->insertTab(
       0, userWindow, QIcon(":/actions/images/actions/users.svg"), "Users");
   ui->tabWidget->insertTab(1, connectionWindow,
@@ -79,16 +90,7 @@ void MainWindow::on_actionSettings_triggered() {
   }
 }
 
-void MainWindow::closeEvent(QCloseEvent *event) {
-  event->ignore();
-  if (this->instance) {
-    if (this->connectionWindow) {
-      this->connectionWindow->savePositions();
-      this->connectionWindow->saveConfig();
-    }
-  }
-  event->accept();
-}
+void MainWindow::closeEvent(QCloseEvent *event) {}
 
 void MainWindow::on_actionNew_triggered() {
   NewConfigWizzard newConfigWizzard(this);

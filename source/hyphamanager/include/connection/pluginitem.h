@@ -2,7 +2,7 @@
 #ifndef PLUGINITEM_H
 #define PLUGINITEM_H
 
-#include "hyphamanager/hmplugin/hyphapluginconfig.h"
+#include <hypha/plugin/hyphabaseplugin.h>
 
 #include <QtCore/QList>
 #include <QtWidgets/QGraphicsItem>

@@ -1,6 +1,10 @@
-// Copyright (c) 2015-2016 Hypha
-#include "hyphamanager/hmplugin/autopluginwidget.h"
+// Copyright (c) 2015-2017 Hypha
+
+#include "plugin/autopluginwidget.h"
 #include "ui_autopluginwidget.h"
+
+#include <confdesc/confdesc.h>
+#include <confdesc/datatypes.h>
 
 #include <QCheckBox>
 #include <QDoubleSpinBox>
@@ -9,9 +13,6 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QSpinBox>
-
-#include <confdesc/confdesc.h>
-#include <confdesc/datatypes.h>
 
 AutoPluginWidget::AutoPluginWidget(hypha::plugin::HyphaBasePlugin* plugin,
                                    QWidget* parent)
@@ -25,7 +26,8 @@ AutoPluginWidget::~AutoPluginWidget() { delete ui; }
 
 void AutoPluginWidget::setupUi() {
   try {
-    cd::ConfDesc desc(plugin->getConfigDescription());
+    std::string description = plugin->getConfigDescription();
+    cd::ConfDesc desc(description);
     for (const auto& items : desc) {
       cd::ConfigItem item = items.second;
 

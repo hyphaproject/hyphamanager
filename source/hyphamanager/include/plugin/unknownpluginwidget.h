@@ -2,25 +2,27 @@
 #ifndef UNKNOWNPLUGINWIDGET_H
 #define UNKNOWNPLUGINWIDGET_H
 
-#include <hyphamanager/hmplugin/hmplugin_api.h>
-#include <QWidget>
 #include <string>
+
+#include <hypha/plugin/hyphabaseplugin.h>
+#include <QWidget>
 
 namespace Ui {
 class UnknownPluginWidget;
 }
 
-class HMPLUGIN_API UnknownPluginWidget : public QWidget {
+class UnknownPluginWidget : public QWidget {
   Q_OBJECT
 
  public:
-  explicit UnknownPluginWidget(QWidget *parent = 0);
+  explicit UnknownPluginWidget(std::string pluginId, QWidget *parent = 0);
   ~UnknownPluginWidget();
   void loadConfig(std::string json);
   std::string getConfig();
 
  private:
   Ui::UnknownPluginWidget *ui;
+  std::string pluginId;
 };
 
 #endif  // UNKNOWNPLUGINWIDGET_H

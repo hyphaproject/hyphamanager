@@ -58,6 +58,7 @@ file(GLOB headers
 "${include_path}/settings/*.h"
 "${include_path}/user/*.h"
 "${include_path}/connection/*.h"
+"${include_path}/plugin/*.h"
 "${include_path}/wizzards/*.h" )
 
 file(GLOB sources
@@ -67,6 +68,7 @@ file(GLOB sources
 "${source_path}/settings/*.cpp"
 "${source_path}/user/*.cpp"
 "${source_path}/connection/*.cpp"
+"${source_path}/plugin/*.cpp"
 "${source_path}/wizzards/*.cpp" )
 
 file(GLOB uis
@@ -76,6 +78,7 @@ file(GLOB uis
 "${source_path}/settings/*.ui"
 "${source_path}/user/*.ui"
 "${source_path}/connection/*.ui"
+"${source_path}/plugin/*.ui"
 "${source_path}/wizzards/*.ui" )
 
 
@@ -150,7 +153,7 @@ target_link_libraries(${target}
     PRIVATE
 
     ${DEFAULT_LIBRARIES}
-    ${META_PROJECT_NAME}::hmplugin
+    #${META_PROJECT_NAME}::hmplugin
     Qt5::WebKit Qt5::WebKitWidgets Qt5::PrintSupport )
 
 

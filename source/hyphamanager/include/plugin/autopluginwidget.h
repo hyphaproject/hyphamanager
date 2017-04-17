@@ -6,14 +6,14 @@
 #include <string>
 
 #include <hypha/plugin/hyphabaseplugin.h>
-#include <hyphamanager/hmplugin/hmplugin_api.h>
+
 #include <QWidget>
 
 namespace Ui {
 class AutoPluginWidget;
 }
 
-class HMPLUGIN_API AutoPluginWidget : public QWidget {
+class AutoPluginWidget : public QWidget {
   Q_OBJECT
 
  public:
