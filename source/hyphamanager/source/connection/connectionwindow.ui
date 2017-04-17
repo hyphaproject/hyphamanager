@@ -24,7 +24,61 @@
        <string>Designer</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="0" colspan="4">
+       <item row="2" column="0" colspan="4">
+        <widget class="QGroupBox" name="descriptionBox">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>400</width>
+           <height>300</height>
+          </size>
+         </property>
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="descriptionLineEdit"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QWebView" name="statusMessageWebView" native="true">
+            <property name="url" stdset="0">
+             <url>
+              <string>about:blank</string>
+             </url>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="4" rowspan="3">
+        <widget class="QGraphicsView" name="graphicsView">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="printButton">
+         <property name="text">
+          <string>Print</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="connectionsButton">
+         <property name="text">
+          <string>Connections</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
         <widget class="QTreeWidget" name="pluginsTreeWidget">
          <property name="minimumSize">
           <size>
@@ -46,70 +100,9 @@
         </widget>
        </item>
        <item row="0" column="2">
-        <widget class="QPushButton" name="handlerButton">
-         <property name="text">
-          <string>Handler</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
         <widget class="QPushButton" name="pluginButton">
          <property name="text">
-          <string>Plugins</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="connectionsButton">
-         <property name="text">
-          <string>Connections</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0" colspan="5">
-        <widget class="QGroupBox" name="descriptionBox">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>400</width>
-           <height>300</height>
-          </size>
-         </property>
-         <property name="title">
-          <string/>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0">
-           <widget class="QLineEdit" name="descriptionLineEdit"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QWebView" name="statusMessageWebView">
-            <property name="url">
-             <url>
-              <string>about:blank</string>
-             </url>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="0" column="5" rowspan="3">
-        <widget class="QGraphicsView" name="graphicsView">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="4">
-        <widget class="QPushButton" name="printButton">
-         <property name="text">
-          <string>Print</string>
+          <string>add Plugin</string>
          </property>
         </widget>
        </item>

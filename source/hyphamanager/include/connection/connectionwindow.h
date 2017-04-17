@@ -51,7 +51,6 @@ class ConnectionWindow : public QWidget {
   void on_pluginsTreeWidget_currentItemChanged(QTreeWidgetItem *current,
                                                QTreeWidgetItem *previous);
   void on_connectionsButton_clicked();
-  void on_handlerButton_clicked();
   void on_pluginButton_clicked();
   void on_printButton_clicked();
 };

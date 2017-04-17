@@ -51,7 +51,7 @@ class Instance : public QObject {
   hypha::settings::UserDatabaseSettings *userDatabaseSettings;
   hypha::database::UserDatabase *userDatabase;
   hypha::settings::PluginSettings *pluginSettings;
-  hypha::plugin::ManagerPluginLoader *pluginLoader;
+  hypha::plugin::PluginLoader *pluginLoader;
 
   void initPluginLoader();
 };

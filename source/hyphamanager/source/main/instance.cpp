@@ -6,7 +6,6 @@
 #include <hypha/core/database/database.h>
 #include <hypha/core/database/userdatabase.h>
 #include <hypha/core/settings/databasesettings.h>
-#include <hypha/core/settings/handlersettings.h>
 #include <hypha/core/settings/hyphasettings.h>
 #include <hypha/core/settings/pluginsettings.h>
 #include <hypha/plugin/pluginloader.h>
@@ -34,7 +33,7 @@ Instance::~Instance() {
 }
 
 void Instance::initPluginLoader() {
-  pluginLoader = new hypha::plugin::ManagerPluginLoader(pluginSettings);
+  pluginLoader = new hypha::plugin::PluginLoader(pluginSettings);
   pluginLoader->loadPlugins(
       hyphaSettings->getString("system.pluginspath", "plugins"));
   pluginLoader->loadPlugins("plugins");

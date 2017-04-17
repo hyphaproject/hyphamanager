@@ -90,16 +90,19 @@ void ConnectionWindow::createPluginsTree() {
 }
 
 void ConnectionWindow::createPluginsTabs() {
+  while (ui->tabWidget->count() > 1) {
+    ui->tabWidget->removeTab(1);
+  }
   for (hypha::plugin::HyphaBasePlugin *plugin :
        instance->getPluginLoader()->getInstances()) {
     if (plugin) {
-      this->pluginTabs.insert(
-          QString::fromStdString(plugin->getId()),
-          ((hypha::plugin::HyphaPluginConfig *)plugin)->widget());
-      ui->tabWidget->addTab(
-          ((hypha::plugin::HyphaPluginConfig *)plugin)->widget(),
-          QString::fromStdString(plugin->getId() + " (" + plugin->name() +
-                                 ")"));
+      // this->pluginTabs.insert(
+      //    QString::fromStdString(plugin->getId()),
+      //    ((hypha::plugin::HyphaPluginConfig *)plugin)->widget());
+      // ui->tabWidget->addTab(
+      //    ((hypha::plugin::HyphaPluginConfig *)plugin)->widget(),
+      //    QString::fromStdString(plugin->getId() + " (" + plugin->name() +
+      //                           ")"));
     }
   }
 }
@@ -168,7 +171,7 @@ void ConnectionWindow::savePosition(std::string id, int x, int y) {
 void ConnectionWindow::addLines() {
   Poco::Data::Statement statement = instance->getDatabase()->getStatement();
   try {
-    statement << "SELECT `id`, `handler_id`, `plugin_id` FROM `connection`;";
+    statement << "SELECT `id`, `sender_id`, `receiver_id` FROM `connection`;";
 
     statement.execute();
   } catch (Poco::Exception &e) {
@@ -224,16 +227,6 @@ void ConnectionWindow::on_connectionsButton_clicked() {
   updateDesigner();
 }
 
-void ConnectionWindow::on_handlerButton_clicked() {
-  saveConfig();
-  // HandlerDialog dialog(instance->getHandlerLoader(), instance->getDatabase(),
-  //                     this);
-  // dialog.exec();
-  updatePluginItems();
-  loadPositions();
-  updateDesigner();
-}
-
 void ConnectionWindow::on_pluginButton_clicked() {
   saveConfig();
   PluginDialog dialog(instance->getPluginLoader(), instance->getDatabase(),
@@ -242,6 +235,7 @@ void ConnectionWindow::on_pluginButton_clicked() {
   updatePluginItems();
   loadPositions();
   updateDesigner();
+  createPluginsTabs();
 }
 
 void ConnectionWindow::on_printButton_clicked() {
