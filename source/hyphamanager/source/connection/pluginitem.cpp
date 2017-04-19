@@ -4,11 +4,19 @@
 #include "connection/connectionline.h"
 #include "connection/connectionwindow.h"
 
+#include <hypha/plugin/pluginutil.h>
+
 #include <QDebug>
 #include <QtGui/QPainter>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QGraphicsSceneContextMenuEvent>
 #include <QtWidgets/QMenu>
+
+static const QPointF points[3] = {
+    QPointF(-10.0, 0.0),
+    QPointF(10.0, 0.0),
+    QPointF(0.0, 10.0)
+};
 
 PluginItem::PluginItem(HyphaBasePlugin *plugin, ConnectionWindow *window,
                        QGraphicsItem *parent)
@@ -32,7 +40,12 @@ void PluginItem::paint(QPainter *painter,
   pen.setColor(QColor(0, 0, 255));
   pen.setWidth(2);
   painter->setPen(pen);
-  painter->drawRoundedRect(-10, -10, 20, 20, 5, 5);
+  if(hypha::plugin::PluginUtil::isHandler(this->plugin))
+    painter->drawRoundedRect(-10, -10, 20, 20, 5, 5);
+  if(hypha::plugin::PluginUtil::isActor(this->plugin))
+    painter->drawConvexPolygon(points, 3);
+  if(hypha::plugin::PluginUtil::isSensor(this->plugin))
+    painter->drawEllipse(-10, -10, 20, 20);
   pen.setColor(QColor(0, 0, 0));
   pen.setWidth(1);
   painter->setPen(pen);
