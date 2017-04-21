@@ -105,7 +105,8 @@ void ConnectionWindow::createPluginsTabs() {
       ui->tabWidget->addTab(
           widget, QString::fromStdString(pluginId + " (" + pluginName + ")"));
     } else if (plugin) {  // Add known auto plugin
-      AutoPluginWidget *widget = new AutoPluginWidget(plugin, this);
+      AutoPluginWidget *widget =
+          new AutoPluginWidget(plugin, instance->getDatabase(), this);
       this->pluginTabs.insert(QString::fromStdString(plugin->getId()), widget);
       ui->tabWidget->addTab(widget,
                             QString::fromStdString(plugin->getId() + " (" +

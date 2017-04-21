@@ -3,8 +3,11 @@
 #include "plugin/autopluginwidget.h"
 #include "ui_autopluginwidget.h"
 
+#include <limits>
+
 #include <confdesc/confdesc.h>
 #include <confdesc/datatypes.h>
+#include <hypha/controller/plugin.h>
 
 #include <QCheckBox>
 #include <QDoubleSpinBox>
@@ -15,10 +18,15 @@
 #include <QSpinBox>
 
 AutoPluginWidget::AutoPluginWidget(hypha::plugin::HyphaBasePlugin* plugin,
+                                   hypha::database::Database* database,
                                    QWidget* parent)
     : QWidget(parent), ui(new Ui::AutoPluginWidget) {
   this->plugin = plugin;
+  this->database = database;
   ui->setupUi(this);
+  ui->nameLabel->setText(QString::fromStdString(plugin->getId()));
+  ui->descriptionLabel->setText(
+      QString::fromStdString(plugin->getDescription()));
   setupUi();
 }
 
@@ -53,9 +61,18 @@ void AutoPluginWidget::setupUi() {
         } break;
         case cd::DataType::INTEGER: {
           QSpinBox* spinBox = new QSpinBox();
+
+          if (item.hasMax())
+            spinBox->setMaximum(item.getMax());
+          else
+            spinBox->setMaximum(std::numeric_limits<int>::max());
+          if (item.hasMin())
+            spinBox->setMinimum(item.getMin());
+          else
+            spinBox->setMinimum(std::numeric_limits<int>::min());
+
           spinBox->setValue(item.getValue<int>());
-          spinBox->setMaximum(item.getMax());
-          spinBox->setMinimum(item.getMin());
+
           spinBox->setPrefix(QString::fromStdString(item.getName()) + " ");
           addWidgets(new QLabel(QString::fromStdString(item.getDescription())),
                      spinBox);
@@ -64,9 +81,15 @@ void AutoPluginWidget::setupUi() {
         } break;
         case cd::DataType::STRING: {
           QLineEdit* lineEdit = new QLineEdit();
+
+          if (item.hasMax())
+            lineEdit->setMaxLength(item.getMax());
+          else
+            lineEdit->setMaxLength(std::numeric_limits<int>::max());
+
           lineEdit->setText(
               QString::fromStdString(item.getValue<std::string>()));
-          lineEdit->setMaxLength(item.getMax());
+
           lineEdit->setToolTip(QString::fromStdString(item.getName()));
           addWidgets(new QLabel(QString::fromStdString(item.getDescription())),
                      lineEdit);
@@ -191,4 +214,9 @@ void AutoPluginWidget::addWidgets(QWidget* widget1, QWidget* widget2) {
   QWidget* w = new QWidget();
   w->setLayout(hLayout);
   ui->layout->addWidget(w);
+}
+
+void AutoPluginWidget::on_saveButton_clicked() {
+  hypha::controller::Plugin plugin(this->database);
+  plugin.updateConfig(this->plugin->getId(), getConfig());
 }

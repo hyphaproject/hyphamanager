@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 
+#include <hypha/core/database/database.h>
 #include <hypha/plugin/hyphabaseplugin.h>
 
 #include <QWidget>
@@ -18,6 +19,7 @@ class AutoPluginWidget : public QWidget {
 
  public:
   explicit AutoPluginWidget(hypha::plugin::HyphaBasePlugin* plugin,
+                            hypha::database::Database* database,
                             QWidget* parent = 0);
   ~AutoPluginWidget();
   void setupUi();
@@ -27,8 +29,12 @@ class AutoPluginWidget : public QWidget {
  protected:
   void addWidgets(QWidget* widget1, QWidget* widget2 = nullptr);
 
+ private slots:
+  void on_saveButton_clicked();
+
  private:
   hypha::plugin::HyphaBasePlugin* plugin;
+  hypha::database::Database* database;
   Ui::AutoPluginWidget* ui;
   std::map<std::string, QWidget*> items;
 };
