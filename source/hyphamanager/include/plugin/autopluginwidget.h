@@ -28,6 +28,7 @@ class AutoPluginWidget : public QWidget {
 
  protected:
   void addWidgets(QWidget* widget1, QWidget* widget2 = nullptr);
+  void addItem(std::string name, QWidget* widget);
 
  private slots:
   void on_saveButton_clicked();

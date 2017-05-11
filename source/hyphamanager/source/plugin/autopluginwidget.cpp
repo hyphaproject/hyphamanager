@@ -46,8 +46,7 @@ void AutoPluginWidget::setupUi() {
           checkbox->setText(QString::fromStdString(item.getDescription()) +
                             " ");
           addWidgets(checkbox);
-          this->items.insert(
-              std::pair<std::string, QWidget*>(item.getName(), checkbox));
+          addItem(item.getName(), checkbox);
         } break;
         case cd::DataType::FLOAT: {
           QDoubleSpinBox* doubleSpinBox = new QDoubleSpinBox();
@@ -56,8 +55,7 @@ void AutoPluginWidget::setupUi() {
                                    " ");
           addWidgets(new QLabel(QString::fromStdString(item.getDescription())),
                      doubleSpinBox);
-          this->items.insert(
-              std::pair<std::string, QWidget*>(item.getName(), doubleSpinBox));
+          addItem(item.getName(), doubleSpinBox);
         } break;
         case cd::DataType::INTEGER: {
           QSpinBox* spinBox = new QSpinBox();
@@ -76,8 +74,7 @@ void AutoPluginWidget::setupUi() {
           spinBox->setPrefix(QString::fromStdString(item.getName()) + " ");
           addWidgets(new QLabel(QString::fromStdString(item.getDescription())),
                      spinBox);
-          this->items.insert(
-              std::pair<std::string, QWidget*>(item.getName(), spinBox));
+          addItem(item.getName(), spinBox);
         } break;
         case cd::DataType::STRING: {
           QLineEdit* lineEdit = new QLineEdit();
@@ -93,8 +90,7 @@ void AutoPluginWidget::setupUi() {
           lineEdit->setToolTip(QString::fromStdString(item.getName()));
           addWidgets(new QLabel(QString::fromStdString(item.getDescription())),
                      lineEdit);
-          this->items.insert(
-              std::pair<std::string, QWidget*>(item.getName(), lineEdit));
+          addItem(item.getName(), lineEdit);
         } break;
         default:
           break;
@@ -214,6 +210,11 @@ void AutoPluginWidget::addWidgets(QWidget* widget1, QWidget* widget2) {
   QWidget* w = new QWidget();
   w->setLayout(hLayout);
   ui->layout->addWidget(w);
+}
+
+void AutoPluginWidget::addItem(std::string name, QWidget* widget) {
+  this->items.insert(std::pair<std::string, QWidget*>(name, widget));
+  widget->setObjectName(QString::fromStdString(name));
 }
 
 void AutoPluginWidget::on_saveButton_clicked() {
