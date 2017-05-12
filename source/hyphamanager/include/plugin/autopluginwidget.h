@@ -2,6 +2,8 @@
 #ifndef AUTOPLUGINWIDGET_H
 #define AUTOPLUGINWIDGET_H
 
+#include "main/instance.h"
+
 #include <map>
 #include <string>
 
@@ -19,8 +21,7 @@ class AutoPluginWidget : public QWidget {
 
  public:
   explicit AutoPluginWidget(hypha::plugin::HyphaBasePlugin* plugin,
-                            hypha::database::Database* database,
-                            QWidget* parent = 0);
+                            Instance* instance, QWidget* parent = 0);
   ~AutoPluginWidget();
   void setupUi();
   void loadConfig(std::string json);
@@ -34,8 +35,8 @@ class AutoPluginWidget : public QWidget {
   void on_saveButton_clicked();
 
  private:
+  Instance* instance;
   hypha::plugin::HyphaBasePlugin* plugin;
-  hypha::database::Database* database;
   Ui::AutoPluginWidget* ui;
   std::map<std::string, QWidget*> items;
 };

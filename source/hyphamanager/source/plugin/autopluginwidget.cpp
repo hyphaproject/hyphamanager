@@ -1,13 +1,17 @@
 // Copyright (c) 2015-2017 Hypha
 
 #include "plugin/autopluginwidget.h"
+#include "main/instance.h"
 #include "ui_autopluginwidget.h"
 
 #include <limits>
 
 #include <confdesc/confdesc.h>
 #include <confdesc/datatypes.h>
+
 #include <hypha/controller/plugin.h>
+#include <hypha/core/database/database.h>
+#include <hypha/plugin/pluginloader.h>
 
 #include <QCheckBox>
 #include <QDoubleSpinBox>
@@ -18,16 +22,17 @@
 #include <QSpinBox>
 
 AutoPluginWidget::AutoPluginWidget(hypha::plugin::HyphaBasePlugin* plugin,
-                                   hypha::database::Database* database,
-                                   QWidget* parent)
+                                   Instance* instance, QWidget* parent)
     : QWidget(parent), ui(new Ui::AutoPluginWidget) {
   this->plugin = plugin;
-  this->database = database;
+  this->instance = instance;
   ui->setupUi(this);
   ui->nameLabel->setText(QString::fromStdString(plugin->getId()));
   ui->descriptionLabel->setText(
       QString::fromStdString(plugin->getDescription()));
   setupUi();
+  this->setStyleSheet(QString::fromStdString(
+      instance->getPluginLoader()->getPluginStyle(plugin->name())));
 }
 
 AutoPluginWidget::~AutoPluginWidget() { delete ui; }
@@ -218,6 +223,6 @@ void AutoPluginWidget::addItem(std::string name, QWidget* widget) {
 }
 
 void AutoPluginWidget::on_saveButton_clicked() {
-  hypha::controller::Plugin plugin(this->database);
+  hypha::controller::Plugin plugin(this->instance->getDatabase());
   plugin.updateConfig(this->plugin->getId(), getConfig());
 }
