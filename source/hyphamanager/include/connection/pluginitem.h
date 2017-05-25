@@ -2,8 +2,11 @@
 #ifndef PLUGINITEM_H
 #define PLUGINITEM_H
 
+#include "main/instance.h"
+
 #include <hypha/plugin/hyphabaseplugin.h>
 
+#include <QAction>
 #include <QtCore/QList>
 #include <QtWidgets/QGraphicsItem>
 
@@ -15,7 +18,7 @@ class ConnectionLine;
 class PluginItem : public QGraphicsItem {
  public:
   explicit PluginItem(HyphaBasePlugin *plugin, ConnectionWindow *window,
-                      QGraphicsItem *parent = 0);
+                      Instance *instance, QGraphicsItem *parent = 0);
 
   QRectF boundingRect() const;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -31,6 +34,7 @@ class PluginItem : public QGraphicsItem {
  protected:
   HyphaBasePlugin *plugin;
   ConnectionWindow *wnd;
+  Instance *instance;
   QList<ConnectionLine *> connections;
 };
 

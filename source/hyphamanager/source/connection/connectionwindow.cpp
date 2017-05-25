@@ -28,14 +28,9 @@ ConnectionWindow::ConnectionWindow(Instance *instance, QWidget *parent)
     : QWidget(parent), ui(new Ui::ConnectionWindow) {
   this->instance = instance;
   ui->setupUi(this);
-  createPluginsTree();
-  createPluginsTabs();
   scene = new QGraphicsScene(0, 0, 2048, 2048);
   ui->graphicsView->setScene(scene);
-  updatePluginItems();
-  loadPositions();
-  addLines();
-  updateDesigner();
+  reload();
 }
 
 ConnectionWindow::~ConnectionWindow() {
@@ -46,6 +41,28 @@ ConnectionWindow::~ConnectionWindow() {
   // qDeleteAll(pluginsTreeItems.begin(), pluginsTreeItems.end());
   pluginsTreeItems.clear();
   delete ui;
+}
+
+void ConnectionWindow::reload()
+{
+    ui->pluginsTreeWidget->clear();
+    pluginTabs.clear();
+    pluginsTreeItems.clear();
+    pluginItems.clear();
+
+    scene->clear();
+    ui->graphicsView->setScene(scene);
+
+    while(ui->tabWidget->count() > 1){
+        ui->tabWidget->removeTab(1);
+    }
+
+    createPluginsTree();
+    createPluginsTabs();
+    updatePluginItems();
+    loadPositions();
+    addLines();
+    updateDesigner();
 }
 
 void ConnectionWindow::moveTab(QString name) {
@@ -115,12 +132,13 @@ void ConnectionWindow::createPluginsTabs() {
 }
 
 void ConnectionWindow::updatePluginItems() {
+    instance->getPluginLoader()->reloadAllInstances();
   for (hypha::plugin::HyphaBasePlugin *plugin :
        instance->getPluginLoader()->getInstances()) {
     if (plugin) {
       PluginItem *item = pluginItems[QString::fromStdString(plugin->getId())];
       if (!item) {
-        item = new PluginItem(plugin, this);
+        item = new PluginItem(plugin, this, instance);
         this->pluginItems.insert(QString::fromStdString(plugin->getId()), item);
         scene->addItem(item);
       }

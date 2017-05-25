@@ -21,6 +21,7 @@ class ConnectionWindow : public QWidget {
  public:
   explicit ConnectionWindow(Instance *instance, QWidget *parent = 0);
   ~ConnectionWindow();
+    void reload();
   void moveTab(QString name);
   void savePositions();
   void saveConfig();

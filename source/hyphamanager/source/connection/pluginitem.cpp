@@ -4,6 +4,8 @@
 #include "connection/connectionline.h"
 #include "connection/connectionwindow.h"
 
+#include <hypha/controller/connection.h>
+#include <hypha/controller/plugin.h>
 #include <hypha/plugin/pluginutil.h>
 
 #include <QDebug>
@@ -16,10 +18,11 @@ static const QPointF points[3] = {QPointF(-10.0, 0.0), QPointF(10.0, 0.0),
                                   QPointF(0.0, 10.0)};
 
 PluginItem::PluginItem(HyphaBasePlugin *plugin, ConnectionWindow *window,
-                       QGraphicsItem *parent)
+                       Instance *instance, QGraphicsItem *parent)
     : QGraphicsItem(parent) {
   this->plugin = plugin;
   this->wnd = window;
+  this->instance = instance;
   setFlag(ItemIsMovable);
   setFlag(ItemIsSelectable);
 }
@@ -50,11 +53,23 @@ void PluginItem::paint(QPainter *painter,
 }
 
 void PluginItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
+  QString editAction("Edit");
+  QString deleteAction("Delete");
+
   QMenu menu;
-  menu.addAction("Edit");
+  menu.addAction(editAction);
+  menu.addAction(deleteAction);
   QAction *a = menu.exec(event->screenPos());
   if (a) {
-    wnd->moveTab(QString::fromStdString(plugin->getId()));
+    if (a->text() == editAction) {
+      wnd->moveTab(QString::fromStdString(plugin->getId()));
+    } else if (a->text() == deleteAction) {
+        hypha::controller::Connection con(instance->getDatabase());
+        con.removeConnections(plugin->getId());
+        hypha::controller::Plugin plug(instance->getDatabase());
+        plug.remove(plugin->getId());
+      wnd->reload();
+    }
   }
 }
 
