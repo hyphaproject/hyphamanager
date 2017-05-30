@@ -4,8 +4,8 @@
 
 #include <QtWidgets/QMainWindow>
 #include "../connection/connectionwindow.h"
-#include "../user/userwindow.h"
-#include "instance.h"
+#include <hyphamanager/user/userwindow.h>
+#include <hyphamanager/core/instance.h>
 
 namespace Ui {
 class MainWindow;

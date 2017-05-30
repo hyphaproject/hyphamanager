@@ -2,7 +2,7 @@
 #ifndef PLUGINITEM_H
 #define PLUGINITEM_H
 
-#include "main/instance.h"
+#include <hyphamanager/core/instance.h>
 
 #include <hypha/plugin/hyphabaseplugin.h>
 

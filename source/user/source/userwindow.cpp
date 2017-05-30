@@ -1,5 +1,5 @@
 // Copyright (c) 2015-2016 Hypha
-#include "user/userwindow.h"
+#include "hyphamanager/user/userwindow.h"
 #include <Poco/Data/RecordSet.h>
 #include <hypha/core/database/database.h>
 #include <hypha/core/database/userdatabase.h>

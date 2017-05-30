@@ -2,7 +2,7 @@
 #ifndef CONNECTIONWINDOW_H
 #define CONNECTIONWINDOW_H
 
-#include "../main/instance.h"
+#include <hyphamanager/core/instance.h>
 #include "pluginitem.h"
 
 #include <QtCore/QList>

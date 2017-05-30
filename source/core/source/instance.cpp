@@ -1,6 +1,6 @@
 // Copyright (c) 2015-2017 Hypha
 
-#include "main/instance.h"
+#include "hyphamanager/core/instance.h"
 
 #include <hypha/core/database/database.h>
 #include <hypha/core/database/userdatabase.h>

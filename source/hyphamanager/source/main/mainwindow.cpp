@@ -4,7 +4,7 @@
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
-#include "main/aboutdialog.h"
+#include <hyphamanager/core/aboutdialog.h>
 #include "main/splashscreen.h"
 #include "settings/settingswindow.h"
 #include "settings/translation.h"

@@ -132,7 +132,8 @@ target_include_directories(${target}
     ${PROJECT_BINARY_DIR}/source/include
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_BINARY_DIR}/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/source
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/${target}
+    ${CMAKE_CURRENT_BINARY_DIR}/source/${target}
     ${CMAKE_CURRENT_BINARY_DIR}
 
     PUBLIC
@@ -153,7 +154,8 @@ target_link_libraries(${target}
     PRIVATE
 
     ${DEFAULT_LIBRARIES}
-    #${META_PROJECT_NAME}::hmplugin
+    ${META_PROJECT_NAME}::core
+    ${META_PROJECT_NAME}::user
     Qt5::WebKit Qt5::WebKitWidgets Qt5::PrintSupport )
 
 

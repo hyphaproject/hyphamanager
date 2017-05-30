@@ -8,8 +8,8 @@
 # List of modules
 set(MODULE_NAMES
 	hyphamanager
-	hmhandler
-	hmplugin
+	core
+	user
 )
 
 

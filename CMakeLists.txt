@@ -19,6 +19,8 @@ include(WriteCompilerDetectionHeader OPTIONAL RESULT_VARIABLE WriterCompilerDete
 
 include(cmake/GetGitRevisionDescription.cmake)
 include(cmake/Custom.cmake)
+include(cmake/HealthCheck.cmake)
+include(cmake/GenerateTemplateExportHeader.cmake)
 
 # Set policies
 set_policy(CMP0028 NEW) # ENABLE CMP0028: Double colon in target name means ALIAS or IMPORTED target.
@@ -91,6 +93,7 @@ include(cmake/3rdParty.cmake)
 
 include(cmake/Clang-Format.cmake)
 include(cmake/Clang-Tidy.cmake)
+
 
 # 
 # Deployment/installation setup

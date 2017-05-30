@@ -16,6 +16,8 @@ configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/${META_PROJECT_N
 set(IDE_FOLDER "")
 
 add_subdirectory(hyphamanager)
+add_subdirectory(core)
+add_subdirectory(user)
 
 # Tests
 set(IDE_FOLDER "Tests")

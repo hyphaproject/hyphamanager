@@ -2,7 +2,7 @@
 #ifndef AUTOPLUGINWIDGET_H
 #define AUTOPLUGINWIDGET_H
 
-#include "main/instance.h"
+#include <hyphamanager/core/instance.h>
 
 #include <map>
 #include <string>

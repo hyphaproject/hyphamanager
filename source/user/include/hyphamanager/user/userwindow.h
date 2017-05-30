@@ -3,7 +3,7 @@
 #define USERWINDOW_H
 
 #include <QtWidgets/QWidget>
-#include "../main/instance.h"
+#include <hyphamanager/core/instance.h>
 
 namespace Ui {
 class UserWindow;
