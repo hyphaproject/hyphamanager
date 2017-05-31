@@ -19,9 +19,9 @@ message(STATUS "Lib ${target}")
 # Set API export file and macro
 string(MAKE_C_IDENTIFIER ${target} target_id)
 string(TOUPPER ${target_id} target_id)
-set(feature_file         "include/${target}/${target}_features.h")
-set(export_file          "include/${target}/${target}_export.h")
-set(template_export_file "include/${target}/${target}_api.h")
+set(feature_file         "include/${META_PROJECT_NAME}/${target}/${target}_features.h")
+set(export_file          "include/${META_PROJECT_NAME}/${target}/${target}_export.h")
+set(template_export_file "include/${META_PROJECT_NAME}/${target}/${target}_api.h")
 set(export_macro         "${target_id}_API")
 
 
@@ -240,13 +240,13 @@ install(TARGETS ${target}
 
 # Header files
 install(DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/${META_PROJECT_NAME}/${target} DESTINATION ${INSTALL_INCLUDE}
     COMPONENT dev
 )
 
 # Generated header files
 install(DIRECTORY
-    ${CMAKE_CURRENT_BINARY_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE}
+    ${CMAKE_CURRENT_BINARY_DIR}/include/${META_PROJECT_NAME}/${target} DESTINATION ${INSTALL_INCLUDE}
     COMPONENT dev
 )
 
