@@ -17,7 +17,9 @@ set(IDE_FOLDER "")
 
 add_subdirectory(hyphamanager)
 add_subdirectory(core)
+add_subdirectory(settings)
 add_subdirectory(user)
+add_subdirectory(wizzards)
 
 # Tests
 set(IDE_FOLDER "Tests")

@@ -5,7 +5,7 @@
 #include <QtCore/QSettings>
 #include <QtCore/QTranslator>
 
-#include "settings/translation.h"
+#include "hyphamanager/settings/translation.h"
 
 Translation *Translation::singleton = 0;
 

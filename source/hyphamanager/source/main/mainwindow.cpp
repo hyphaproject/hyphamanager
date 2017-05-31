@@ -6,10 +6,10 @@
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
 #include "main/splashscreen.h"
-#include "settings/settingswindow.h"
-#include "settings/translation.h"
+#include "hyphamanager/settings/settingswindow.h"
+#include "hyphamanager/settings/translation.h"
+#include "hyphamanager/wizzards/newconfigwizzard.h"
 #include "ui_mainwindow.h"
-#include "wizzards/newconfigwizzard.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {

@@ -9,7 +9,9 @@
 set(MODULE_NAMES
 	hyphamanager
 	core
+    settings
 	user
+    wizzards
 )
 
 

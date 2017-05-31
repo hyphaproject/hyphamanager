@@ -58,8 +58,7 @@ file(GLOB headers
 "${include_path}/settings/*.h"
 "${include_path}/user/*.h"
 "${include_path}/connection/*.h"
-"${include_path}/plugin/*.h"
-"${include_path}/wizzards/*.h" )
+"${include_path}/plugin/*.h" )
 
 file(GLOB sources
 "${source_path}/*.cpp"
@@ -68,8 +67,7 @@ file(GLOB sources
 "${source_path}/settings/*.cpp"
 "${source_path}/user/*.cpp"
 "${source_path}/connection/*.cpp"
-"${source_path}/plugin/*.cpp"
-"${source_path}/wizzards/*.cpp" )
+"${source_path}/plugin/*.cpp" )
 
 file(GLOB uis
 "${source_path}/*.ui"
@@ -78,8 +76,7 @@ file(GLOB uis
 "${source_path}/settings/*.ui"
 "${source_path}/user/*.ui"
 "${source_path}/connection/*.ui"
-"${source_path}/plugin/*.ui"
-"${source_path}/wizzards/*.ui" )
+"${source_path}/plugin/*.ui" )
 
 
 file(GLOB resources "${resource_path}/*.qrc" )
@@ -155,7 +152,9 @@ target_link_libraries(${target}
 
     ${DEFAULT_LIBRARIES}
     ${META_PROJECT_NAME}::core
+    ${META_PROJECT_NAME}::settings
     ${META_PROJECT_NAME}::user
+    ${META_PROJECT_NAME}::wizzards
     Qt5::WebKit Qt5::WebKitWidgets Qt5::PrintSupport )
 
 

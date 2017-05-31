@@ -1,6 +1,6 @@
 // Copyright (c) 2015-2017 Hypha
 
-#include "settings/settingswindow.h"
+#include <hyphamanager/settings/settingswindow.h>
 #include "ui_settingswindow.h"
 
 #include <QFileDialog>

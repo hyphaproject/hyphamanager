@@ -1,7 +1,7 @@
 // Copyright (c) 2015-2016 Hypha
 #include <QtWidgets/QApplication>
 #include "main/mainwindow.h"
-#include "settings/translation.h"
+#include <hyphamanager/settings/translation.h>
 
 int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
