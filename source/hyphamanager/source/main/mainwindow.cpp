@@ -1,10 +1,10 @@
 // Copyright (c) 2015-2016 Hypha
 #include "main/mainwindow.h"
+#include <hyphamanager/core/aboutdialog.h>
 #include <QtCore/QThread>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
-#include <hyphamanager/core/aboutdialog.h>
 #include "main/splashscreen.h"
 #include "settings/settingswindow.h"
 #include "settings/translation.h"

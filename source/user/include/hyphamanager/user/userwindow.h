@@ -2,8 +2,8 @@
 #ifndef USERWINDOW_H
 #define USERWINDOW_H
 
-#include <QtWidgets/QWidget>
 #include <hyphamanager/core/instance.h>
+#include <QtWidgets/QWidget>
 
 namespace Ui {
 class UserWindow;

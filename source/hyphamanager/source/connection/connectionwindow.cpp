@@ -43,26 +43,25 @@ ConnectionWindow::~ConnectionWindow() {
   delete ui;
 }
 
-void ConnectionWindow::reload()
-{
-    ui->pluginsTreeWidget->clear();
-    pluginTabs.clear();
-    pluginsTreeItems.clear();
-    pluginItems.clear();
+void ConnectionWindow::reload() {
+  ui->pluginsTreeWidget->clear();
+  pluginTabs.clear();
+  pluginsTreeItems.clear();
+  pluginItems.clear();
 
-    scene->clear();
-    ui->graphicsView->setScene(scene);
+  scene->clear();
+  ui->graphicsView->setScene(scene);
 
-    while(ui->tabWidget->count() > 1){
-        ui->tabWidget->removeTab(1);
-    }
+  while (ui->tabWidget->count() > 1) {
+    ui->tabWidget->removeTab(1);
+  }
 
-    createPluginsTree();
-    createPluginsTabs();
-    updatePluginItems();
-    loadPositions();
-    addLines();
-    updateDesigner();
+  createPluginsTree();
+  createPluginsTabs();
+  updatePluginItems();
+  loadPositions();
+  addLines();
+  updateDesigner();
 }
 
 void ConnectionWindow::moveTab(QString name) {
@@ -132,7 +131,7 @@ void ConnectionWindow::createPluginsTabs() {
 }
 
 void ConnectionWindow::updatePluginItems() {
-    instance->getPluginLoader()->reloadAllInstances();
+  instance->getPluginLoader()->reloadAllInstances();
   for (hypha::plugin::HyphaBasePlugin *plugin :
        instance->getPluginLoader()->getInstances()) {
     if (plugin) {

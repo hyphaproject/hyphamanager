@@ -1,4 +1,4 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
 #include "wizzards/newconfigwizzard.h"
 #include <QFileDialog>
 #include "hypha/core/settings/configgenerator.h"
@@ -40,6 +40,7 @@ void NewConfigWizzard::on_nextButton_clicked() {
     generator.dbDatabase = ui->dDatabaseEdit->text().toStdString();
     generator.dbDriver = ui->dDriverBox->currentText().toStdString();
     generator.dbHost = ui->dHostEdit->text().toStdString();
+    generator.dbPort = ui->dPortSpinBox->value();
     generator.dbPassword = ui->dPasswordEdit->text().toStdString();
     generator.dbUsername = ui->dUsernameEdit->text().toStdString();
 
@@ -54,6 +55,7 @@ void NewConfigWizzard::on_nextButton_clicked() {
     generator.udbDatabase = ui->udDatabaseEdit->text().toStdString();
     generator.udbDriver = ui->udDriverBox->currentText().toStdString();
     generator.udbHost = ui->udHostEdit->text().toStdString();
+    generator.udbPort = ui->udPortSpinBox->value();
     generator.udbPassword = ui->udPasswordEdit->text().toStdString();
     generator.udbTable = ui->udTableEdit->text().toStdString();
     generator.generateConfigFile(ui->configFileEdit->text().toStdString());

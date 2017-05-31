@@ -44,7 +44,7 @@
    <item row="0" column="0" colspan="3">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tabFile">
       <attribute name="title">
@@ -96,7 +96,7 @@
          </item>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="7" column="1">
         <widget class="QLabel" name="label_4">
          <property name="text">
           <string>Password</string>
@@ -110,7 +110,7 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="2" colspan="2">
+       <item row="7" column="2" colspan="2">
         <widget class="QLineEdit" name="udPasswordEdit">
          <property name="text">
           <string>hypha</string>
@@ -127,7 +127,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="5" column="1">
         <widget class="QLabel" name="label_3">
          <property name="text">
           <string>Username</string>
@@ -148,7 +148,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="2" colspan="2">
+       <item row="5" column="2" colspan="2">
         <widget class="QLineEdit" name="udUsernameEdit">
          <property name="text">
           <string>hypha</string>
@@ -214,6 +214,20 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="label_17">
+         <property name="text">
+          <string>Port</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2" colspan="2">
+        <widget class="QSpinBox" name="udPortSpinBox">
+         <property name="maximum">
+          <number>65536</number>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -346,7 +360,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="2" colspan="2">
+       <item row="4" column="2" colspan="2">
         <widget class="QLineEdit" name="dUsernameEdit">
          <property name="text">
           <string>hypha</string>
@@ -366,7 +380,7 @@
          </property>
         </spacer>
        </item>
-       <item row="4" column="1">
+       <item row="5" column="1">
         <widget class="QLabel" name="label_16">
          <property name="text">
           <string>Password</string>
@@ -380,7 +394,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="2" colspan="2">
+       <item row="5" column="2" colspan="2">
         <widget class="QLineEdit" name="dPasswordEdit">
          <property name="text">
           <string>hypha</string>
@@ -390,7 +404,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QLabel" name="label_15">
          <property name="text">
           <string>Username</string>
@@ -450,6 +464,20 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_18">
+         <property name="text">
+          <string>Port</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2" colspan="2">
+        <widget class="QSpinBox" name="dPortSpinBox">
+         <property name="maximum">
+          <number>65536</number>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

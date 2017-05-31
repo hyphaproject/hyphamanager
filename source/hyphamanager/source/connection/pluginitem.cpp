@@ -64,10 +64,10 @@ void PluginItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
     if (a->text() == editAction) {
       wnd->moveTab(QString::fromStdString(plugin->getId()));
     } else if (a->text() == deleteAction) {
-        hypha::controller::Connection con(instance->getDatabase());
-        con.removeConnections(plugin->getId());
-        hypha::controller::Plugin plug(instance->getDatabase());
-        plug.remove(plugin->getId());
+      hypha::controller::Connection con(instance->getDatabase());
+      con.removeConnections(plugin->getId());
+      hypha::controller::Plugin plug(instance->getDatabase());
+      plug.remove(plugin->getId());
       wnd->reload();
     }
   }
