@@ -1,20 +1,21 @@
 // Copyright (c) 2015-2017 Hypha
 
-#include "connection/connectionwindow.h"
-#include "connection/connectiondialog.h"
-#include "connection/connectionline.h"
-#include "connection/plugindialog.h"
-#include "plugin/autopluginwidget.h"
-#include "plugin/unknownpluginwidget.h"
+#include "hyphamanager/connection/connectionwindow.h"
+#include "hyphamanager/connection/connectiondialog.h"
+#include "hyphamanager/connection/connectionline.h"
+#include "hyphamanager/connection/plugindialog.h"
+#include "hyphamanager/plugin/autopluginwidget.h"
+#include "hyphamanager/plugin/unknownpluginwidget.h"
 #include "ui_connectionwindow.h"
 
-#include <Poco/Data/RecordSet.h>
 #include <hypha/controller/plugin.h>
 #include <hypha/core/database/database.h>
 #include <hypha/core/database/userdatabase.h>
 #include <hypha/plugin/hyphabaseplugin.h>
 #include <hypha/plugin/pluginloader.h>
 #include <hypha/plugin/pluginutil.h>
+
+#include <Poco/Data/RecordSet.h>
 #include <QtCore/QDebug>
 #include <QtCore/QtAlgorithms>
 #include <QtPrintSupport/QPrinter>

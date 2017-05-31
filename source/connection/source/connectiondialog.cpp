@@ -1,7 +1,7 @@
 // Copyright (c) 2015-2017 Hypha
 
-#include "connection/connectiondialog.h"
-#include "connection/connectionitem.h"
+#include "hyphamanager/connection/connectiondialog.h"
+#include "hyphamanager/connection/connectionitem.h"
 #include "ui_connectiondialog.h"
 
 #include <hypha/controller/connection.h>

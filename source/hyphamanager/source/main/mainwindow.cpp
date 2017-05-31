@@ -1,14 +1,14 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
 #include "main/mainwindow.h"
 #include <hyphamanager/core/aboutdialog.h>
 #include <QtCore/QThread>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
-#include "main/splashscreen.h"
 #include "hyphamanager/settings/settingswindow.h"
 #include "hyphamanager/settings/translation.h"
 #include "hyphamanager/wizzards/newconfigwizzard.h"
+#include "main/splashscreen.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)

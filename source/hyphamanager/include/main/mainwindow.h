@@ -1,11 +1,12 @@
-// Copyright (c) 2015-2016 Hypha
+// Copyright (c) 2015-2017 Hypha
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <hyphamanager/connection/connectionwindow.h>
 #include <hyphamanager/core/instance.h>
 #include <hyphamanager/user/userwindow.h>
+
 #include <QtWidgets/QMainWindow>
-#include "../connection/connectionwindow.h"
 
 namespace Ui {
 class MainWindow;

@@ -1,7 +1,7 @@
 // Copyright (c) 2015-2017 Hypha
 
-#include "connection/connectionline.h"
-#include "connection/pluginitem.h"
+#include "hyphamanager/connection/connectionline.h"
+#include "hyphamanager/connection/pluginitem.h"
 
 #include <QtGui/QPen>
 #include <QtWidgets/QGraphicsLineItem>

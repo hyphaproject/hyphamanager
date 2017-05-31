@@ -11,7 +11,7 @@
 # 
 
 # Target name
-set(target core)
+set(target plugin)
 
 # Exit here if required dependencies are not met
 message(STATUS "Lib ${target}")
@@ -33,13 +33,13 @@ set(include_path "${CMAKE_CURRENT_SOURCE_DIR}/include/${META_PROJECT_NAME}/${tar
 set(source_path  "${CMAKE_CURRENT_SOURCE_DIR}/source")
 
 set(headers
-    ${include_path}/aboutdialog.h
-    ${include_path}/instance.h
+    ${include_path}/autopluginwidget.h
+    ${include_path}/unknownpluginwidget.h
 )
 
 set(sources
-    ${source_path}/aboutdialog.cpp
-    ${source_path}/instance.cpp
+    ${source_path}/autopluginwidget.cpp
+    ${source_path}/unknownpluginwidget.cpp
 )
 
 file(GLOB uis
@@ -157,9 +157,9 @@ target_link_libraries(${target}
 
     PUBLIC
     ${DEFAULT_LIBRARIES}
+    hyphamanager::core
     Qt5::Core
     Qt5::Widgets
-    
     INTERFACE
 )
 
@@ -202,7 +202,6 @@ target_link_libraries(${target}
 
     PUBLIC
     ${DEFAULT_LINKER_OPTIONS}
-
     INTERFACE
 )
 

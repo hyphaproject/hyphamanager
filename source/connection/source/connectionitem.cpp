@@ -1,5 +1,5 @@
-// Copyright (c) 2015-2016 Hypha
-#include "connection/connectionitem.h"
+// Copyright (c) 2015-2017 Hypha
+#include "hyphamanager/connection/connectionitem.h"
 #include <hypha/controller/connection.h>
 #include <hypha/core/database/database.h>
 #include "ui_connectionitem.h"

@@ -8,7 +8,9 @@
 # List of modules
 set(MODULE_NAMES
 	hyphamanager
+    connection
 	core
+    plugin
     settings
 	user
     wizzards

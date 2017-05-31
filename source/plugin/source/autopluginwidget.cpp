@@ -1,6 +1,6 @@
 // Copyright (c) 2015-2017 Hypha
 
-#include "plugin/autopluginwidget.h"
+#include "hyphamanager/plugin/autopluginwidget.h"
 #include <hyphamanager/core/instance.h>
 #include "ui_autopluginwidget.h"
 

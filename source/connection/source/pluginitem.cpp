@@ -1,8 +1,8 @@
 // Copyright (c) 2015-2017 Hypha
 
-#include "connection/pluginitem.h"
-#include "connection/connectionline.h"
-#include "connection/connectionwindow.h"
+#include "hyphamanager/connection/pluginitem.h"
+#include "hyphamanager/connection/connectionline.h"
+#include "hyphamanager/connection/connectionwindow.h"
 
 #include <hypha/controller/connection.h>
 #include <hypha/controller/plugin.h>

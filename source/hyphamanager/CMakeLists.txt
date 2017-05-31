@@ -151,6 +151,7 @@ target_link_libraries(${target}
     PRIVATE
 
     ${DEFAULT_LIBRARIES}
+    ${META_PROJECT_NAME}::connection
     ${META_PROJECT_NAME}::core
     ${META_PROJECT_NAME}::settings
     ${META_PROJECT_NAME}::user

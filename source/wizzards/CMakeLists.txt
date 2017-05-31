@@ -5,12 +5,6 @@
 
 # find_package(THIRDPARTY REQUIRED)
 
-find_package(Qt5Sql REQUIRED)
-find_package(Qt5LinguistTools REQUIRED)
-find_package(Qt5WebKit REQUIRED)
-find_package(Qt5WebKitWidgets REQUIRED)
-find_package(Qt5PrintSupport REQUIRED)
-find_package(Qt5Network REQUIRED)
 
 # 
 # Library name and options
@@ -161,6 +155,8 @@ target_link_libraries(${target}
 
     PUBLIC
     ${DEFAULT_LIBRARIES}
+    Qt5::Core
+    Qt5::Widgets
 
     INTERFACE
 )
@@ -204,8 +200,7 @@ target_link_libraries(${target}
 
     PUBLIC
     ${DEFAULT_LINKER_OPTIONS}
-    Qt5::Core
-    Qt5::Widgets
+
     INTERFACE
 )
 

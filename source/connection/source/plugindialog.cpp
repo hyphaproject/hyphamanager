@@ -1,6 +1,6 @@
 // Copyright (c) 2015-2017 Hypha
 
-#include "connection/plugindialog.h"
+#include "hyphamanager/connection/plugindialog.h"
 #include "ui_plugindialog.h"
 
 #include <hypha/controller/plugin.h>

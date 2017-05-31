@@ -16,7 +16,9 @@ configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/${META_PROJECT_N
 set(IDE_FOLDER "")
 
 add_subdirectory(hyphamanager)
+add_subdirectory(connection)
 add_subdirectory(core)
+add_subdirectory(plugin)
 add_subdirectory(settings)
 add_subdirectory(user)
 add_subdirectory(wizzards)

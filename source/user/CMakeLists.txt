@@ -148,6 +148,9 @@ target_link_libraries(${target}
 
     PUBLIC
     ${DEFAULT_LIBRARIES}
+    ${META_PROJECT_NAME}::core
+    Qt5::Core
+    Qt5::Widgets
 
     INTERFACE
 )
@@ -191,9 +194,7 @@ target_link_libraries(${target}
 
     PUBLIC
     ${DEFAULT_LINKER_OPTIONS}
-    ${META_PROJECT_NAME}::core
-    Qt5::Core
-    Qt5::Widgets
+
     INTERFACE
 )
 

@@ -1,5 +1,5 @@
 // Copyright (c) 2015-2016 Hypha
-#include "plugin/unknownpluginwidget.h"
+#include "hyphamanager/plugin/unknownpluginwidget.h"
 #include "ui_unknownpluginwidget.h"
 
 UnknownPluginWidget::UnknownPluginWidget(std::string pluginId, QWidget *parent)

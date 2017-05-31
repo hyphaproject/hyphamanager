@@ -1,7 +1,7 @@
 // Copyright (c) 2015-2017 Hypha
 #include "hyphamanager/wizzards/newconfigwizzard.h"
-#include <QFileDialog>
 #include <hypha/core/settings/configgenerator.h>
+#include <QFileDialog>
 #include "ui_newconfigwizzard.h"
 
 NewConfigWizzard::NewConfigWizzard(QWidget *parent)
